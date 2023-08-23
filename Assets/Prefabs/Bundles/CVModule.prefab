@@ -1,0 +1,256 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5908918691056470524
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6185836735841715167}
+  - component: {fileID: 9013648242050378783}
+  - component: {fileID: 1142930326964183528}
+  - component: {fileID: 6861657317584452466}
+  - component: {fileID: 6247040367254317596}
+  - component: {fileID: 5381597656063058531}
+  m_Layer: 0
+  m_Name: CVModule
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6185836735841715167
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5908918691056470524}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 5, y: 5}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &9013648242050378783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5908918691056470524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ef618cb29a9945cdb642dead03cf481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scanner: {fileID: 1142930326964183528}
+--- !u!114 &1142930326964183528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5908918691056470524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd178e92aefba4cdfb4a0ade32a69de0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPositions:
+  - teamID: 0
+    positionID: 0
+    names: stripes_drone blue_stripes_warrior
+    curConfidence: 0
+    curPosition: {x: 0, y: 0}
+    label: {fileID: 0}
+    hat: {fileID: 0}
+    isWarrior: 0
+    isQueen: 0
+    isSnail: 0
+    isVisible: 0
+  - teamID: 0
+    positionID: 1
+    names: blue_abs_drone blue_abs_warrior
+    curConfidence: 0
+    curPosition: {x: 0, y: 0}
+    label: {fileID: 0}
+    hat: {fileID: 0}
+    isWarrior: 0
+    isQueen: 0
+    isSnail: 0
+    isVisible: 0
+  - teamID: 0
+    positionID: 2
+    names: blue_queen
+    curConfidence: 0
+    curPosition: {x: 0, y: 0}
+    label: {fileID: 0}
+    hat: {fileID: 0}
+    isWarrior: 0
+    isQueen: 0
+    isSnail: 0
+    isVisible: 0
+  - teamID: 0
+    positionID: 3
+    names: blue_skulls_drone blue_skulls_warrior
+    curConfidence: 0
+    curPosition: {x: 0, y: 0}
+    label: {fileID: 0}
+    hat: {fileID: 0}
+    isWarrior: 0
+    isQueen: 0
+    isSnail: 0
+    isVisible: 0
+  - teamID: 0
+    positionID: 4
+    names: blue_chex_drone blue_chex_warrior
+    curConfidence: 0
+    curPosition: {x: 0, y: 0}
+    label: {fileID: 0}
+    hat: {fileID: 0}
+    isWarrior: 0
+    isQueen: 0
+    isSnail: 0
+    isVisible: 0
+  - teamID: 1
+    positionID: 0
+    names: gold_stripes_drone gold_stripes_warrior
+    curConfidence: 0
+    curPosition: {x: 0, y: 0}
+    label: {fileID: 0}
+    hat: {fileID: 0}
+    isWarrior: 0
+    isQueen: 0
+    isSnail: 0
+    isVisible: 0
+  - teamID: 1
+    positionID: 1
+    names: gold_abs_drone gold_abs_warrior
+    curConfidence: 0
+    curPosition: {x: 0, y: 0}
+    label: {fileID: 0}
+    hat: {fileID: 0}
+    isWarrior: 0
+    isQueen: 0
+    isSnail: 0
+    isVisible: 0
+  - teamID: 1
+    positionID: 2
+    names: gold_queen
+    curConfidence: 0
+    curPosition: {x: 0, y: 0}
+    label: {fileID: 0}
+    hat: {fileID: 0}
+    isWarrior: 0
+    isQueen: 0
+    isSnail: 0
+    isVisible: 0
+  - teamID: 1
+    positionID: 3
+    names: gold_skulls_drone gold_skulls_warrior
+    curConfidence: 0
+    curPosition: {x: 0, y: 0}
+    label: {fileID: 0}
+    hat: {fileID: 0}
+    isWarrior: 0
+    isQueen: 0
+    isSnail: 0
+    isVisible: 0
+  - teamID: 1
+    positionID: 4
+    names: gold_chex_drone gold_chex_warrior
+    curConfidence: 0
+    curPosition: {x: 0, y: 0}
+    label: {fileID: 0}
+    hat: {fileID: 0}
+    isWarrior: 0
+    isQueen: 0
+    isSnail: 0
+    isVisible: 0
+  - teamID: 2
+    positionID: 0
+    names: snail
+    curConfidence: 0
+    curPosition: {x: 0, y: 0}
+    label: {fileID: 0}
+    hat: {fileID: 0}
+    isWarrior: 0
+    isQueen: 0
+    isSnail: 0
+    isVisible: 0
+  detector: {fileID: 6861657317584452466}
+  inferenceMode: 0
+  webcam: {fileID: 0}
+  detectionConfidence: 0.62
+  inferenceConfidence: 0.25
+  lpf: 324
+  logResults: 0
+  alwaysShow: 0
+  showNames: 0
+  showHats: 1
+  showFire: 1
+  defaultHat: {fileID: 21300000, guid: be5dc9cd1c5574c588e42b2beb2e3035, type: 3}
+  labelOrigin: {x: -8.8, y: 8.4}
+  labelBoundaries: {x: 14.34, y: 8}
+  playerLabelTemplate: {fileID: 308183225799493352, guid: 6a436fbdf7df44ad7be8a8e81d09e082, type: 3}
+--- !u!114 &6861657317584452466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5908918691056470524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c64ff85fe600345e9bf86c694006ae99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  INPUT_NAME: images
+  IMAGE_SIZE: 640
+  CLASS_COUNT: 19
+  OUTPUT_ROWS: 25200
+  MINIMUM_CONFIDENCE: 0.25
+  OBJECTS_LIMIT: 1000
+  LAYERS_PER_FRAME: 1
+  modelFile: {fileID: 5022602860645237092, guid: 6512ff115a0c44f07b93f6c91ce27f2e, type: 3}
+  labelsFile: {fileID: 4900000, guid: 79b5a9f4a7b054bb98b0f32c8d2bc0a9, type: 3}
+  postprocess: {fileID: 7200000, guid: 15ebe8d7ca4ef43598a7b7d82b5d8497, type: 3}
+--- !u!222 &6247040367254317596
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5908918691056470524}
+  m_CullTransparentMesh: 1
+--- !u!223 &5381597656063058531
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5908918691056470524}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0

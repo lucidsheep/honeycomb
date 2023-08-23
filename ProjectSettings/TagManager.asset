@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: BG
+    uniqueID: 393065391
+    locked: 0
+  - name: BGUpper
+    uniqueID: 3952243883
+    locked: 0
+  - name: Main
+    uniqueID: 3329120389
+    locked: 0
+  - name: MainUpper
+    uniqueID: 3987434647
+    locked: 0
+  - name: Toast
+    uniqueID: 3634839553
+    locked: 0
+  - name: Card
+    uniqueID: 762639559
+    locked: 0
+  - name: Card_Upper
+    uniqueID: 3398704677
+    locked: 0
+  - name: Card_Gold
+    uniqueID: 4221906029
+    locked: 0
+  - name: Card_Gold_Upper
+    uniqueID: 519526589
+    locked: 0
+  - name: SetPoints
+    uniqueID: 1371024821
+    locked: 0
+  - name: TopStats
+    uniqueID: 3705929769
+    locked: 0
+  - name: New Layer 5
+    uniqueID: 2742088729
+    locked: 0
+  - name: CardAnimOutline
+    uniqueID: 1305930927
+    locked: 0
+  - name: CardAnim
+    uniqueID: 241458577
+    locked: 0
+  - name: Setup
+    uniqueID: 3653770387
+    locked: 0

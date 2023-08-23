@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 887fa2aa1533445849d096ba2824ec8d, type: 3}
+  m_Name: TopBarTheme
+  m_EditorClassIdentifier: 
+  color: []
+  material:
+  - {fileID: 2100000, guid: b2991ea3837a0484281349dc9eeae66e, type: 2}
+  - {fileID: 2100000, guid: e15953011a8a2410ba4673b83855b4a8, type: 2}

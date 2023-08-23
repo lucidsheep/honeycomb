@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 522b578d7470446f6bb10e807ad500bd, type: 3}
+  m_Name: BlueAbs
+  m_EditorClassIdentifier: 
+  drone_idle: {fileID: 21300000, guid: 11368a8505a2148249d8871f8a77ee9f, type: 3}
+  drone_berry: {fileID: 21300000, guid: 0ebc94f015f36433aacf2c33f1a66c88, type: 3}
+  soldier_idle: {fileID: 21300000, guid: d818aba3bb7e8440d9d289c797334686, type: 3}
+  soldier_attack: {fileID: 21300000, guid: 29fd962823a3e4f889d6f334f893bebb, type: 3}
+  icon: {fileID: 21300000, guid: 6743f648bd0764a9c86175652bd28fab, type: 3}

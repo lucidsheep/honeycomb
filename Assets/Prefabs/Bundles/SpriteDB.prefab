@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4113521603024518878
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4113521603024518876}
+  - component: {fileID: 4113521603024518879}
+  m_Layer: 0
+  m_Name: SpriteDB
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4113521603024518876
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4113521603024518878}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4113521603024518879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4113521603024518878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6681b2db31756485c9565e32f5c9248e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _allSprites:
+  - playerSprites:
+    - {fileID: 11400000, guid: 36ec1efe8cfcf4185bb93e2b8d2241c9, type: 2}
+    - {fileID: 11400000, guid: c52ab79b9bd294c81926c7f0eff698d1, type: 2}
+    - {fileID: 11400000, guid: d1b6e73cbefd44341998f0f6e0af5d91, type: 2}
+    - {fileID: 11400000, guid: 58310f81bb6a1450db029742c0b34585, type: 2}
+    - {fileID: 11400000, guid: 42460aa0731e849098b259ad79db4f3c, type: 2}
+  - playerSprites:
+    - {fileID: 11400000, guid: cccd441b2e39f4ea79a60a7349e68bd4, type: 2}
+    - {fileID: 11400000, guid: cb08752f4984f43448f4296ad0c0c7ac, type: 2}
+    - {fileID: 11400000, guid: e4eef13448616496da352adb02552f2b, type: 2}
+    - {fileID: 11400000, guid: 40d700102e01647e1a5a3314f108f905, type: 2}
+    - {fileID: 11400000, guid: aa47d0cf9353d43fbad1d750d096f9d3, type: 2}
+  _hatDatabase:
+  - validEmoji: "\U0001F1FC"
+    hivemindID: 0
+    hat: {fileID: 21300000, guid: c7ad81b0823f640b5813592972e415a2, type: 3}
+  - validEmoji: "\U0001F1FC"
+    hivemindID: 156
+    hat: {fileID: 21300000, guid: be5dc9cd1c5574c588e42b2beb2e3035, type: 3}
+  - validEmoji: 
+    hivemindID: 266
+    hat: {fileID: 21300000, guid: f5027489669764480a57e47296d8640c, type: 3}
+  - validEmoji: "\U0001F451"
+    hivemindID: 0
+    hat: {fileID: 1358038701, guid: 840a2fe6bc0094fa5a8c71c9e63b1115, type: 3}
+  - validEmoji: "\U0001F43B"
+    hivemindID: 0
+    hat: {fileID: -1533615576, guid: 840a2fe6bc0094fa5a8c71c9e63b1115, type: 3}
+  - validEmoji: "\U0001F389"
+    hivemindID: 0
+    hat: {fileID: 661261768, guid: 840a2fe6bc0094fa5a8c71c9e63b1115, type: 3}
+  - validEmoji: "\U0001F920"
+    hivemindID: 0
+    hat: {fileID: 1235262466, guid: 840a2fe6bc0094fa5a8c71c9e63b1115, type: 3}
+  - validEmoji: "\U0001F95A"
+    hivemindID: 0
+    hat: {fileID: -1757525235, guid: 840a2fe6bc0094fa5a8c71c9e63b1115, type: 3}
+  - validEmoji: "\U0001F9E2"
+    hivemindID: 0
+    hat: {fileID: 1503777678, guid: 840a2fe6bc0094fa5a8c71c9e63b1115, type: 3}
+  - validEmoji: "\U0001F3A9"
+    hivemindID: 0
+    hat: {fileID: 541171445, guid: 840a2fe6bc0094fa5a8c71c9e63b1115, type: 3}
+  - validEmoji: "\U0001F380"
+    hivemindID: 0
+    hat: {fileID: -359170774, guid: 840a2fe6bc0094fa5a8c71c9e63b1115, type: 3}
+  - validEmoji: "\U0001F353"
+    hivemindID: 0
+    hat: {fileID: 21300000, guid: d0e8118b4995c4c29928ddc010d64600, type: 3}
+  - validEmoji: "\U0001F4A9"
+    hivemindID: 0
+    hat: {fileID: 1581342922, guid: 840a2fe6bc0094fa5a8c71c9e63b1115, type: 3}

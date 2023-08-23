@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 522b578d7470446f6bb10e807ad500bd, type: 3}
+  m_Name: BlueStripes
+  m_EditorClassIdentifier: 
+  drone_idle: {fileID: 21300000, guid: eaeb1ece5ee7c4491914b182fc26056e, type: 3}
+  drone_berry: {fileID: 21300000, guid: 74c7faf75c87244d882aa3d8a4b69d8e, type: 3}
+  soldier_idle: {fileID: 21300000, guid: f88adfbd0b36f41088454524aac78f30, type: 3}
+  soldier_attack: {fileID: 21300000, guid: 1e8d33d596e3944e8ae47e9115c4c2ff, type: 3}
+  icon: {fileID: 21300000, guid: 866d0b659010a4b19b99b4deaf255067, type: 3}

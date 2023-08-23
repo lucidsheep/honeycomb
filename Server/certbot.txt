@@ -1,0 +1,7 @@
+(Instructions for renewing https certificate)
+
+1. certbot certonly --manual -d kq.style -d www.kq.style
+2. Adjust parameters inside of webServer.js
+3. sudo systemctl restart nodeServer
+4. Repeat 2 and 3 for second set
+5. sudo systemctl restart nodeServer

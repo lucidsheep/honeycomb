@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2ba88aa9bbce4223b177d6b964c6fa0, type: 3}
+  m_Name: HCC
+  m_EditorClassIdentifier: 
+  themeName: hcc
+  blueTheme:
+    primaryColor: {r: 0.5376625, g: 0.29352084, b: 0.6415094, a: 1}
+    secondaryColor: {r: 0.4070375, g: 0.09732112, b: 0.764151, a: 1}
+    iconColor: {r: 0.8454929, g: 0.28324133, b: 0.8962264, a: 1}
+    postgameVideoURL: hcc.mp4
+    postgameVideo: {fileID: 32900000, guid: fb43223787bd349c1ab6ae87f80d1e18, type: 3}
+    militaryVictory: {fileID: 0}
+    economicVictory: {fileID: 0}
+    snailVictory: {fileID: 0}
+  goldTheme:
+    primaryColor: {r: 0.8301887, g: 0.23370236, b: 0.17621933, a: 1}
+    secondaryColor: {r: 0.60784316, g: 0.14117645, b: 0.14548184, a: 1}
+    iconColor: {r: 0.9245283, g: 0.44918123, b: 0.51123613, a: 1}
+    postgameVideoURL: hcc.mp4
+    postgameVideo: {fileID: 32900000, guid: fb43223787bd349c1ab6ae87f80d1e18, type: 3}
+    militaryVictory: {fileID: 0}
+    economicVictory: {fileID: 0}
+    snailVictory: {fileID: 0}
+  teamNameFont: {fileID: 11400000, guid: 24c5927429cdc4e719e88f55c2bb16a9, type: 2}
+  postgameFont: {fileID: 11400000, guid: fde807863e84b4ef992ebb837160e986, type: 2}
+  showPlayerCams: 1
+  layout: 0
+  sidebarModules:
+  - logoSpace
+  - logoSpace
+  - blueRoster
+  - goldRoster
+  sidebarModules_Left: []
+  replayVideoURL: replay.mp4
+  videoSetName: hcc
+  replayVideo: {fileID: 32900000, guid: 6f75f482edf6448a7aac071e96ec6dc1, type: 3}
+  postGameSecondaryScreen: {fileID: 2148343639433771755, guid: 69af786a65b474a6fbbef21241acc7e5, type: 3}
+  sideBarPadding: 0
+  showBuzzBar: 0
+  playerCardFont: 
+  postgameHeaderFont: 
+  leaderboardID: 0
+  hideMilestones: 0
+  hideCrownAnimation: 0

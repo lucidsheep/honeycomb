@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2ba88aa9bbce4223b177d6b964c6fa0, type: 3}
+  m_Name: postcamp
+  m_EditorClassIdentifier: 
+  themeName: postcamp
+  blueTheme:
+    primaryColor: {r: 0.6117647, g: 0.67058825, b: 0.97647065, a: 1}
+    secondaryColor: {r: 0.16470589, g: 0.227451, b: 0.5803922, a: 1}
+    iconColor: {r: 0.9333334, g: 0.91372555, b: 0.8196079, a: 1}
+    postgameVideoURL: blueBG.mp4
+    postgameVideo: {fileID: 32900000, guid: 96c72f3a500e24b45b5db3b6ad85c277, type: 3}
+    militaryVictory: {fileID: 32900000, guid: 260423f34cdf74c319a68b1d03210647, type: 3}
+    economicVictory: {fileID: 32900000, guid: 9fc2f1ef394d24722816e90664f88021, type: 3}
+    snailVictory: {fileID: 32900000, guid: 6afc6f1cb61624ed980b6ad88eeeb681, type: 3}
+  goldTheme:
+    primaryColor: {r: 0.8352942, g: 0.6431373, b: 0.3137255, a: 1}
+    secondaryColor: {r: 0.42352945, g: 0.2392157, b: 0.121568635, a: 1}
+    iconColor: {r: 0.9294118, g: 0.8862746, b: 0.7960785, a: 1}
+    postgameVideoURL: goldBG.mp4
+    postgameVideo: {fileID: 32900000, guid: 96c72f3a500e24b45b5db3b6ad85c277, type: 3}
+    militaryVictory: {fileID: 32900000, guid: 150c105356f0c44529cecc627392115a, type: 3}
+    economicVictory: {fileID: 32900000, guid: d54946ae471d74bd4a5eb28221048c80, type: 3}
+    snailVictory: {fileID: 32900000, guid: 3f438d4762a7d4446afc885a86dffdd4, type: 3}
+  teamNameFont: {fileID: 11400000, guid: 24c5927429cdc4e719e88f55c2bb16a9, type: 2}
+  postgameFont: {fileID: 11400000, guid: fde807863e84b4ef992ebb837160e986, type: 2}
+  showPlayerCams: 1
+  layout: 3
+  sidebarModules:
+  - logoSpace|spacing=0.42
+  - 'campText|text= '
+  - commentaryCamera|scale=0.96|offsetX=0.1
+  - 'campText|text= '
+  - logoSpace|spacing=6.55
+  - goldRosterCamp|forceIcons=true|offsetX=0.1
+  sidebarModules_Left:
+  - logoSpace|spacing=0.42
+  - 'campText|text= '
+  - logoSpace|spacing=1.0
+  - leaderboard|font=campLeaderboard|offsetX=0.08
+  - logoSpace|spacing=1.95
+  - blueRosterCamp|forceIcons=true
+  replayVideoURL: replay.mp4
+  videoSetName: camp
+  replayVideo: {fileID: 32900000, guid: 6f75f482edf6448a7aac071e96ec6dc1, type: 3}
+  postGameSecondaryScreen: {fileID: 6723382725104235921, guid: 9f21b0331ff5844dc9c923ae7667ec0b, type: 3}
+  sideBarPadding: 0.2
+  showBuzzBar: 1
+  playerCardFont: campLeaderboard
+  postgameHeaderFont: campHeader
+  leaderboardID: 226
+  hideMilestones: 1
+  hideCrownAnimation: 1

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 522b578d7470446f6bb10e807ad500bd, type: 3}
+  m_Name: GoldAbs
+  m_EditorClassIdentifier: 
+  drone_idle: {fileID: 21300000, guid: bb0a7634a1bdc42d3971386265c6528b, type: 3}
+  drone_berry: {fileID: 21300000, guid: a0562bf9748ea4b3998551fff940b2a3, type: 3}
+  soldier_idle: {fileID: 21300000, guid: 3b37578824d0c494aa9fa83cbde36d38, type: 3}
+  soldier_attack: {fileID: 21300000, guid: f2e5bf201369748d2b133e024abb86e0, type: 3}
+  icon: {fileID: 21300000, guid: ca80b5447fb8a40cc8621c1cb0559c5c, type: 3}

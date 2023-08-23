@@ -1,0 +1,273 @@
+﻿// First stage postprocessing (detection data aggregation)
+
+#pragma kernel Postprocess
+
+#include "Common.hlsl"
+
+// constants
+
+#define TOTAL_SIZE 604800  //604800 //input size * 24 features
+#define INPUT_SIZE 25200 - 150//25200 //per row
+//#define InputWidth 432
+
+// Input
+
+Texture2D<float> Input;
+uint InputWidth;
+float Threshold;
+uint wtfOffset;
+
+// Output buffer
+globallycoherent RWStructuredBuffer<Detection> Output;
+
+
+float4 GetFloat4(uint rawPosition)
+        {
+            //432 x 350
+            //reverse
+
+            rawPosition = 604800 - rawPosition - 1;
+            rawPosition /= 4;
+            return Input[uint2(rawPosition % InputWidth, rawPosition / InputWidth)];
+            //return remainder == 0 ? temp.x : remainder == 1 ? temp.y : remainder == 2 ? temp.z : temp.w;
+        }
+
+bool Elem1(uint element, out float x, out float y, out float w, out float h, out float c, out uint bestClass)
+{
+    float best = 0.0;
+    float cur = 0.0;
+    bestClass = 0;
+    c = Sigmoid(GetFloat4(element + (4 * INPUT_SIZE)).x);
+    if(c < Threshold)
+        return false;
+    for(uint f = 5; f < 24; f++)
+    {
+        cur = GetFloat4(element + (f * INPUT_SIZE)).x;
+        if(cur > best){
+            bestClass = f - 5;
+            best = cur;
+        }
+    }
+    if(c * best < Threshold)
+        return false;
+
+    x = GetFloat4(element + (0 * INPUT_SIZE)).x;
+    y = GetFloat4(element + (1 * INPUT_SIZE)).x;
+    w = GetFloat4(element + (2 * INPUT_SIZE)).x;
+    h = GetFloat4(element + (3 * INPUT_SIZE)).x;
+
+    return true;
+}
+
+bool Elem2(uint element, out float x, out float y, out float w, out float h, out float c, out uint bestClass)
+{
+    float best = 0.0;
+    float cur = 0.0;
+    bestClass = 0;
+    c = Sigmoid(GetFloat4(element + (4 * INPUT_SIZE)).y);
+    if(c < Threshold)
+        return false;
+    for(uint f = 5; f < 24; f++)
+    {
+        cur = GetFloat4(element + (f * INPUT_SIZE)).y;
+        if(cur > best){
+            bestClass = f - 5;
+            best = cur;
+        }
+    }
+    if(c * best < Threshold)
+        return false;
+
+    x = GetFloat4(element + (0 * INPUT_SIZE)).y;
+    y = GetFloat4(element + (1 * INPUT_SIZE)).y;
+    w = GetFloat4(element + (2 * INPUT_SIZE)).y;
+    h = GetFloat4(element + (3 * INPUT_SIZE)).y;
+
+    return true;
+}
+
+bool Elem3(uint element, out float x, out float y, out float w, out float h, out float c, out uint bestClass)
+{
+    float best = 0.0;
+    float cur = 0.0;
+    bestClass = 0;
+    c = Sigmoid(GetFloat4(element + (4 * INPUT_SIZE)).z);
+    if(c < Threshold)
+        return false;
+    for(uint f = 5; f < 24; f++)
+    {
+        cur = GetFloat4(element + (f * INPUT_SIZE)).z;
+        if(cur > best){
+            bestClass = f - 5;
+            best = cur;
+        }
+    }
+    //if(c * best < Threshold)
+    //    return false;
+
+    x = GetFloat4(element + (0 * INPUT_SIZE)).z;
+    y = GetFloat4(element + (1 * INPUT_SIZE)).z;
+    w = GetFloat4(element + (2 * INPUT_SIZE)).z;
+    h = GetFloat4(element + (3 * INPUT_SIZE)).z;
+
+    return true;
+}
+
+bool Elem4(uint element, out float x, out float y, out float w, out float h, out float c, out uint bestClass)
+{
+    float best = 0.0;
+    float cur = 0.0;
+    bestClass = 0;
+    c = Sigmoid(GetFloat4(element + (4 * INPUT_SIZE)).w);
+    if(c < Threshold)
+        return false;
+    for(uint f = 5; f < 24; f++)
+    {
+        cur = GetFloat4(element + (f * INPUT_SIZE)).w;
+        if(cur > best){
+            bestClass = f - 5;
+            best = cur;
+        }
+    }
+    if(c * best < Threshold)
+        return false;
+
+    x = GetFloat4(element + (0 * INPUT_SIZE)).w;
+    y = GetFloat4(element + (1 * INPUT_SIZE)).w;
+    w = GetFloat4(element + (2 * INPUT_SIZE)).w;
+    h = GetFloat4(element + (3 * INPUT_SIZE)).w;
+
+    return true;
+}
+
+float4 GetFloat4FromTex(uint floatIndex)
+{
+    return Input[uint2(floatIndex % InputWidth, floatIndex / InputWidth)];
+}
+
+float GetSubValue(float4 sample, uint subElement)
+{
+    switch(subElement)
+    {
+        case 0: return sample.x;
+        case 1: return sample.y;
+        case 2: return sample.z;
+        case 3: default: return sample.w;
+    }
+}
+
+uint GetFloatIndex(uint rawPos)
+{
+    return rawPos / 4;
+}
+
+uint GetSubElement(uint rawPos)
+{
+    return rawPos % 4;
+}
+
+uint GetRaw(uint element, uint feature)
+{
+    //return TOTAL_SIZE - wtfOffset - element - (feature * INPUT_SIZE);
+
+    return (element * 24) + feature;
+}
+
+float GetFeature(uint element, uint feature)
+{
+    uint raw = GetRaw(element, feature);
+
+    return Input[uint2(raw % InputWidth, raw / InputWidth)];
+    //uint floatIndex = GetFloatIndex(raw);
+    //uint subIndex = GetSubElement(raw);
+    //float4 fromTex = GetFloat4FromTex(floatIndex);
+    //return GetSubValue(fromTex, subIndex);
+}
+bool Elem(uint element, out float x, out float y, out float w, out float h, out float c, out uint bestClass)
+{
+    float best = 0.0;
+    float cur = 0.0;
+    bestClass = 0;
+    c = Sigmoid(GetFeature(element, 4));
+    if(c < Threshold)
+        return false;
+    for(uint f = 5; f < 24; f++)
+    {
+        cur = GetFeature(element, f);
+        if(cur > best){
+            bestClass = f - 5;
+            best = cur;
+        }
+    }
+    if(c * best < Threshold)
+        return false;
+
+    x = GetFeature(element, 0);
+    y = GetFeature(element, 1);
+    w = GetFeature(element, 2);
+    h = GetFeature(element, 3);
+
+    return true;
+}
+
+[numthreads(168, 1, 1)]
+void Postprocess(uint2 id : SV_DispatchThreadID)
+{
+    float x = 0, y = 0, w = 0, h = 0, c = 0;
+    uint bestClass;
+    uint element = id.x;
+
+    float best = 0.0;
+    float cur = 0.0;
+    bestClass = 0;
+    float rc = GetFeature(element, 4);
+    c = Sigmoid(GetFeature(element, 4));
+    if(c < Threshold)
+        return;
+    for(uint f = 5; f < 24; f++) //24
+    {
+        cur = GetFeature(element, f);
+        if(cur > best){
+            bestClass = f - 5;
+            best = cur;
+        }
+    }
+    if(c * best < Threshold)
+        return;
+
+    x = GetFeature(element, 0);
+    y = GetFeature(element, 1);
+    w = GetFeature(element, 2);
+    h = GetFeature(element, 3);
+
+    //does not beat the best result for this class so far
+
+    if(c < Output[bestClass].score)
+        return;
+    Detection data;
+/*
+    data.classIndex = GetFeature(0, 0);
+    data.x = GetFeature(1, 0);
+    data.y = GetFeature(2, 0);
+    data.w = GetFeature(3, 0);
+    data.h = GetFeature(4, 0);
+    data.score = c;
+*/
+
+    data.classIndex = bestClass;
+    data.x = x;
+    data.y = y;
+    data.w = w;
+    data.h = h;
+    data.score = c;
+
+    Output[bestClass] = data;
+    /*
+    Output[bestClass].classIndex = bestClass;
+    Output[bestClass].x = x;
+    Output[bestClass].y = y;
+    Output[bestClass].w = w;
+    Output[bestClass].h = h;
+    Output[bestClass].score = c;
+    */
+}
