@@ -260,8 +260,8 @@ public class PlayerCameraObserver : KQObserver
     void OnTheme()
     {
         SetState();
-        if(webcamName == "commentaryCamera")
-            frame.gameObject.SetActive(bgContainer.sprite == null);
+        //if(webcamName == "commentaryCamera")
+        //    frame.gameObject.SetActive(bgContainer.sprite == null);
     }
 
     void SetState()
@@ -519,6 +519,15 @@ public class PlayerCameraObserver : KQObserver
             //clippedCamTexture = cameraImage.material.mainTexture = clippedWebcam;
     }
 
+    public override void OnParameters()
+    {
+        base.OnParameters();
+
+        if (moduleParameters.ContainsKey("hideBackground"))
+        {
+            frame.gameObject.SetActive(false);
+        }
+    }
     private void OnDestroy()
     {
         allCameras.Remove(this);
