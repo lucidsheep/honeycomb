@@ -69,6 +69,10 @@ public class KQObserver : MonoBehaviour
 		{
 			offset.y = float.Parse(moduleParameters["offsetY"]);
 		}
+		if (moduleParameters.ContainsKey("hideBackground") && bgContainer != null)
+        {
+			bgContainer.gameObject.SetActive(false);
+        }
 	}
 
 }

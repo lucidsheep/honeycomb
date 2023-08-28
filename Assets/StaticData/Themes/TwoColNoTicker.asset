@@ -10,45 +10,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2ba88aa9bbce4223b177d6b964c6fa0, type: 3}
-  m_Name: PortlandCamless
+  m_Name: TwoColNoTicker
   m_EditorClassIdentifier: 
-  themeName: pdxCamless
+  themeName: twoCol
   blueTheme:
     primaryColor: {r: 0.3019608, g: 0.41960788, b: 0.5529412, a: 1}
     secondaryColor: {r: 0.20000002, g: 0.2901961, b: 0.35686275, a: 1}
     iconColor: {r: 0.57254905, g: 0.7607844, b: 0.83921576, a: 1}
     postgameVideoURL: blueBG.mp4
-    postgameVideo: {fileID: 32900000, guid: 05ff9370f37c04d17a24858e2e5b2e9d, type: 3}
-    militaryVictory: {fileID: 0}
-    economicVictory: {fileID: 0}
-    snailVictory: {fileID: 0}
   goldTheme:
     primaryColor: {r: 0.76470596, g: 0.5294118, b: 0.22352943, a: 1}
     secondaryColor: {r: 0.60784316, g: 0.31764707, b: 0.14117648, a: 1}
     iconColor: {r: 1, g: 0.882353, b: 0.68235296, a: 1}
     postgameVideoURL: goldBG.mp4
-    postgameVideo: {fileID: 32900000, guid: 3b7a692d25d684a95b8db5ba1f7d18e9, type: 3}
-    militaryVictory: {fileID: 0}
-    economicVictory: {fileID: 0}
-    snailVictory: {fileID: 0}
   teamNameFont: {fileID: 11400000, guid: 24c5927429cdc4e719e88f55c2bb16a9, type: 2}
   postgameFont: {fileID: 11400000, guid: fde807863e84b4ef992ebb837160e986, type: 2}
-  showPlayerCams: 0
-  layout: 0
+  showPlayerCams: 1
+  layout: 3
   sidebarModules:
-  - logoSpace
-  - rosterText
-  - blueRoster
-  - goldRoster
-  sidebarModules_Left: []
+  - logoSpace|spacing=0.92
+  - rosterText|text=Commentary
+  - commentaryCamera
+  - chatText|text=Chat
+  - logoSpace|spacing=6.75
+  - goldRoster|forceIcons=true
+  sidebarModules_Left:
+  - logoSpace|spacing=1.32
+  - leaderboard
+  - logoSpace|spacing=3.15
+  - blueRoster|forceIcons=true
   replayVideoURL: replay.mp4
   videoSetName: modern
-  replayVideo: {fileID: 32900000, guid: 6f75f482edf6448a7aac071e96ec6dc1, type: 3}
   postGameSecondaryScreen: {fileID: 6723382725104235921, guid: 9f21b0331ff5844dc9c923ae7667ec0b, type: 3}
-  sideBarPadding: 0
+  sideBarPadding: 0.2
   showBuzzBar: 0
   playerCardFont: 
   postgameHeaderFont: 
   leaderboardID: 0
-  hideMilestones: 0
-  hideCrownAnimation: 0
+  hideMilestones: 1
+  hideCrownAnimation: 1

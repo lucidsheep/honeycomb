@@ -75,7 +75,8 @@ public class WebcamController : MonoBehaviour
                 scale = 0.0022f;
             } else if(ViewModel.currentTheme.layout == ThemeData.LayoutStyle.Game_Only)
             {
-                //todo
+                position = new Vector3(5.1f, 3.41f, 0f);
+                scale = 0.0027f;
             }
         } else
         {

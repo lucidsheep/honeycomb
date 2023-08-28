@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2ba88aa9bbce4223b177d6b964c6fa0, type: 3}
-  m_Name: FPKQL
+  m_Name: PortlandTicker
   m_EditorClassIdentifier: 
-  themeName: fpkql
+  themeName: pdxTicker
   blueTheme:
     primaryColor: {r: 0.3019608, g: 0.41960788, b: 0.5529412, a: 1}
     secondaryColor: {r: 0.20000002, g: 0.2901961, b: 0.35686275, a: 1}
@@ -26,27 +26,22 @@ MonoBehaviour:
   teamNameFont: {fileID: 11400000, guid: 24c5927429cdc4e719e88f55c2bb16a9, type: 2}
   postgameFont: {fileID: 11400000, guid: fde807863e84b4ef992ebb837160e986, type: 2}
   showPlayerCams: 1
-  layout: 3
+  layout: 0
   sidebarModules:
-  - logoSpace|spacing=0.92
-  - rosterText|text=Commentary
-  - commentaryCamera|hideBackground=true
-  - logoSpace|spacing=0.15
+  - logoSpace
+  - commentaryCamera
+  - rosterText|text=Team Rosters
+  - blueRoster
+  - goldRoster
   - chatText|text=Chat
-  - logoSpace|spacing=5.95
-  - goldRoster|forceIcons=true
-  sidebarModules_Left:
-  - logoSpace|spacing=1.32
-  - leaderboard|hideBackground=true
-  - logoSpace|spacing=3.05
-  - blueRoster|forceIcons=true
+  sidebarModules_Left: []
   replayVideoURL: replay.mp4
   videoSetName: modern
   postGameSecondaryScreen: {fileID: 6723382725104235921, guid: 9f21b0331ff5844dc9c923ae7667ec0b, type: 3}
-  sideBarPadding: 0.2
+  sideBarPadding: 0
   showBuzzBar: 1
   playerCardFont: 
   postgameHeaderFont: 
   leaderboardID: 0
-  hideMilestones: 1
-  hideCrownAnimation: 1
+  hideMilestones: 0
+  hideCrownAnimation: 0

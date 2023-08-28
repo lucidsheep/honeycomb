@@ -21,6 +21,7 @@ public class PostGameScreen : KQObserver
 	public TextMeshPro replayText;
 	public RawImage replayImage;
 	public VideoClipper clipper;
+	public float playerCardsDuration = 8f;
 	bool doInstantReplay = false;
 	bool isVisible = true;
 	bool blueWins = false;
@@ -112,6 +113,10 @@ public class PostGameScreen : KQObserver
 				pos.x = 0f;
 				pos.y = 0.23f + campBump;
 				scale = .88f;
+				break;
+			case ThemeData.LayoutStyle.Game_Only:
+				pos = new Vector3(0f, -.12f, 0f);
+				scale = 1.26f;
 				break;
         }
 		pos.y += ViewModel.bottomBarPadding.property;
@@ -301,7 +306,7 @@ public class PostGameScreen : KQObserver
 		}
 		if (newVal)
 		{
-			ChangeState(1, false, 12f);
+			ChangeState(1, false, playerCardsDuration);
 			//set text delay to see if we're starting a new set
 			seriesText.text = GetSeriesText();
 		}

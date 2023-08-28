@@ -29,7 +29,8 @@ public class SideBarModuleManager : MonoBehaviour
 	void OnThemeChange()
     {
 		SetModules();
-		gameIDText.color = timeText.color = (ViewModel.currentTheme.showBuzzBar ? new Color(1f, 1f, 1f, 0f) : gameInfoColor);
+		bool showInfo = !ViewModel.currentTheme.showBuzzBar && ViewModel.currentTheme.layout != ThemeData.LayoutStyle.Game_Only;
+		gameIDText.color = timeText.color = (showInfo ? gameInfoColor : new Color(1f, 1f, 1f, 0f));
     }
 
     private void SetModules()

@@ -21,6 +21,7 @@ public class MainBarObserver : KQObserver
 		switch(ViewModel.currentTheme.layout)
         {
 			case ThemeData.LayoutStyle.Game_Only:
+				newPos.y = -50f;
 				break;
 			case ThemeData.LayoutStyle.TwoCol:
 				camX = 6.69f;
@@ -38,6 +39,8 @@ public class MainBarObserver : KQObserver
 		blueCam.transform.localPosition = new Vector3(-camX, -.79f, -3.3f);
 		goldCam.transform.localPosition = new Vector3(camX, -.79f, -3.3f);
 		transform.localScale = Vector3.one * scale;
+
+		//gameObject.SetActive(ViewModel.currentTheme.layout != ThemeData.LayoutStyle.Game_Only);
 		//-3.94
     }
 	// Update is called once per frame
