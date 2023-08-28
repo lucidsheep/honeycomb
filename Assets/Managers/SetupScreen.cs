@@ -22,10 +22,21 @@ public class SetupScreen : MonoBehaviour
 	public Toggle doubleElim, instantReplay, computerVision, virtualDesktop, lowResCamera;
 	public WebcamController webcamController;
 	public CameraState gameCameraState, blueCameraState, goldCameraState, commCameraState;
-
+	public TMP_Dropdown themeSelector;
 	public GameObject controlPanelTemplate;
+	public TMP_InputField[] tabList;
 
 	public static UnityEvent onSetupComplete = new UnityEvent();
+
+	const int THEME_UNDEFINED = -1;
+	const int THEME_ONECOL = 0;
+	const int THEME_TWOCOL = 1;
+	const int THEME_TWOCOL_TICKER = 2;
+	const int THEME_GAMEONLY = 3;
+	const int THEME_CUSTOM = 4;
+
+	string storedCustomThemeName;
+	int curTab = -1;
 
 	CameraState[] cameraStates;
     private void Awake()
@@ -41,7 +52,8 @@ public class SetupScreen : MonoBehaviour
 		themeName.text = PlayerPrefs.GetString("theme");
 		tickerCabs.text = PlayerPrefs.GetString("ticker");
 		if (themeName.text == "")
-			themeName.text = "pdx";
+			themeName.text = "oneCol";
+		storedCustomThemeName = themeName.text;
 		//cabName.text = PlayerPrefs.GetString("cabName");
 		//twitchURL.text = PlayerPrefs.GetString("twitchURL");
 		computerVision.isOn = PlayerPrefs.GetInt("computerVision") == 1;
@@ -49,7 +61,9 @@ public class SetupScreen : MonoBehaviour
 		instantReplay.isOn = PlayerPrefs.GetInt("instantReplay") == 1;
 		virtualDesktop.isOn = PlayerPrefs.GetInt("virtualDesktop") == 1;
 		lowResCamera.isOn = PlayerPrefs.GetInt("lowResCamera") == 1;
-
+		var themeOption = PlayerPrefs.GetInt("themePreset", -1);
+		themeSelector.onValueChanged.AddListener(OnThemeSelected);
+		themeSelector.value = themeOption == THEME_UNDEFINED ? THEME_CUSTOM : themeOption;
 		var gameplayCamID = PlayerPrefs.GetInt("gameplayCameraID", 0);
 		webcamController.ChangeCamera(gameplayCamID);
 		PlayerCameraObserver.camerasUpdatedEvent.AddListener(OnCamerasUpdated);
@@ -73,13 +87,61 @@ public class SetupScreen : MonoBehaviour
 
 		}
 		OnCamerasUpdated();
+
+		int tabIndex = 0;
+		foreach(var tab in tabList)
+        {
+			int thisTab = tabIndex;
+			tab.onSelect.AddListener(s => OnTabSelected(thisTab));
+			tabIndex++;
+        }
+
+		if (PlayerPrefs.GetInt("skipSetup") == 1)
+			OnDoneClicked();
 	}
 
+	void OnTabSelected(int tab)
+    {
+		curTab = tab;
+    }
+
+	void SelectTab(int tab)
+    {
+		tabList[tab].Select();
+    }
+
+	void OnThemeSelected(int newTheme)
+    {
+		storedCustomThemeName = themeName.text;
+		themeName.gameObject.SetActive(newTheme == THEME_CUSTOM);
+    }
+
+	string GetThemeName()
+    {
+		switch(themeSelector.value)
+        {
+			case THEME_ONECOL: case THEME_UNDEFINED: return "oneCol";
+			case THEME_TWOCOL: return "twoCol";
+			case THEME_TWOCOL_TICKER: return "twoColTicker";
+			case THEME_GAMEONLY: return "gameOnly";
+			case THEME_CUSTOM: default: return themeName.text;
+        }
+    }
 	// Update is called once per frame
 	void Update()
 	{
 		if (setupInProgress && AppLoader.SKIP_SETUP)
 			OnDoneClicked();
+		if(Input.GetKeyDown(KeyCode.Tab))
+        {
+			bool found = false;
+			do
+			{
+				curTab = curTab + 1 >= tabList.Length ? 0 : curTab + 1;
+			} while (!tabList[curTab].IsActive());
+
+			SelectTab(curTab);
+        }
 	}
 
 	void OnCamerasUpdated()
@@ -151,7 +213,8 @@ public class SetupScreen : MonoBehaviour
     {
 		PlayerPrefs.SetString("cabID", cabID.text);
 		PlayerPrefs.SetString("sceneID", sceneID.text);
-		PlayerPrefs.SetString("theme", themeName.text);
+		PlayerPrefs.SetString("theme", GetThemeName());
+		PlayerPrefs.SetInt("themePreset", themeSelector.value);
 		PlayerPrefs.SetString("ticker", tickerCabs.text);
 		//PlayerPrefs.SetString("cabName", cabName.text);
 		//PlayerPrefs.SetString("twitchURL", twitchURL.text);
@@ -163,21 +226,33 @@ public class SetupScreen : MonoBehaviour
 		PlayerPrefs.SetInt("virtualDesktop", virtualDesktop.isOn ? 1 : 0);
 		PlayerPrefs.SetInt("lowResCamera", lowResCamera.isOn ? 1 : 0);
 
+		setupInProgress = false;
+		NetworkManager.instance.sceneName = sceneID.text;
+		NetworkManager.instance.cabinetName = cabID.text;
+		NetworkManager.BeginNetworking();
+
+		string[] cabsToWatch = tickerCabs.text.Split(',');
+		for (int i = 0; i < cabsToWatch.Length; i++)
+			cabsToWatch[i] = cabsToWatch[i].Replace(" ", "");
+		TickerNetworkManager.Init(cabsToWatch);
+		ViewModel.SetTheme(GetThemeName());
+
 		if (lowResCamera.isOn)
-        {
+		{
 			PlayerCameraObserver.cameraHeight = 1080;
 			PlayerCameraObserver.cameraWidth = 1920;
 			PlayerCameraObserver.cameraFPS = 30;
 			PlayerCameraObserver.useCameraDefaults = false;
-        } else
-        {
+		}
+		else
+		{
 			PlayerCameraObserver.cameraHeight = 1080;
 			PlayerCameraObserver.cameraWidth = 1920;
 			PlayerCameraObserver.cameraFPS = 60;
 			PlayerCameraObserver.useCameraDefaults = false;
 		}
 		foreach (var camera in cameraStates)
-        {
+		{
 			if (camera.name == "gameplayCamera")
 			{
 				webcamController.ChangeCamera(camera.id);
@@ -188,23 +263,14 @@ public class SetupScreen : MonoBehaviour
 				var cam = PlayerCameraObserver.GetCamera(camera.name);
 				if (cam != null)
 				{
-					cam.deviceName = camera.deviceName;
+					cam.deviceName = ViewModel.currentTheme.layout == ThemeData.LayoutStyle.Game_Only ? "Off" : camera.deviceName;
 					cam.aspectRatio = camera.aspectRatio;
 					if (cam.state == PlayerCameraObserver.WebcamState.On)
 						cam.StartCamera();
 				}
 			}
 		}
-		setupInProgress = false;
-		NetworkManager.instance.sceneName = sceneID.text;
-		NetworkManager.instance.cabinetName = cabID.text;
-		NetworkManager.BeginNetworking();
 
-		string[] cabsToWatch = tickerCabs.text.Split(',');
-		for (int i = 0; i < cabsToWatch.Length; i++)
-			cabsToWatch[i] = cabsToWatch[i].Replace(" ", "");
-		TickerNetworkManager.Init(cabsToWatch);
-		ViewModel.SetTheme(themeName.text);
 		PlayerCameraObserver.UpdateAllCameras();
 		if(virtualDesktop.isOn)
         {

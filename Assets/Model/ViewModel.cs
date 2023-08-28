@@ -66,7 +66,8 @@ public class ViewModel : MonoBehaviour
 		MapDB.currentMap.onChange.AddListener(OnMapChange);
 		if (defaultTheme != "")
 			SetTheme(defaultTheme);
-		LSConsole.AddCommandHook("setTheme", "sets the theme to [themeTag]", SetThemeCommand);
+		LSConsole.AddCommandHook("setTheme", "refreshes current theme, or sets the theme to [themeTag]", SetThemeCommand);
+		LSConsole.AddCommandHook("skipSetup", "set to [true/false], true will skip the setup dialog on launch", SkipSetupCommand);
 
 #if UNITY_STANDALONE_WIN && !UNITY_EDITOR
 		instance.mainDisplay = VirtualDesktop.DesktopManager.VirtualDesktopManagerInternal.GetCurrentDesktop();
@@ -284,10 +285,24 @@ public class ViewModel : MonoBehaviour
 	public string SetThemeCommand(string[] args)
 	{
 		if (args.Length == 0)
-			SetTheme("pdx");
+			SetTheme(ViewModel.currentTheme.themeName);
 		else
 			SetTheme(args[0]);
 		return "";
+	}
+
+	public string SkipSetupCommand(string[] args)
+    {
+		bool curVal = PlayerPrefs.GetInt("skipSetup") == 1;
+		if(args.Length == 0)
+        {
+			curVal = !curVal;
+        } else
+        {
+			curVal = args[0] == "true" || args[0] == "yes" || args[0] == "enabled";
+        }
+		PlayerPrefs.SetInt("skipSetup", curVal ? 1 : 0);
+		return "skipSetup set to " + curVal;
 	}
 
 	public static void SetTheme(string themeTag)

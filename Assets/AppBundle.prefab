@@ -755,15 +755,13 @@ MonoBehaviour:
     m_Options:
     - m_Text: One Column
       m_Image: {fileID: 0}
-    - m_Text: One Column + Ticker
-      m_Image: {fileID: 0}
     - m_Text: Two Column
       m_Image: {fileID: 0}
     - m_Text: Two Column + Ticker
       m_Image: {fileID: 0}
     - m_Text: Game Only
       m_Image: {fileID: 0}
-    - m_Text: Custom
+    - m_Text: 'Custom:'
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3386,7 +3384,13 @@ MonoBehaviour:
     aspectRatio: 0
     sourceText: {fileID: 1758299714820526683}
     ratioText: {fileID: 3924549114984958634}
+  themeSelector: {fileID: 3143121274929854986}
   controlPanelTemplate: {fileID: 4415245472369559675, guid: 2aa2b2ef5835c4e38b3d4157485d1b4d, type: 3}
+  tabList:
+  - {fileID: 1468528149441713928}
+  - {fileID: 1468528149386979464}
+  - {fileID: 1468528149327353855}
+  - {fileID: 4832641464032360844}
 --- !u!1 &1468528150256823382
 GameObject:
   m_ObjectHideFlags: 0
@@ -3859,7 +3863,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 20}
+  m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8241128397094248841
 MonoBehaviour:
@@ -4378,7 +4382,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 2}
-  m_SizeDelta: {x: 0, y: 150}
+  m_SizeDelta: {x: 0, y: 250}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4914787373547478390
 CanvasRenderer:
@@ -7258,8 +7262,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

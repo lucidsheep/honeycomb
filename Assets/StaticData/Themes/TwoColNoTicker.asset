@@ -37,7 +37,7 @@ MonoBehaviour:
   sidebarModules_Left:
   - logoSpace|spacing=1.32
   - leaderboard
-  - logoSpace|spacing=3.15
+  - logoSpace|spacing=3.45
   - blueRoster|forceIcons=true
   replayVideoURL: replay.mp4
   videoSetName: modern
