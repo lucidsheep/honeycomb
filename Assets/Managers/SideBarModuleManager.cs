@@ -50,7 +50,7 @@ public class SideBarModuleManager : MonoBehaviour
 			var curY = 5f;
 
 			transformToUse.localScale = Vector3.one * (ViewModel.currentTheme.layout == ThemeData.LayoutStyle.TwoCol ? .75f : 1f);
-			var pos = new Vector3(7.3f, 0f, 0f) + (ViewModel.currentTheme.layout == ThemeData.LayoutStyle.TwoCol ? new Vector3(.35f, 1.18f, 0f) : Vector3.zero);
+			var pos = new Vector3(7.23f, 0f, 0f) + (ViewModel.currentTheme.layout == ThemeData.LayoutStyle.TwoCol ? new Vector3(.42f, 1.18f, 0f) : Vector3.zero);
 			if (i == 1)
 				pos.x *= -1f;
 			transformToUse.localPosition = pos;

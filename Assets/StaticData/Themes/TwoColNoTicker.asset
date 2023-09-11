@@ -32,7 +32,7 @@ MonoBehaviour:
   - rosterText|text=Commentary
   - commentaryCamera
   - chatText|text=Chat
-  - logoSpace|spacing=6.75
+  - logoSpace|spacing=6.7
   - goldRoster|forceIcons=true
   sidebarModules_Left:
   - logoSpace|spacing=1.32

@@ -316,11 +316,11 @@ public class ViewModel : MonoBehaviour
 			{
 				case ThemeData.LayoutStyle.OneCol_Left:
 				case ThemeData.LayoutStyle.OneCol_Right:
-					totalBarWidth = 20.22f;
+					totalBarWidth = 10.045f * 2f;
 					totalTextWidth = 88f;
 					break;
 				case ThemeData.LayoutStyle.TwoCol:
-					totalBarWidth = 9.34f * 2f; // 17.72f;
+					totalBarWidth = 9.31f * 2f;
 					totalTextWidth = 78f;
 					break;
 			}

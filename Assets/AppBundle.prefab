@@ -2151,7 +2151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1468528149327353848
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9084,6 +9084,10 @@ PrefabInstance:
     - target: {fileID: 2608510282178366072, guid: 6aae708465e8a435fa3f05648b06b95a, type: 3}
       propertyPath: m_text
       value: Gold Team
+      objectReference: {fileID: 0}
+    - target: {fileID: 2608510282215350716, guid: 6aae708465e8a435fa3f05648b06b95a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6aae708465e8a435fa3f05648b06b95a, type: 3}
