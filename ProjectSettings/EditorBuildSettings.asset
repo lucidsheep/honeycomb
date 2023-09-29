@@ -9,12 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/SingleBar.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 0
-    path: Assets/Scenes/OneCol.unity
-    guid: 0cf7f67cb361c4dc1a4c9f9149e4479a
-  - enabled: 1
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
     path: Assets/Scenes/AppView.unity
     guid: 3a15de26fd4144e70bce95cc860299a2
   - enabled: 0
     path: Assets/Scenes/BigOverlay.unity
     guid: 2a1d92144a64040ef817507f106584e9
+  - enabled: 1
+    path: Assets/Scenes/AppViewLocal.unity
+    guid: 64c9adea11ac24413a3f48a61f3aaa96
   m_configObjects: {}

@@ -3466,6 +3466,7 @@ GameObject:
   - component: {fileID: 3153013138482860815}
   - component: {fileID: 6648581378096043803}
   - component: {fileID: 247699985227940698}
+  - component: {fileID: 6768570265686587269}
   m_Layer: 0
   m_Name: Singletons
   m_TagString: Untagged
@@ -3765,6 +3766,18 @@ MonoBehaviour:
     fontName: campLeaderboard
   - font: {fileID: 11400000, guid: 3b88c3ec6c72b4759b01e752a2b1690d, type: 2}
     fontName: campHeader
+--- !u!114 &6768570265686587269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468528150411243536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c48009cbf0dce43eabb3c753111f8bd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1546578203106074057
 GameObject:
   m_ObjectHideFlags: 0
