@@ -254,6 +254,7 @@ public class NetworkManager : MonoBehaviour
 #endif
         if (isHiveMindMessage)
         {
+            Debug.Log(json);
             //first turn into generic object to check event type
             var jsonStepOne = JsonUtility.FromJson<HMTypeCheck>(json);
             if (jsonStepOne.cabinet_id != cabinetID) return; //only care about our cabinet
@@ -282,13 +283,13 @@ public class NetworkManager : MonoBehaviour
                     if (matchData.current_match == null || matchData.current_match.blue_team == null)
                     {
                         Debug.Log("null game found");
-                        GameModel.newSetOnNextGameStart = true;
+                        GameModel.newSetTimeout = 25f;
                     }
                     else
                     {
                         Debug.Log("new match data found");
                         StartCoroutine(GetTeamIDs());
-                        if (GameModel.newSetOnNextGameStart == false)
+                        if (GameModel.newSetTimeout > 0f)
                         {
                             //match data without the null means an adjustment, so change immediately
                             GameModel.instance.setPoints.property = matchData.current_match.rounds_per_match != 0 ? matchData.current_match.rounds_per_match : matchData.current_match.wins_per_match;
@@ -301,7 +302,7 @@ public class NetworkManager : MonoBehaviour
                             tournamentEventDispatcher.Invoke(matchData);
                             if (GameModel.instance.isWarmup.property)
                             {
-                                GameModel.newSetOnNextGameStart = true; //reset stats after warmup ends
+                                GameModel.newSetTimeout = 1f; //reset stats after warmup ends
                                 GameModel.newSetTeamData = matchData;
                             }
                         }
@@ -519,6 +520,7 @@ public class NetworkManager : MonoBehaviour
 #if UNITY_WEBGL && !UNITY_EDITOR
             GameEventBroadcaster.JSGameEvent(webRequest.downloadHandler.text);
 #endif
+                Debug.Log(webRequest.downloadHandler.text);
                 var result = JsonUtility.FromJson<HMSignedInResponse>(webRequest.downloadHandler.text);
                 instance.ProcessSignedInPlayers(result);
 
@@ -590,6 +592,7 @@ public class NetworkManager : MonoBehaviour
             {
                 var result = JsonUtility.FromJson<HMUserData>(webRequest.downloadHandler.text);
                 Debug.Log("user data for " + userID);
+                Debug.Log(webRequest.downloadHandler.text);
                 PlayerStaticData.AddPlayer(userID, result);
                 GameModel.instance.teams[team].players[position].OnPlayerSignIn(PlayerStaticData.GetPlayer(userID));
             }

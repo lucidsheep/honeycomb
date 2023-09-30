@@ -15,6 +15,13 @@ public class PlayerStaticData : MonoBehaviour
         public int profilePicRotation;
         public GameDataStructure dayStatistics;
         public GameDataStructure careerStatistics;
+        public string sceneTag { get
+            {
+                //todo - tournament data
+                if (data != null && data.scene != "") return data.scene;
+                return "";
+            } }
+        public string sceneColor;
         public string hatEmoji = "";
 
         public string pronouns { get {

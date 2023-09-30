@@ -70,7 +70,7 @@ public class GameModel : MonoBehaviour
 
     //tournament game state
     public LSProperty<bool> isWarmup = new LSProperty<bool>(false);
-    public static bool newSetOnNextGameStart = false;
+    public static float newSetTimeout = -1f;
 
     public static GameEvent onGameEvent = new GameEvent();
     public static UnityEvent onGameStart = new UnityEvent();
@@ -128,7 +128,38 @@ public class GameModel : MonoBehaviour
         gameTime.property = 0f;
     }
 
-
+    void NewSetAfterDelay()
+    {
+        ResetSet();
+        newSetTimeout = -1f;
+        if (newSetTeamData != null)
+        {
+            //set team data
+            Debug.Log("resetting set with stored team data");
+            GameModel.instance.setPoints.property = newSetTeamData.current_match.rounds_per_match != 0 ? newSetTeamData.current_match.rounds_per_match : newSetTeamData.current_match.wins_per_match;
+            GameModel.instance.teams[0].teamName.property = newSetTeamData.current_match.blue_team;
+            GameModel.instance.teams[0].setWins.property = newSetTeamData.current_match.blue_score;
+            GameModel.instance.teams[1].teamName.property = newSetTeamData.current_match.gold_team;
+            GameModel.instance.teams[1].setWins.property = newSetTeamData.current_match.gold_score;
+            GameModel.instance.isWarmup.property = newSetTeamData.current_match.is_warmup;
+            onDelayedTournamentData.Invoke(newSetTeamData);
+            newSetTeamData = null;
+        }
+        else
+        {
+            //tournament mode over
+            Debug.Log("Tournament ended");
+            var tempMatchData = new HMMatchState { blue_score = 0, gold_score = 0, current_match = new HMCurrentMatch { blue_score = 0, gold_score = 0, gold_team = "Gold Team", blue_team = "Blue Team", is_warmup = false, rounds_per_match = 0, wins_per_match = 0 } };
+            GameModel.instance.setPoints.property = 0;
+            GameModel.instance.teams[0].teamName.property = "Blue Team";
+            GameModel.instance.teams[0].setWins.property = 0;
+            GameModel.instance.teams[1].teamName.property = "Gold Team";
+            GameModel.instance.teams[1].setWins.property = 0;
+            GameModel.instance.isWarmup.property = false;
+            onDelayedTournamentData.Invoke(tempMatchData);
+            TournamentPresetData.ClearPresetData();
+        }
+    }
     void OnGameEvent(string eType ,GameEventData data)
     {
 
@@ -146,43 +177,9 @@ public class GameModel : MonoBehaviour
             case GameEventType.SPAWN:
                 if(data.playerID == 2 && data.teamID == 1) //gold queen spawn is the first trigger at game start
                 {
-                    if (newSetOnNextGameStart)
+                    if (newSetTimeout > 0f)
                     {
-                        ResetSet();
-                        newSetOnNextGameStart = false;
-                        if(newSetTeamData != null)
-                        {
-                            //set team data
-                            Debug.Log("resetting set with stored team data");
-                            GameModel.instance.setPoints.property = newSetTeamData.current_match.rounds_per_match != 0 ? newSetTeamData.current_match.rounds_per_match : newSetTeamData.current_match.wins_per_match;
-                            GameModel.instance.teams[0].teamName.property = newSetTeamData.current_match.blue_team;
-                            GameModel.instance.teams[0].setWins.property = newSetTeamData.current_match.blue_score;
-                            GameModel.instance.teams[1].teamName.property = newSetTeamData.current_match.gold_team;
-                            GameModel.instance.teams[1].setWins.property = newSetTeamData.current_match.gold_score;
-                            GameModel.instance.isWarmup.property = newSetTeamData.current_match.is_warmup;
-                            onDelayedTournamentData.Invoke(newSetTeamData);
-                            if (GameModel.instance.isWarmup.property) //weird double warmup case, keep the team data and get ready to reset again
-                            {
-                                GameModel.newSetOnNextGameStart = true; //reset stats after warmup ends
-                                newSetTeamData.current_match.is_warmup = false;
-                            }
-                            else
-                                newSetTeamData = null;
-                        } else
-                        {
-                            //tournament mode over
-                            Debug.Log("Tournament ended");
-                            var tempMatchData = new HMMatchState { blue_score = 0, gold_score = 0, current_match = new HMCurrentMatch { blue_score = 0, gold_score = 0, gold_team = "Gold Team", blue_team = "Blue Team", is_warmup = false, rounds_per_match = 0, wins_per_match = 0 } };
-                            GameModel.instance.setPoints.property = 0;
-                            GameModel.instance.teams[0].teamName.property = "Blue Team";
-                            GameModel.instance.teams[0].setWins.property = 0;
-                            GameModel.instance.teams[1].teamName.property = "Gold Team";
-                            GameModel.instance.teams[1].setWins.property = 0;
-                            GameModel.instance.isWarmup.property = false;
-                            onDelayedTournamentData.Invoke(tempMatchData);
-                            TournamentPresetData.ClearPresetData();
-                        }
-                        
+                        NewSetAfterDelay();   
                     }
                     else
                     {
@@ -403,6 +400,11 @@ public class GameModel : MonoBehaviour
                     p.fireGauge -= Time.deltaTime * 10f;
                 }
             }
+        } else if(newSetTimeout > 0f)
+        {
+            newSetTimeout -= Time.deltaTime;
+            if (newSetTimeout <= 0f)
+                NewSetAfterDelay();
         }
         if(famineTimer.property > 0f)
         {

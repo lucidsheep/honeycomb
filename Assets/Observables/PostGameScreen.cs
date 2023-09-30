@@ -177,7 +177,7 @@ public class PostGameScreen : KQObserver
 			return "";
 		int blueScore = GameModel.instance.teams[0].setWins.property;
 		int goldScore = GameModel.instance.teams[1].setWins.property;
-		string seriesStatus = GameModel.newSetOnNextGameStart ? " wins series " : " leads series ";
+		string seriesStatus = GameModel.newSetTimeout > 0f ? " wins series " : " leads series ";
 		if (blueScore == goldScore)
 			return "Series tied at " + blueScore + "-" + goldScore;
 		else if (blueScore > goldScore)
