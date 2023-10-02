@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.Video;
-using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 
 public class GlobalFade : MonoBehaviour
@@ -9,28 +8,43 @@ public class GlobalFade : MonoBehaviour
 	TextMeshPro[] tmps;
 	MeshRenderer[] players;
 
+	Dictionary<SpriteRenderer, float> baseAlphas = new Dictionary<SpriteRenderer, float>();
 	float _alpha = 1f;
 	public float alpha {get { return _alpha; } set {
 			_alpha = value;
-			foreach (var s in srs)
-				s.color = new Color(s.color.r, s.color.g, s.color.b, _alpha);
-			foreach (var t in tmps)
-				t.color = new Color(t.color.r, t.color.g, t.color.b, _alpha);
-			foreach (var v in players)
-				v.material.SetColor("_Color", new Color(1f, 1f, 1f, _alpha));
+			SetAlpha();
 		} }
 	void Awake()
 	{
 		SetFadeSubjects();
 	}
 
+	void SetAlpha()
+    {
+		foreach (var s in srs)
+		{
+			float adjustedAlpha = baseAlphas.ContainsKey(s) ? baseAlphas[s] * _alpha : _alpha;
+			s.color = new Color(s.color.r, s.color.g, s.color.b, adjustedAlpha);
+		}
+		foreach (var t in tmps)
+			t.color = new Color(t.color.r, t.color.g, t.color.b, _alpha);
+		foreach (var v in players)
+			v.material.SetColor("_Color", new Color(1f, 1f, 1f, _alpha));
+	}
 	public void SetFadeSubjects()
     {
 		srs = GetComponentsInChildren<SpriteRenderer>();
 		tmps = GetComponentsInChildren<TextMeshPro>();
 		players = GetComponentsInChildren<MeshRenderer>();
-
-		//alpha = (_alpha + 1f - 1f);
 	}
+
+	public void ForceUpdate()
+    {
+		SetAlpha();
+    }
+	public void SetBaseAlpha(SpriteRenderer sr, float baseAlpha)
+    {
+		baseAlphas.Add(sr, baseAlpha);
+    }
 }
 

@@ -37,12 +37,15 @@ public class NetworkManager : MonoBehaviour
 
     int cabinetID = -1;
     bool useSecureSockets = true;
+    bool setCompleteFlag = true;
 
     public static int currentGameID = 0;
 
     public GameEvent gameEventDispatcher = new GameEvent();
     public UnityEvent<HMMatchState> tournamentEventDispatcher = new UnityEvent<HMMatchState>();
     public UnityEvent<string, GameEventData> rawEventDispatcher = new UnityEvent<string, GameEventData>();
+    public UnityEvent<int, int> onTournamentTeamIDs = new UnityEvent<int, int>();
+    public UnityEvent<int, int, int> onTournamentTeamWinLossData = new UnityEvent<int, int, int>();
     public UnityEvent<int> onGameID = new UnityEvent<int>();
 
     public Queue<string> LogQueue;
@@ -254,7 +257,6 @@ public class NetworkManager : MonoBehaviour
 #endif
         if (isHiveMindMessage)
         {
-            Debug.Log(json);
             //first turn into generic object to check event type
             var jsonStepOne = JsonUtility.FromJson<HMTypeCheck>(json);
             if (jsonStepOne.cabinet_id != cabinetID) return; //only care about our cabinet
@@ -274,9 +276,7 @@ public class NetworkManager : MonoBehaviour
                         currentGameID = int.Parse(gameStartData.game_id);
                         onGameID.Invoke(currentGameID);
                     }
-                    /*
-                     * {"type":"gamestart","cabinet_id":"26","cabinet_name":"groundkontrol","scene_name":"kqpdx","game_id":"627809"}
-                    */
+                    setCompleteFlag = false;
                     break;
                 case "match":
                     var matchData = JsonUtility.FromJson<HMMatchState>(json);
@@ -284,14 +284,16 @@ public class NetworkManager : MonoBehaviour
                     {
                         Debug.Log("null game found");
                         GameModel.newSetTimeout = 25f;
+                        GameModel.newSetTeamData = null;
+                        setCompleteFlag = true;
                     }
                     else
                     {
                         Debug.Log("new match data found");
                         StartCoroutine(GetTeamIDs());
-                        if (GameModel.newSetTimeout > 0f)
+                        if (!setCompleteFlag)
                         {
-                            //match data without the null means an adjustment, so change immediately
+                            //match data during a set means an adjustment, so fix immediately
                             GameModel.instance.setPoints.property = matchData.current_match.rounds_per_match != 0 ? matchData.current_match.rounds_per_match : matchData.current_match.wins_per_match;
                             GameModel.instance.teams[0].teamName.property = matchData.current_match.blue_team;
                             GameModel.instance.teams[0].setWins.property = matchData.current_match.blue_score;
@@ -308,8 +310,9 @@ public class NetworkManager : MonoBehaviour
                         }
                         else
                         {
-                            //store next set data for when next match starts, only care about warmup
+                            //store next set data and start countdown for showing match preview
                             GameModel.newSetTeamData = matchData;
+                            GameModel.newSetTimeout = 10f;
                             if (matchData.current_match.is_warmup)
                                 GameModel.instance.isWarmup.property = true;
                         }
@@ -481,13 +484,11 @@ public class NetworkManager : MonoBehaviour
             yield return webRequest.SendWebRequest();
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
-                Debug.Log(webRequest.downloadHandler.text);
                 var result = JsonUtility.FromJson<HMCabinetResponse>(webRequest.downloadHandler.text);
                 var test = new HMCabinetResponse();
                 test.results = new HMCabinet[1];
                 test.results[0] = new HMCabinet();
                 var testJson = JsonUtility.ToJson(test);
-                Debug.Log(testJson);
                 if (result.results.Length > 0)
                 {
                     instance.cabinetID = result.results[0].id;
@@ -520,7 +521,6 @@ public class NetworkManager : MonoBehaviour
 #if UNITY_WEBGL && !UNITY_EDITOR
             GameEventBroadcaster.JSGameEvent(webRequest.downloadHandler.text);
 #endif
-                Debug.Log(webRequest.downloadHandler.text);
                 var result = JsonUtility.FromJson<HMSignedInResponse>(webRequest.downloadHandler.text);
                 instance.ProcessSignedInPlayers(result);
 
@@ -583,7 +583,7 @@ public class NetworkManager : MonoBehaviour
         ProcessSignedInPlayers(response);
             
     }
-    static IEnumerator GetUserData(int userID, int team, int position)
+    static IEnumerator GetUserData(int userID, int team = -1, int position = -1)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get("https://kqhivemind.com/api/user/user/" + userID + "/"))
         {
@@ -592,9 +592,9 @@ public class NetworkManager : MonoBehaviour
             {
                 var result = JsonUtility.FromJson<HMUserData>(webRequest.downloadHandler.text);
                 Debug.Log("user data for " + userID);
-                Debug.Log(webRequest.downloadHandler.text);
                 PlayerStaticData.AddPlayer(userID, result);
-                GameModel.instance.teams[team].players[position].OnPlayerSignIn(PlayerStaticData.GetPlayer(userID));
+                if(team >= 0)
+                    GameModel.instance.teams[team].players[position].OnPlayerSignIn(PlayerStaticData.GetPlayer(userID));
             }
             else
             {
@@ -668,8 +668,6 @@ public class NetworkManager : MonoBehaviour
                 var result = JsonUtility.FromJson<HMTournamentResponse>(webRequest.downloadHandler.text);
                 if (result.results.Length > 0)
                 {
-                    
-                    Debug.Log(result.results[0].blue_team + " " + result.results[0].gold_team);
                     if (result.results[0].tournament != null)
                         GameModel.currentTournamentID = result.results[0].tournament.id;
                     else
@@ -678,6 +676,8 @@ public class NetworkManager : MonoBehaviour
                     GetTournamentTeamNames(result.results[0].blue_team, result.results[0].gold_team);
                     GetBracketData(result.results[0].bracket, result.results[0].blue_score, result.results[0].gold_score);
                     GameModel.instance.isWarmup.property = result.results[0].is_warmup;
+                    GameModel.inTournamentMode = true;
+                    instance.setCompleteFlag = false;
                     TournamentPresetData.OnTournamentData(result.results[0].blue_team.ToString(), result.results[0].gold_team.ToString());
                     //MaybeSendDiscord();
                 } else
@@ -742,7 +742,6 @@ public class NetworkManager : MonoBehaviour
     }
     static IEnumerator GetTeamIDs()
     {
-        Debug.Log("getteamids");
         using (UnityWebRequest webRequest = UnityWebRequest.Get("https://kqhivemind.com/api/tournament/match/?active_cabinet_id=" + instance.cabinetID))
         {
             yield return webRequest.SendWebRequest();
@@ -751,10 +750,12 @@ public class NetworkManager : MonoBehaviour
                 var result = JsonUtility.FromJson<HMTournamentResponse>(webRequest.downloadHandler.text);
                 if (result.results.Length > 0)
                 {
-                    Debug.Log(result.results[0].blue_team + " " + result.results[0].gold_team);
                     TournamentPresetData.OnTournamentData(result.results[0].blue_team.ToString(), result.results[0].gold_team.ToString());
                     if (result.results[0].blue_score + result.results[0].gold_score == 0)
                         MaybeSendDiscord();
+                    GetTournamentPlayerData(result.results[0].blue_team, result.results[0].gold_team);
+                    GetTournamentTeamData(result.results[0].blue_team, result.results[0].gold_team);
+                    instance.onTournamentTeamIDs.Invoke(result.results[0].blue_team, result.results[0].gold_team);
                 }
                 else
                 {
@@ -767,6 +768,80 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
+    static void GetTournamentPlayerData(int blueTeam, int goldTeam)
+    {
+        instance.StartCoroutine(GetTournamentTeamPlayers(blueTeam));
+        instance.StartCoroutine(GetTournamentTeamPlayers(goldTeam));
+    }
+
+    
+    static IEnumerator GetTournamentTeamPlayers(int teamID)
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get("https://kqhivemind.com/api/tournament/player/?team_id=" + teamID))
+        {
+            yield return webRequest.SendWebRequest();
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                var result = JsonUtility.FromJson<HMTournamentPlayerList>(webRequest.downloadHandler.text);
+                Debug.Log("found " + result.count + " tournament players for team " + teamID);
+                foreach(var playerData in result.results)
+                {
+                    if (playerData == null) continue;
+                    //if this player hasn't signed in yet today, get their normal player data as well
+                    if(!PlayerStaticData.HasHivemindData(playerData.user))
+                    {
+                        Debug.Log("also getting user data for " + playerData.user);
+                        instance.StartCoroutine(GetUserData(playerData.user));
+                    }
+                    PlayerStaticData.AddPlayer(playerData.user, playerData);
+                }
+
+            }
+            else
+            {
+                Debug.Log("request failed reason: " + webRequest.result.ToString());
+            }
+        }
+    }
+
+    static void GetTournamentTeamData(int blueTeam, int goldTeam)
+    {
+        instance.StartCoroutine(GetTournamentTeamWinLoss(blueTeam));
+        instance.StartCoroutine(GetTournamentTeamWinLoss(goldTeam));
+    }
+
+    static IEnumerator GetTournamentTeamWinLoss(int teamID)
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get("https://kqhivemind.com/api/tournament/match/?team_id=" + teamID))
+        {
+            yield return webRequest.SendWebRequest();
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                var result = JsonUtility.FromJson<HMTournamentResponse>(webRequest.downloadHandler.text);
+                Debug.Log("found " + result.count + " sets for team " + teamID);
+                int wins = 0, losses = 0;
+                foreach (var matchData in result.results)
+                {
+                    if (matchData == null) continue;
+
+                    if(matchData.blue_team == teamID)
+                    {
+                        wins += matchData.blue_score;
+                        losses += matchData.gold_score;
+                    } else
+                    {
+                        wins += matchData.gold_score;
+                        losses += matchData.blue_score;
+                    }
+                }
+                instance.onTournamentTeamWinLossData.Invoke(teamID, wins, losses);
+            }
+            else
+            {
+                Debug.Log("request failed reason: " + webRequest.result.ToString());
+            }
+        }
+    }
     static void MaybeSendDiscord()
     {
         bool isDoubleElim = PlayerPrefs.GetInt("doubleElim") == 1;

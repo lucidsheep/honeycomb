@@ -32,7 +32,7 @@ public class SetPointTextObserver : KQObserver
     }
     void OnGameComplete(int winningTeam, string winType)
     {
-        if (winningTeam == team && !GameModel.instance.isWarmup)
+        if (winningTeam == team && !GameModel.instance.isWarmup && !GameModel.inTournamentMode)
         {
                 OnVictory();
         }

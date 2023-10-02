@@ -22,10 +22,16 @@ public class MatchPreviewPlayer : MonoBehaviour
 	public void Init(PlayerStaticData.PlayerData player)
     {
 		if (player.profilePic != null)
-			avatar.SetPicture(player.profilePic, player.profilePicRotation, .35f);
+			avatar.SetPicture(player.profilePic, player.profilePicRotation, .55f);
 		else
 			avatar.SetPicture(defaultAvatar);
-		nameTxt.text = player.name + " " + FormatTags(player.pronouns, player.sceneColor);
+		nameTxt.text = player.name + " " + FormatTags(player.pronouns, player.sceneTag);
+    }
+
+	public void Clear()
+    {
+		avatar.SetPicture(defaultAvatar);
+		nameTxt.text = "";
     }
 	static string FormatTags(string pronouns, string scene, string sceneColor = "00aa00", float size = 30f)
 	{

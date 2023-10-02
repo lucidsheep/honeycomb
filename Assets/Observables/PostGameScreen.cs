@@ -86,7 +86,7 @@ public class PostGameScreen : KQObserver
 		{
 			minimap.enabled = false;
 		}
-		SetVisible(false, true);
+		
 		//gameObject.SetActive(false);
 		replayRender = new RenderTexture(1920, 1080, 24);
 		LSConsole.AddCommandHook("postgame", "use with [start] or [stop] to control postgame screen", CommandPostgame);
@@ -95,7 +95,8 @@ public class PostGameScreen : KQObserver
 	void OnSetupComplete()
     {
 		doInstantReplay = PlayerPrefs.GetInt("instantReplay") == 1;
-    }
+		SetVisible(false, true);
+	}
 
 	void OnThemeChange()
     {
@@ -108,7 +109,7 @@ public class PostGameScreen : KQObserver
 				pos.x *= -1f;
 				break;
 			case ThemeData.LayoutStyle.TwoCol:
-				//hack for extra space with camp frame. need to include parameter to let theme to adjust this
+				//hack for extra space with camp frame. need to include parameter to let theme adjust this
 				float campBump = (ViewModel.currentTheme.themeName == "campkq" || ViewModel.currentTheme.themeName == "postcamp") ? .18f : 0f;
 				pos.x = 0f;
 				pos.y = 0.23f + campBump;
@@ -297,12 +298,14 @@ public class PostGameScreen : KQObserver
 		if (instant)
 		{
 			fader.alpha = newVal ? 1f : 0f;
+			SetChildrenActive(newVal);
 			//gameObject.SetActive(newVal);
 		}
 		else
 		{
-			DOTween.To(() => fader.alpha, x => fader.alpha = x, newVal ? 1f : 0f, .5f);
-				//.OnComplete(() => gameObject.SetActive(newVal));
+			if (newVal == true) SetChildrenActive(true);
+			DOTween.To(() => fader.alpha, x => fader.alpha = x, newVal ? 1f : 0f, .5f)
+				.OnComplete(() => { if (!newVal) SetChildrenActive(newVal); }); // gameObject.SetActive(newVal));
 		}
 		if (newVal)
 		{
@@ -312,7 +315,16 @@ public class PostGameScreen : KQObserver
 		}
 	}
 
-	
+
+	void SetChildrenActive(bool isActive)
+    {
+		if(postgameSecondaryScreen != null)
+			postgameSecondaryScreen.SetActive(isActive);
+		combinedPostgame.SetActive(isActive);
+		//boxScore.gameObject.SetActive(isActive);
+		//foreach (var go in gameObject.GetComponentsInChildren<GameObject>())
+			//go.SetActive(isActive);
+    }
 	void ChangeState(int newState, bool instant = false, float delay = 0f)
     {
 		if (postgameSecondaryScreen == null)

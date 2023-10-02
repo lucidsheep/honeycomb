@@ -29,7 +29,6 @@ using System.Collections;
 [System.Serializable]
 public class HMMatchState
 {
-    //type = *
     public string type;
     public string cabinet_id;
     //type = match
@@ -319,6 +318,23 @@ public class HMTournamentBracket
     public bool is_valid, report_as_sets;
 }
 
+[System.Serializable]
+public class HMTournamentPlayer
+{
+    public string name, scene, pronouns, tidbit, image;
+    public int team, user, tournament;
+    public bool do_not_display;
+    public HMUserStat[] stats;
+}
+
+[System.Serializable]
+public class HMTournamentPlayerList
+{
+    public int count;
+    public string next;
+    public string previous;
+    public HMTournamentPlayer[] results;
+}
 [System.Serializable]
 public class HMUserList
 {

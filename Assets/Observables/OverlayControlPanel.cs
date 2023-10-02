@@ -76,6 +76,7 @@ public class OverlayControlPanel : MonoBehaviour
 	public void ForceClosePostgame()
     {
 		PostGameScreen.ForceClosePostgame();
+		MatchPreviewScreen.ForceClosePreview();
     }
 	// Update is called once per frame
 	void Update()

@@ -60,6 +60,7 @@ public class GameModel : MonoBehaviour
     public TeamModel[] teams = new TeamModel[2];
     public static bool setScoresEnabled { get { return instance.setPoints.property > 0; } }
     public LSProperty<int> setPoints = new LSProperty<int>(0);
+    public static bool inTournamentMode = false;
 
     //current game state
     public LSProperty<int> berriesLeft = new LSProperty<int>(0);
@@ -144,6 +145,7 @@ public class GameModel : MonoBehaviour
             GameModel.instance.isWarmup.property = newSetTeamData.current_match.is_warmup;
             onDelayedTournamentData.Invoke(newSetTeamData);
             newSetTeamData = null;
+            inTournamentMode = true;
         }
         else
         {
@@ -158,6 +160,7 @@ public class GameModel : MonoBehaviour
             GameModel.instance.isWarmup.property = false;
             onDelayedTournamentData.Invoke(tempMatchData);
             TournamentPresetData.ClearPresetData();
+            inTournamentMode = false;
         }
     }
     void OnGameEvent(string eType ,GameEventData data)
@@ -336,7 +339,8 @@ public class GameModel : MonoBehaviour
                 break;
             case GameEventType.GAME_END_DETAIL:
 
-                if (!isWarmup.property)
+                //if in tournament mode, let HM do the score keeping
+                if (!isWarmup.property && !inTournamentMode)
                     teams[data.teamID].setWins.property++;
 
                 SnailModel.instance.OnGameEnd(data.targetType == "snail");

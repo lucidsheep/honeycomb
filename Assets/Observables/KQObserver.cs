@@ -27,7 +27,9 @@ public class KQObserver : MonoBehaviour
     {
 		if (!ViewModel.instance.appView || bgContainer == null) return;
 
-		bgContainer.sprite = AppLoader.GetStreamingSprite(moduleName);
+		var sprite = AppLoader.GetStreamingSprite(moduleName);
+		if (sprite != null)
+			bgContainer.sprite = sprite;
     }
 	public void SetParameters(string[] args)
     {
