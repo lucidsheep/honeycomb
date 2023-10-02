@@ -320,7 +320,6 @@ public class TickerNetworkManager : MonoBehaviour
                 break;
             case "match":
                 var matchData = JsonUtility.FromJson<HMMatchState>(message);
-                Debug.Log(message);
                 if (matchData.current_match == null || matchData.current_match.blue_team == null)
                 {
                     //tournament ended
@@ -371,7 +370,6 @@ public class TickerNetworkManager : MonoBehaviour
             yield return webRequest.SendWebRequest();
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
-                Debug.Log(webRequest.downloadHandler.text);
                 var result = JsonUtility.FromJson<HMCabinetResponse>(webRequest.downloadHandler.text);
                 if (result.results.Length > 0)
                 {

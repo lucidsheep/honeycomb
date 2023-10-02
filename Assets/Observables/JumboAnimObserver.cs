@@ -17,6 +17,8 @@ public class JumboAnimObserver : KQObserver
 
 	void OnGameEvent(string type, GameEventData data)
     {
+		if (GameModel.instance.isWarmup.property) return;
+
 		if (type == GameEventType.PLAYER_KILL && data.targetID == 2)
         {
 			var anim = StartAnim(queenKillAnim);

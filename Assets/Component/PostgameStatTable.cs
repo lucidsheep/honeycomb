@@ -26,8 +26,10 @@ public class PostgameStatTable : MonoBehaviour
 				for (int j = 0; j < stats.Length; j++)
 				{
 					//force queen uptime to be gate control
-					if(i % 5 == 2 && stats[j] == PlayerModel.StatValueType.UpTime)
+					if (i % 5 == 2 && stats[j] == PlayerModel.StatValueType.UpTime)
 						txt += GameModel.GetPlayer(i / 5, i % 5).curGameDerivedStats[PlayerModel.StatValueType.Gates].fullNumber + "\n";
+					else if (stats[j] == PlayerModel.StatValueType.KDA)
+						txt += GameModel.GetPlayer(i / 5, i % 5).GetKDA() + "\n";
 					else
 						txt += GameModel.GetPlayer(i / 5, i % 5).curGameDerivedStats[stats[j]].fullNumber + "\n";
 				}

@@ -76,7 +76,7 @@ public class MatchPreviewScreen : KQObserver
 
 		if (ViewModel.currentTheme.postgameHeaderFont != "")
 		{
-			//title.font = FontDB.GetFont(ViewModel.currentTheme.postgameHeaderFont);
+			blueTeamName.font = goldTeamName.font = FontDB.GetFont(ViewModel.currentTheme.postgameHeaderFont);
 		}
 	}
 	private void OnTournamentData(HMMatchState data)

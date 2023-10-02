@@ -183,6 +183,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7657268993330126908}
   - component: {fileID: 5974609778520550472}
+  - component: {fileID: 3900615574369204509}
   m_Layer: 0
   m_Name: PlayerInfoBlue
   m_TagString: Untagged
@@ -223,6 +224,25 @@ MonoBehaviour:
   avatar: {fileID: 8054469404300847645}
   nameTxt: {fileID: 613281799510865326}
   defaultAvatar: {fileID: 21300000, guid: 576f95240368f450782e3438afe9e0c9, type: 3}
+--- !u!114 &3900615574369204509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5794138295320137538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7095f7aba0a004150a0675086dc4b3dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetID: 0
+  switchOnInversion: 1
+  primarySprites: []
+  secondarySprites:
+  - {fileID: 4523609401213492082}
+  iconSprites: []
+  preserveAlpha: 0
 --- !u!1 &9144460858766659774
 GameObject:
   m_ObjectHideFlags: 0

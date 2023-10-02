@@ -16,10 +16,10 @@ public class PlayerModel : IComparable
     }
     public static StatValueType[] GetStatList()
     {
-        return new StatValueType[] { StatValueType.KD, StatValueType.Berries, StatValueType.Snail, StatValueType.Gates, StatValueType.LongestLife, StatValueType.QueenKills, StatValueType.Pinces, StatValueType.ObjGuards, StatValueType.FormGuards, StatValueType.UpTime, StatValueType.BerryKicks, StatValueType.BumpAssists, StatValueType.SnailKills, StatValueType.SnailFeeds, StatValueType.Value, StatValueType.BerriesCombined, StatValueType.DroneKills };
+        return new StatValueType[] { StatValueType.KD, StatValueType.Berries, StatValueType.Snail, StatValueType.Gates, StatValueType.LongestLife, StatValueType.QueenKills, StatValueType.Pinces, StatValueType.ObjGuards, StatValueType.FormGuards, StatValueType.UpTime, StatValueType.BerryKicks, StatValueType.BumpAssists, StatValueType.SnailKills, StatValueType.SnailFeeds, StatValueType.Value, StatValueType.BerriesCombined, StatValueType.DroneKills, StatValueType.KDA };
     }
 
-    public enum StatValueType { KD, Berries, Snail, Gates, LongestLife, QueenKills, Pinces, ObjGuards, FormGuards, UpTime, BerryKicks, BumpAssists, SnailKills, SnailFeeds, Value, BerriesCombined, DroneKills }
+    public enum StatValueType { KD, Berries, Snail, Gates, LongestLife, QueenKills, Pinces, ObjGuards, FormGuards, UpTime, BerryKicks, BumpAssists, SnailKills, SnailFeeds, Value, BerriesCombined, DroneKills, KDA }
     public struct StatValue : System.IComparable
     {
         public int stylePoints;
@@ -53,7 +53,7 @@ public class PlayerModel : IComparable
                 bool plural = num1 != 1;
                 switch (type)
                 {
-                    case StatValueType.KD: return "Military Kill" + (plural ? "s" : "");
+                    case StatValueType.KD: case StatValueType.KDA:  return "Military Kill" + (plural ? "s" : "");
                     case StatValueType.Berries: return "Berr" + (plural ? "ies" : "y") + " Run";
                     case StatValueType.BerryKicks: return "Kick-in" + (plural ? "s" : "");
                     case StatValueType.BumpAssists: return "Bump Assist" + (plural ? "s" : "");
@@ -112,6 +112,11 @@ public class PlayerModel : IComparable
         }
     }
 
+    public string GetKDA()
+    {
+        //need special function since it combines two different statValues
+        return curGameDerivedStats[StatValueType.KD].fullNumber + "-" + (curGameDerivedStats[StatValueType.BumpAssists].num1 + curGameDerivedStats[StatValueType.Pinces].num1);
+    }
     static string dashIfZero(int num) { return num == 0 ? "-" : num.ToString(); }
     public struct CombinedStylePoints : System.IComparable
     {
