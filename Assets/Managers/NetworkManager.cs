@@ -774,7 +774,9 @@ public class NetworkManager : MonoBehaviour
         instance.StartCoroutine(GetTournamentTeamPlayers(goldTeam));
     }
 
-    
+    //we need a fake HM ID for tournament users that lack a normal HM account, since we index on that
+    static int fakeID = 1000000;
+
     static IEnumerator GetTournamentTeamPlayers(int teamID)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get("https://kqhivemind.com/api/tournament/player/?team_id=" + teamID))
@@ -787,9 +789,16 @@ public class NetworkManager : MonoBehaviour
                 foreach(var playerData in result.results)
                 {
                     if (playerData == null) continue;
-                    //if this player hasn't signed in yet today, get their normal player data as well
-                    if(!PlayerStaticData.HasHivemindData(playerData.user))
+                    
+                    if(playerData.user <= 0)
                     {
+                        //tournament user without a HM account, needs a fake ID
+                        playerData.user = fakeID;
+                        fakeID++;
+                    }
+                    else if(!PlayerStaticData.HasHivemindData(playerData.user))
+                    {
+                        //if this player hasn't signed in yet today, get their normal player data as well
                         Debug.Log("also getting user data for " + playerData.user);
                         instance.StartCoroutine(GetUserData(playerData.user));
                     }

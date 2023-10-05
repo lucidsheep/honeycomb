@@ -151,7 +151,7 @@ public class GameModel : MonoBehaviour
         {
             //tournament mode over
             Debug.Log("Tournament ended");
-            var tempMatchData = new HMMatchState { blue_score = 0, gold_score = 0, current_match = new HMCurrentMatch { blue_score = 0, gold_score = 0, gold_team = "Gold Team", blue_team = "Blue Team", is_warmup = false, rounds_per_match = 0, wins_per_match = 0 } };
+            var tempMatchData = new HMMatchState { blue_score = 0, gold_score = 0, current_match = new HMCurrentMatch { blue_score = 0, gold_score = 0, gold_team = "Gold Team", blue_team = "Blue Team", is_warmup = false, rounds_per_match = 0, wins_per_match = 0, id = 0} };
             GameModel.instance.setPoints.property = 0;
             GameModel.instance.teams[0].teamName.property = "Blue Team";
             GameModel.instance.teams[0].setWins.property = 0;

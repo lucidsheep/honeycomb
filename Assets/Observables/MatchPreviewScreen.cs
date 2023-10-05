@@ -81,6 +81,9 @@ public class MatchPreviewScreen : KQObserver
 	}
 	private void OnTournamentData(HMMatchState data)
     {
+		if (data.current_match == null || data.current_match.id <= 0) //null tournament data, do not show preview screen
+			return;
+
 		if(!GameModel.instance.gameIsRunning)
         {
 			PostGameScreen.ForceClosePostgame();

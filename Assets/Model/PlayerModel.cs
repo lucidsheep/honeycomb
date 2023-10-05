@@ -308,7 +308,7 @@ public class PlayerModel : IComparable
             curCareerStats.snailMoved.onChange.AddListener((b, a) => { CheckMilestone(StatValueType.Snail, StatTimescale.Career, b, a); });
             curCareerStats.militaryKills.onChange.AddListener((b, a) => { CheckMilestone(StatValueType.KD, StatTimescale.Career, b, a); });
             curCareerStats.queenKills.onChange.AddListener((b, a) => { CheckMilestone(StatValueType.QueenKills, StatTimescale.Career, b, a); });
-            Debug.Log(data.data.id + " career stats: qkills/kills: " + curCareerStats.queenKills + "/" + curCareerStats.militaryKills + " berries " + curCareerStats.berriesDeposited + " snail " + curCareerStats.snailMoved);
+            Debug.Log(data.hivemindID + " career stats: qkills/kills: " + curCareerStats.queenKills + "/" + curCareerStats.militaryKills + " berries " + curCareerStats.berriesDeposited + " snail " + curCareerStats.snailMoved);
         }
         bestUnusedMilestone = default(Milestone);
 

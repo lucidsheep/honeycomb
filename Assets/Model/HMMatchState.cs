@@ -37,7 +37,7 @@ public class HMMatchState
     public HMCurrentMatch current_match;
     public HMCurrentMatch on_deck;
     //type = matchend
-    public string match_id;
+    public int match_id;
     public string blue_team;
     public int blue_score;
     public string gold_team;
@@ -56,7 +56,7 @@ public class HMMatchState
 [System.Serializable]
 public class HMCurrentMatch
 {
-    public string id;
+    public int id;
     public string blue_team;
     public int blue_score;
     public string gold_team;
