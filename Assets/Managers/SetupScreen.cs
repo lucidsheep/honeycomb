@@ -25,6 +25,7 @@ public class SetupScreen : MonoBehaviour
 	public TMP_Dropdown themeSelector;
 	public GameObject controlPanelTemplate;
 	public TMP_InputField[] tabList;
+	public TMP_Text connectionModeToggleText, sceneText, cabText, ipText;
 
 	public static UnityEvent onSetupComplete = new UnityEvent();
 
@@ -37,6 +38,7 @@ public class SetupScreen : MonoBehaviour
 
 	string storedCustomThemeName;
 	int curTab = -1;
+	bool localMode = false;
 
 	CameraState[] cameraStates;
     private void Awake()
@@ -100,6 +102,29 @@ public class SetupScreen : MonoBehaviour
 			OnDoneClicked();
 	}
 
+	public void ToggleMode()
+    {
+		localMode = !localMode;
+
+		if(localMode)
+        {
+			connectionModeToggleText.text = "Local";
+			sceneText.gameObject.SetActive(false);
+			cabText.gameObject.SetActive(false);
+			cabID.gameObject.SetActive(false);
+			ipText.gameObject.SetActive(true);
+
+			sceneID.text = "kq.local";
+        } else
+        {
+			connectionModeToggleText.text = "HiveMind";
+			sceneText.gameObject.SetActive(true);
+			cabText.gameObject.SetActive(true);
+			cabID.gameObject.SetActive(true);
+			ipText.gameObject.SetActive(false);
+			sceneID.text = PlayerPrefs.GetString("sceneID");
+		}
+    }
 	void OnTabSelected(int tab)
     {
 		curTab = tab;
@@ -212,7 +237,8 @@ public class SetupScreen : MonoBehaviour
 	public void OnDoneClicked()
     {
 		PlayerPrefs.SetString("cabID", cabID.text);
-		PlayerPrefs.SetString("sceneID", sceneID.text);
+		if(!localMode)
+			PlayerPrefs.SetString("sceneID", sceneID.text);
 		PlayerPrefs.SetString("theme", GetThemeName());
 		PlayerPrefs.SetInt("themePreset", themeSelector.value);
 		PlayerPrefs.SetString("ticker", tickerCabs.text);
@@ -229,7 +255,7 @@ public class SetupScreen : MonoBehaviour
 		setupInProgress = false;
 		NetworkManager.instance.sceneName = sceneID.text;
 		NetworkManager.instance.cabinetName = cabID.text;
-		NetworkManager.BeginNetworking();
+		NetworkManager.BeginNetworking(localMode ? sceneID.text : "");
 
 		string[] cabsToWatch = tickerCabs.text.Split(',');
 		for (int i = 0; i < cabsToWatch.Length; i++)

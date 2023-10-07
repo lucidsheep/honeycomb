@@ -123,7 +123,9 @@ public class FakeEventEmitter : MonoBehaviour
         var randTarget = 0;
         var randTargetType = "";
         var randCoord = new Vector2Int(Random.Range(0, 1920), Random.Range(0, 1080));
-        var ret = "{\"event_type\":\"" + (type.IndexOf("queenKill") > -1 ? "playerKill" : type) + "\",\"values\":[";
+        string rawType = type.IndexOf("queenKill") > -1 ? "playerKill" : type;
+        var ret = NetworkManager.localMode ? "![k[" + rawType + "],v["
+            : "{\"event_type\":\"" + rawType + "\",\"values\":[";
         switch (type)
         {
             case "queenKill":
@@ -151,7 +153,7 @@ public class FakeEventEmitter : MonoBehaviour
                     randTarget = 2;
                     randTargetType = "Queen";
                 }
-                    ret += quote(randCoord.x) + "," + quote(randCoord.y) + "," + quote(randPlayer) + "," + quote(randTarget) + "," + quote(randTargetType);
+                ret += quote(randCoord.x) + "," + quote(randCoord.y) + "," + quote(randPlayer) + "," + quote(randTarget) + "," + quote(randTargetType);
                 //ret += "\"1461\",\"496\",\"" + randTarget + "\",\"" + randPlayer + "\",\"" + randTargetType + "\"";
                 break;
             default:
@@ -197,17 +199,22 @@ public class FakeEventEmitter : MonoBehaviour
 
 
         }
-        ret += "]}";
+        ret += NetworkManager.localMode ? "]]!"
+            : "]}";
         return ret;
     }
 
     static string quote(int val)
     {
+        if (NetworkManager.localMode) return val.ToString();
+
         return "\"" + val + "\"";
     }
 
     static string quote(string val)
     {
+        if (NetworkManager.localMode) return val;
+
         return "\"" + val + "\"";
     }
 }

@@ -40,6 +40,7 @@ public class NetworkManager : MonoBehaviour
     bool setCompleteFlag = true;
 
     public static int currentGameID = 0;
+    public static bool localMode = false;
 
     public GameEvent gameEventDispatcher = new GameEvent();
     public UnityEvent<HMMatchState> tournamentEventDispatcher = new UnityEvent<HMMatchState>();
@@ -164,22 +165,36 @@ public class NetworkManager : MonoBehaviour
 
         return "";
     }
-    public static void BeginNetworking()
+    public static void BeginNetworking(string localIP = "")
     {
 //        if (instance.usePrivateRelay)
   //          instance.serverAddress = "kq.style/listener";
 
         instance.beginNetworkingFlag = true;
+        if(localIP != "")
+        {
+            instance.serverAddress = localIP;
+            instance.serverPort = 12749;
+            localMode = true;
+        }
 
     }
     static void _BeginNetworking()
     {
         //todo: private relay
-        cabinetEvents.serverAddress = instance.serverAddress + instance.sceneName + "/" + instance.cabinetName;
-        cabinetEvents.StartConnection();
-        hivemindEvents.StartConnection();
+        if (localMode)
+        {
+            cabinetEvents.serverAddress = instance.serverAddress;
+            cabinetEvents.serverPort = instance.serverPort;
 
-        GetCabData(instance.sceneName, instance.cabinetName);
+        }
+        else
+        {
+            cabinetEvents.serverAddress = instance.serverAddress + instance.sceneName + "/" + instance.cabinetName;
+            hivemindEvents.StartConnection();
+            GetCabData(instance.sceneName, instance.cabinetName);
+        }
+        cabinetEvents.StartConnection();
 
         instance.beginNetworkingFlag = false;
     }
@@ -327,16 +342,35 @@ public class NetworkManager : MonoBehaviour
         }
         else
         {
-            var jsonData = JsonUtility.FromJson<GameEventJSON>(json);
+            string rawEvent;
+            GameEventJSON jsonData;
             string datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff+00");
+            if (localMode)
+            {
+
+                string eventType = json.Substring(4, json.IndexOf(']') - 4);
+                //Debug.Log("event type is '" + eventType + "'");
+                int lastInd = json.LastIndexOf('[') + 1;
+                string args = json.Substring(lastInd, json.Length - 3 - lastInd);
+                //Debug.Log("args: " + args);
+                jsonData = new GameEventJSON();
+                jsonData.event_type = eventType;
+                jsonData.values = args.Split(',');
+            }
+            else
+            {
+                jsonData = JsonUtility.FromJson<GameEventJSON>(json);
+            }
+
             //string datetime = DateTime.UtcNow.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
-            string rawEvent = "0," + datetime + "," + jsonData.event_type + ",{";
-            for(int i = 0; i < jsonData.values.Length; i++)
+            rawEvent = "0," + datetime + "," + jsonData.event_type + ",{";
+            for (int i = 0; i < jsonData.values.Length; i++)
             {
                 rawEvent += jsonData.values[i];
                 if (i + 1 < jsonData.values.Length) rawEvent += ";";
             }
             rawEvent += "}," + currentGameID;
+
             var gd = ParseEvent(jsonData);
             rawEventDispatcher.Invoke(rawEvent, gd);
             gameEventDispatcher.Invoke(jsonData.event_type, gd);
