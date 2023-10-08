@@ -23,14 +23,14 @@ public class PostgamePlayerCard : MonoBehaviour
 
 	public void OnPostgame(int teamID, int playerID)
     {
-		ThemeData.TeamTheme theme = ViewModel.currentTheme.GetTeamTheme(teamID);
+		var theme = ViewModel.currentTheme.GetTeamTheme(teamID);
 		string suffix = teamID == 0 ? "blue" : "gold";
 		themeBG.sprite = AppLoader.GetStreamingSprite("postgamePlayerCard_" + suffix);
 		namePlate.SetActive(themeBG.sprite == null);
 		foreach (var bg in primaryBGs)
-			SetColorPreserveAlpha(bg, theme.primaryColor);
+			SetColorPreserveAlpha(bg, theme.pColor);
 		foreach (var bg in secondaryBGs)
-			SetColorPreserveAlpha(bg, theme.secondaryColor);
+			SetColorPreserveAlpha(bg, theme.sColor);
 		var model = GameModel.GetPlayer(teamID, playerID);
 		var (pic, rotation) = PlayerStaticData.GetProfilePic(model.hivemindID);
 		playerName.text = model.displayName;
@@ -70,9 +70,9 @@ public class PostgamePlayerCard : MonoBehaviour
 		if(customCrownEmpty == null)
         {
 			crowns[0].sprite = crowns[1].sprite = crowns[2].sprite = defaultCrown;
-			SetColorPreserveAlpha(crowns[0], nQueenKills > 0 ? fadedWhite : theme.secondaryColor);
-			SetColorPreserveAlpha(crowns[1], nQueenKills > 1 ? fadedWhite : theme.secondaryColor);
-			SetColorPreserveAlpha(crowns[2], nQueenKills > 2 ? fadedWhite : theme.secondaryColor);
+			SetColorPreserveAlpha(crowns[0], nQueenKills > 0 ? fadedWhite : theme.sColor);
+			SetColorPreserveAlpha(crowns[1], nQueenKills > 1 ? fadedWhite : theme.sColor);
+			SetColorPreserveAlpha(crowns[2], nQueenKills > 2 ? fadedWhite : theme.sColor);
 		} else
         {
 			crowns[0].color = crowns[1].color = crowns[2].color = new Color(1f,1f,1f, crowns[0].color.a);
@@ -81,9 +81,9 @@ public class PostgamePlayerCard : MonoBehaviour
 			crowns[2].sprite = nQueenKills > 2 ? customCrownFull : customCrownEmpty;
 		}
 
-		if(ViewModel.currentTheme.playerCardFont != "")
+		if(ViewModel.currentTheme.postgameCardFont != "")
         {
-			leftCol.font = rightCol.font = FontDB.GetFont(ViewModel.currentTheme.playerCardFont);
+			leftCol.font = rightCol.font = FontDB.GetFont(ViewModel.currentTheme.postgameCardFont);
         }
 	}
 }

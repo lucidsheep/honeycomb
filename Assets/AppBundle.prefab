@@ -4286,6 +4286,7 @@ GameObject:
   - component: {fileID: 3153013138482860815}
   - component: {fileID: 6648581378096043803}
   - component: {fileID: 247699985227940698}
+  - component: {fileID: 3953148250283245154}
   m_Layer: 0
   m_Name: Singletons
   m_TagString: Untagged
@@ -4447,7 +4448,33 @@ MonoBehaviour:
   - {fileID: 1001474565358818122}
   - {fileID: 4538637431201132806}
   bgFilter: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
-  theme: {fileID: 11400000, guid: 45c15c2b4f0514311a33c9c203fb3f60, type: 2}
+  theme:
+    name: 
+    layout: 
+    headerFont: 
+    postgameHeaderFont: 
+    postgameCardFont: 
+    postgameDetailFont: 
+    postgameScreen: 
+    mainBarStyle: 
+    videoSet: 
+    showTicker: 0
+    showPlayerCams: 0
+    showMilestones: 0
+    showCrownAnimation: 0
+    startReversed: 0
+    leaderboardID: 0
+    sidebarPadding: 0
+    blueTheme:
+      primaryColor: 
+      secondaryColor: 
+      iconColor: 
+    goldTheme:
+      primaryColor: 
+      secondaryColor: 
+      iconColor: 
+    sideBarPrimary: []
+    sideBarSecondary: []
   themeList:
   - {fileID: 11400000, guid: 45c15c2b4f0514311a33c9c203fb3f60, type: 2}
   - {fileID: 11400000, guid: 408e3b8cfa672417982c7d29bd8b08a2, type: 2}
@@ -4459,6 +4486,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eb213b5ae09564b3c945837671f2fbdc, type: 2}
   - {fileID: 11400000, guid: 14f8ace28e4a348cca95905550c3f888, type: 2}
   - {fileID: 11400000, guid: f37e6283c00eb456f9d8a139bf06ff61, type: 2}
+  themeListJson: []
 --- !u!114 &1468528150411243551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4538,6 +4566,7 @@ MonoBehaviour:
   - {fileID: 1119994536920078731, guid: 32a75c7fb31674ed9a6b403bbbe8ddfe, type: 3}
   - {fileID: 7326644024046561879, guid: 98b7669c86a6e460aa35b342790e48e4, type: 3}
   - {fileID: 7326644024046561879, guid: d34d9ebbca4de4d3f86c634e32a7fe6a, type: 3}
+  - {fileID: 1119994536920078731, guid: ae7fefc9240184ee898ecb71425aa143, type: 3}
   curModules: []
   leftSidebar: {fileID: 7971284978406135557}
   rightSidebar: {fileID: 4681536881800815490}
@@ -4590,6 +4619,27 @@ MonoBehaviour:
     fontName: campLeaderboard
   - font: {fileID: 11400000, guid: 3b88c3ec6c72b4759b01e752a2b1690d, type: 2}
     fontName: campHeader
+  - font: {fileID: 11400000, guid: 24c5927429cdc4e719e88f55c2bb16a9, type: 2}
+    fontName: defaultHeader
+  - font: {fileID: 11400000, guid: fde807863e84b4ef992ebb837160e986, type: 2}
+    fontName: defaultFont
+--- !u!114 &3953148250283245154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468528150411243536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6076d936ed8144b8924edd95fe4652d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainBars: []
+  postgameScreens:
+  - {fileID: 6037398074245946859, guid: 69af786a65b474a6fbbef21241acc7e5, type: 3}
+  - {fileID: -1697214059453694578, guid: 9f21b0331ff5844dc9c923ae7667ec0b, type: 3}
+  - {fileID: 3146608573864202273, guid: d6db21a91cf55491b83e974fdda849ec, type: 3}
 --- !u!1 &1546578203106074057
 GameObject:
   m_ObjectHideFlags: 0
@@ -10118,6 +10168,7 @@ MonoBehaviour:
   size: 0
   bgContainer: {fileID: 7906949865279641448}
   offset: {x: 0, y: 0}
+  absolutePos: 0
   roundName: {fileID: 4609887289928446690}
   winCondition: {fileID: 3800522560526936988}
   blueTeamName: {fileID: 7582460860014039644}
@@ -13826,6 +13877,7 @@ MonoBehaviour:
   size: 0
   bgContainer: {fileID: 0}
   offset: {x: 0, y: 0}
+  absolutePos: 0
   blueCam: {fileID: 63546645877241702}
   goldCam: {fileID: 1384701760281321673}
 --- !u!114 &1468528150101525758 stripped

@@ -9,6 +9,7 @@ public class KQObserver : MonoBehaviour
 	public float size;
 	public SpriteRenderer bgContainer;
 	public Vector2 offset;
+	public bool absolutePos = false;
 	public Dictionary<string,string> moduleParameters = new Dictionary<string, string>();
 	public int team { get { return targetID == 0 ? UIState.blue : UIState.gold; } }
 	virtual public void Start()
@@ -49,6 +50,11 @@ public class KQObserver : MonoBehaviour
 			//Debug.Log("spacing = " + moduleParameters["spacing"]);
 			size = float.Parse(moduleParameters["spacing"]);
         }
+		if(moduleParameters.ContainsKey("position"))
+        {
+			offset.y = float.Parse(moduleParameters["position"]);
+			absolutePos = true;
+		}
 		if(moduleParameters.ContainsKey("scale"))
         {
 			var scale = float.Parse(moduleParameters["scale"]);

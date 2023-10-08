@@ -289,7 +289,7 @@ public class SetupScreen : MonoBehaviour
 				var cam = PlayerCameraObserver.GetCamera(camera.name);
 				if (cam != null)
 				{
-					cam.deviceName = ViewModel.currentTheme.layout == ThemeData.LayoutStyle.Game_Only ? "Off" : camera.deviceName;
+					cam.deviceName = ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.Game_Only ? "Off" : camera.deviceName;
 					cam.aspectRatio = camera.aspectRatio;
 					if (cam.state == PlayerCameraObserver.WebcamState.On)
 						cam.StartCamera();

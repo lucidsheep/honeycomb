@@ -27,7 +27,7 @@ public class PostgamePlayerLine : MonoBehaviour
 
 		}
 		if(bg != null)
-			SetColorPreserveAlpha(bg, ViewModel.currentTheme.GetTeamTheme(player.teamID).primaryColor);
+			SetColorPreserveAlpha(bg, ViewModel.currentTheme.GetTeamTheme(player.teamID).pColor);
 		//if(profileBG != null)
 		//	SetColorPreserveAlpha(profileBG, ViewModel.currentTheme.GetTeamTheme(player.teamID).primaryColor);
 		for (int i = 0; i < 3; i++)

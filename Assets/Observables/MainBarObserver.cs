@@ -18,20 +18,20 @@ public class MainBarObserver : KQObserver
 		Vector3 newPos = new Vector3(0f, -4.24f + ViewModel.bottomBarPadding.property, 0f);
 		float scale = 1f;
 		float camX = 7.2f;
-		switch(ViewModel.currentTheme.layout)
+		switch(ViewModel.currentTheme.GetLayout())
         {
-			case ThemeData.LayoutStyle.Game_Only:
+			case ThemeDataJson.LayoutStyle.Game_Only:
 				newPos.y = -50f;
 				break;
-			case ThemeData.LayoutStyle.TwoCol:
+			case ThemeDataJson.LayoutStyle.TwoCol:
 				camX = 6.674f;
 				scale = .95f;
 				break;
-			case ThemeData.LayoutStyle.OneCol_Right:
+			case ThemeDataJson.LayoutStyle.OneCol_Right:
 				newPos.x = -1.65f;
 				newPos.y = -4.18f + ViewModel.bottomBarPadding.property;
 				break;
-			case ThemeData.LayoutStyle.OneCol_Left:
+			case ThemeDataJson.LayoutStyle.OneCol_Left:
 				newPos.x = 1.65f;
 				newPos.y = -4.18f + ViewModel.bottomBarPadding.property;
 				break;

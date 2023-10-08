@@ -38,13 +38,13 @@ public class Themeable : MonoBehaviour
 
     public void SetTheme()
     {
-        ThemeData.TeamTheme themeToUse = targetID == (switchOnInversion ? UIState.blue : 0) ? ViewModel.currentTheme.blueTheme : ViewModel.currentTheme.goldTheme;
+        var themeToUse = targetID == (switchOnInversion ? UIState.blue : 0) ? ViewModel.currentTheme.blueTheme : ViewModel.currentTheme.goldTheme;
         foreach (var sprite in primarySprites)
-            SetColor(sprite, themeToUse.primaryColor);
+            SetColor(sprite, themeToUse.pColor);
         foreach (var sprite in secondarySprites)
-            SetColor(sprite, themeToUse.secondaryColor);
+            SetColor(sprite, themeToUse.sColor);
         foreach (var sprite in iconSprites)
-            SetColor(sprite, themeToUse.iconColor);
+            SetColor(sprite, themeToUse.iColor);
     }
 }
 

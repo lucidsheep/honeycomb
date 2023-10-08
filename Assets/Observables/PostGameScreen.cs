@@ -102,20 +102,20 @@ public class PostGameScreen : KQObserver
     {
 		var pos = new Vector3(-1.65f, .84f, 0f);
 		float scale = 1f;
-		switch(ViewModel.currentTheme.layout)
+		switch(ViewModel.currentTheme.GetLayout())
         {
-			case ThemeData.LayoutStyle.OneCol_Right: break;
-			case ThemeData.LayoutStyle.OneCol_Left:
+			case ThemeDataJson.LayoutStyle.OneCol_Right: break;
+			case ThemeDataJson.LayoutStyle.OneCol_Left:
 				pos.x *= -1f;
 				break;
-			case ThemeData.LayoutStyle.TwoCol:
+			case ThemeDataJson.LayoutStyle.TwoCol:
 				//hack for extra space with camp frame. need to include parameter to let theme adjust this
-				float campBump = (ViewModel.currentTheme.themeName == "campkq" || ViewModel.currentTheme.themeName == "postcamp") ? .18f : 0f;
+				float campBump = (ViewModel.currentTheme.name == "campkq" || ViewModel.currentTheme.name == "postcamp") ? .18f : 0f;
 				pos.x = 0f;
 				pos.y = 0.23f + campBump;
 				scale = .88f;
 				break;
-			case ThemeData.LayoutStyle.Game_Only:
+			case ThemeDataJson.LayoutStyle.Game_Only:
 				pos = new Vector3(0f, -.12f, 0f);
 				scale = 1.26f;
 				break;
@@ -138,9 +138,9 @@ public class PostGameScreen : KQObserver
 			Destroy(postgameSecondaryScreen.gameObject);
 			postgameSecondaryScreen = null;
         }
-		if(ViewModel.currentTheme.postGameSecondaryScreen != null)
+		if(ViewModel.currentTheme.postgameScreen != null)
         {
-			postgameSecondaryScreen = Instantiate(ViewModel.currentTheme.postGameSecondaryScreen, combinedPostgame.transform);
+			postgameSecondaryScreen = Instantiate(MainLayoutModuleManager.GetPostgameScreen(ViewModel.currentTheme.postgameScreen).gameObject, combinedPostgame.transform);
 			postgameSecondaryScreen.transform.localPosition = new Vector3(20f, 0f, 0f);
         }
 		fader.SetFadeSubjects();
@@ -277,18 +277,8 @@ public class PostGameScreen : KQObserver
 		*/
 		isVisible = newVal;
 		fader.DOKill();
-		if (!ViewModel.instance.appView)
-		{
-			//stream video
-			bg.source = VideoSource.Url;
-			bg.url = "https://kq.style/etc/" + ViewModel.currentTheme.GetTeamTheme(blueWins ? 0 : 1).postgameVideoURL;
-		}
-		else
-		{
-			bg.source = VideoSource.VideoClip;
-
-			bg.clip = blueWins ? VideoDB.blueVideos.postgame : VideoDB.goldVideos.postgame;
-		}
+		bg.source = VideoSource.VideoClip;
+		bg.clip = blueWins ? VideoDB.blueVideos.postgame : VideoDB.goldVideos.postgame;
 		if (ViewModel.instance.appView && newVal)
 			ViewModel.StartPIP(false);
 		else if(ViewModel.instance.appView && !newVal)

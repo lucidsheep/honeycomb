@@ -112,24 +112,24 @@ public class WinForecastObserver : KQObserver
 				for (int i = 0; i < blueArrows.Length; i++)
 				{
 					if (forceLit >= i)
-						AnimateSR(arrows[i], forceLitBright ? theme.iconColor : theme.primaryColor);
+						AnimateSR(arrows[i], forceLitBright ? theme.iColor : theme.pColor);
 					else if (!isWinning)
-						AnimateSR(arrows[i], theme.secondaryColor);
+						AnimateSR(arrows[i], theme.sColor);
 					else
 					{
 						bool startedWinning = !wasWinning && isWinning;
 						if (i == 0 && startedWinning)
-							AnimateSR(arrows[i], theme.iconColor);
+							AnimateSR(arrows[i], theme.iColor);
 						else if(i != 0)
 						{
 							float threshold = i == 1 ? .65f : .8f;
 							if ((prevPct < threshold && pct >= threshold) || (startedWinning && pct >= threshold))
 							{
-								AnimateSR(arrows[i], theme.iconColor);
+								AnimateSR(arrows[i], theme.iColor);
 							}
 							else if (prevPct >= threshold && pct < threshold)
 							{
-								AnimateSR(arrows[i], theme.secondaryColor);
+								AnimateSR(arrows[i], theme.sColor);
 							}
 
 						}

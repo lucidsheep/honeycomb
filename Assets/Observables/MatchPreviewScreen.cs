@@ -52,20 +52,20 @@ public class MatchPreviewScreen : KQObserver
 	{
 		var pos = new Vector3(-1.64f, .96f, 0f);
 		float scale = 1f;
-		switch (ViewModel.currentTheme.layout)
+		switch (ViewModel.currentTheme.GetLayout())
 		{
-			case ThemeData.LayoutStyle.OneCol_Right: break;
-			case ThemeData.LayoutStyle.OneCol_Left:
+			case ThemeDataJson.LayoutStyle.OneCol_Right: break;
+			case ThemeDataJson.LayoutStyle.OneCol_Left:
 				pos.x *= -1f;
 				break;
-			case ThemeData.LayoutStyle.TwoCol:
+			case ThemeDataJson.LayoutStyle.TwoCol:
 				//hack for extra space with camp frame. need to include parameter to let theme adjust this
 				//float campBump = (ViewModel.currentTheme.themeName == "campkq" || ViewModel.currentTheme.themeName == "postcamp") ? .18f : 0f;
 				pos.x = 0f;
 				pos.y = 0.36f;
 				scale = .88f;
 				break;
-			case ThemeData.LayoutStyle.Game_Only:
+			case ThemeDataJson.LayoutStyle.Game_Only:
 				pos = new Vector3(0f, -.12f, 0f);
 				scale = 1.26f;
 				break;

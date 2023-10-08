@@ -29,7 +29,7 @@ public class SideBarModuleManager : MonoBehaviour
 	void OnThemeChange()
     {
 		SetModules();
-		bool showInfo = !ViewModel.currentTheme.showBuzzBar && ViewModel.currentTheme.layout != ThemeData.LayoutStyle.Game_Only;
+		bool showInfo = !ViewModel.currentTheme.showTicker && ViewModel.currentTheme.GetLayout() != ThemeDataJson.LayoutStyle.Game_Only;
 		gameIDText.color = timeText.color = (showInfo ? gameInfoColor : new Color(1f, 1f, 1f, 0f));
     }
 
@@ -39,24 +39,24 @@ public class SideBarModuleManager : MonoBehaviour
 			Destroy(m.gameObject);
 		curModules = new List<KQObserver>();
 
-		var infoY = ViewModel.currentTheme.layout == ThemeData.LayoutStyle.TwoCol ? -5.8f : -4.5f;
+		var infoY = ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.TwoCol ? -5.8f : -4.5f;
 		rightSidebar.GetComponent<GameInfoObserver>().time.transform.localPosition = new Vector3(-1.72f, infoY, 0f);
 		rightSidebar.GetComponent<GameInfoObserver>().id.transform.localPosition = new Vector3(-1.67f, infoY, 0f);
 
 		for(int i = 0; i < 2; i++)
         {
-			var moduleList = i == 0 ? ViewModel.currentTheme.sidebarModules : ViewModel.currentTheme.sidebarModules_Left;
+			var moduleList = i == 0 ? ViewModel.currentTheme.sideBarPrimary : ViewModel.currentTheme.sideBarSecondary;
 			var transformToUse = i == 0 ? rightSidebar.transform : leftSidebar.transform;
 			var curY = 5f;
 
-			transformToUse.localScale = Vector3.one * (ViewModel.currentTheme.layout == ThemeData.LayoutStyle.TwoCol ? .75f : 1f);
-			var pos = new Vector3(7.23f, 0f, 0f) + (ViewModel.currentTheme.layout == ThemeData.LayoutStyle.TwoCol ? new Vector3(.42f, 1.18f, 0f) : Vector3.zero);
+			transformToUse.localScale = Vector3.one * (ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.TwoCol ? .75f : 1f);
+			var pos = new Vector3(7.23f, 0f, 0f) + (ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.TwoCol ? new Vector3(.42f, 1.18f, 0f) : Vector3.zero);
 			if (i == 1)
 				pos.x *= -1f;
 			transformToUse.localPosition = pos;
 			foreach (var moduleName in moduleList)
 			{
-				curY -= ViewModel.currentTheme.sideBarPadding;
+				curY -= ViewModel.currentTheme.sidebarPadding;
 				var parsedModule = moduleName.Split('|');
 				if (parsedModule[0] == "commentaryCamera")
 				{
@@ -81,7 +81,8 @@ public class SideBarModuleManager : MonoBehaviour
 						var size = thisModule.size;
 						var newMod = Instantiate(thisModule, transformToUse);
 						newMod.SetParameters(parsedModule);
-						newMod.transform.localPosition = new Vector3(0f + newMod.offset.x, curY - (newMod.size / 2f) + newMod.offset.y, 0f);
+						var yPos = newMod.absolutePos ? newMod.offset.y : curY - (newMod.size / 2f) + newMod.offset.y;
+						newMod.transform.localPosition = new Vector3(0f + newMod.offset.x, yPos, 0f);
 						curY -= newMod.size;
 						if (thisModule.moduleName == "leaderboard" && ViewModel.currentTheme.leaderboardID < 0)
                         {

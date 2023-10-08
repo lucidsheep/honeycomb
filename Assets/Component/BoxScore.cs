@@ -19,9 +19,9 @@ public class BoxScore : MonoBehaviour
 		goldName.text = GameModel.instance.teams[1].teamName.property;
 
 		foreach (var bg in blueBGs)
-			SetColorPreserveAlpha(bg, ViewModel.currentTheme.blueTheme.primaryColor);
+			SetColorPreserveAlpha(bg, ViewModel.currentTheme.blueTheme.pColor);
 		foreach (var bg in goldBGs)
-			SetColorPreserveAlpha(bg, ViewModel.currentTheme.goldTheme.primaryColor);
+			SetColorPreserveAlpha(bg, ViewModel.currentTheme.goldTheme.pColor);
 		int blueQueens, goldQueens, blueBerries, goldBerries, blueSnail, goldSnail;
 		blueQueens = GameModel.instance.teams[1].players[2].curGameStats.deaths.property;
 		goldQueens = GameModel.instance.teams[0].players[2].curGameStats.deaths.property;

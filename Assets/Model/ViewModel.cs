@@ -2,6 +2,7 @@
 using UnityEngine.Events;
 using DG.Tweening;
 using System.Collections.Generic;
+using System.IO;
 
 public class ViewModel : MonoBehaviour
 {
@@ -37,9 +38,10 @@ public class ViewModel : MonoBehaviour
 
 	public Color bgFilter;
 
-	public ThemeData theme;
+	public ThemeDataJson theme;
 	public List<ThemeData> themeList;
-	public static ThemeData currentTheme { get { return instance.theme; } }
+	public List<ThemeDataJson> themeListJson;
+	public static ThemeDataJson currentTheme { get { return instance.theme; } }
 	public static UnityEvent onThemeChange = new UnityEvent();
 
 	public static Transform stage { get { return instance.mainTransform.transform; } }
@@ -59,6 +61,11 @@ public class ViewModel : MonoBehaviour
 		hideSetPoints[0] = new LSProperty<int>(0);
 		hideSetPoints[1] = new LSProperty<int>(0);
 		instance = this;
+
+		themeListJson = AppLoader.GetThemeList();
+		Debug.Log("found " + themeListJson.Count + " json themes");
+		foreach (var theme in themeListJson)
+			Debug.Log(theme.name);
 	}
 	void Start()
 	{
@@ -285,7 +292,7 @@ public class ViewModel : MonoBehaviour
 	public string SetThemeCommand(string[] args)
 	{
 		if (args.Length == 0)
-			SetTheme(ViewModel.currentTheme.themeName);
+			SetTheme(ViewModel.currentTheme.name);
 		else
 			SetTheme(args[0]);
 		return "";
@@ -308,23 +315,23 @@ public class ViewModel : MonoBehaviour
 	public static void SetTheme(string themeTag)
     {
 		Debug.Log("setTheme " + themeTag);
-		ThemeData newTheme = instance.themeList.Find(x => x.themeName.Equals(themeTag));
+		ThemeDataJson newTheme = instance.themeListJson.Find(x => x.name == themeTag);
 		if (newTheme != null)
 		{
 			instance.theme = newTheme;
-			switch (newTheme.layout)
+			switch (newTheme.GetLayout())
 			{
-				case ThemeData.LayoutStyle.OneCol_Left:
-				case ThemeData.LayoutStyle.OneCol_Right:
+				case ThemeDataJson.LayoutStyle.OneCol_Left:
+				case ThemeDataJson.LayoutStyle.OneCol_Right:
 					totalBarWidth = 10.045f * 2f;
 					totalTextWidth = 88f;
 					break;
-				case ThemeData.LayoutStyle.TwoCol:
+				case ThemeDataJson.LayoutStyle.TwoCol:
 					totalBarWidth = 9.31f * 2f;
 					totalTextWidth = 78f;
 					break;
 			}
-			bottomBarPadding.property = newTheme.showBuzzBar ? .30f : 0f;
+			bottomBarPadding.property = newTheme.showTicker ? .30f : 0f;
 			instance.topLevelGraphicContainer.sprite = AppLoader.GetStreamingSprite("mainFrame");
 			instance.backgroundGraphicContainers[0].sprite = AppLoader.GetStreamingSprite("background");
 			onThemeChange.Invoke();

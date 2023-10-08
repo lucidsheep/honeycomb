@@ -43,7 +43,7 @@ public class ScoreboardQueenObserver : MonoBehaviour
 		var isCenter = queenPoints[teamID] == 3;
 		Color blue = UIState.inverted ? goldFaded : blueFaded;
 		Color gold = UIState.inverted ? blueFaded : goldFaded;
-		if (ViewModel.currentTheme.hideCrownAnimation)
+		if (!ViewModel.currentTheme.showCrownAnimation)
 		{
 			staticCrown.main.color = isCenter ? (isBlue ? blue : gold) : (isBlue ? blueFilled : goldFilled);
 			return;

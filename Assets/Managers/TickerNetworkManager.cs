@@ -178,7 +178,7 @@ public class TickerNetworkManager : MonoBehaviour
 
     void OnThemeChange()
     {
-        transform.position = new Vector3(0f, -4.86f + (ViewModel.currentTheme.showBuzzBar ? 0f : -2f), 0f);
+        transform.position = new Vector3(0f, -4.86f + (ViewModel.currentTheme.showTicker ? 0f : -2f), 0f);
     }
     public static void Init()
     {

@@ -37,7 +37,7 @@ public class JumboAnimQueenKill : JumboAnim
 
 		foreach(var thisBG in bgs)
         {
-			thisBG.color = sideID == UIState.blue ? ViewModel.currentTheme.blueTheme.primaryColor : ViewModel.currentTheme.goldTheme.primaryColor;
+			thisBG.color = sideID == UIState.blue ? ViewModel.currentTheme.blueTheme.pColor : ViewModel.currentTheme.goldTheme.pColor;
         }
 		//player
 		DOTween.Sequence()

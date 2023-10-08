@@ -15,7 +15,7 @@ public class StaticText : KQObserver
     {
         base.OnParameters();
         txt.text = moduleParameters.ContainsKey("text") ? moduleParameters["text"] : "";
-        txt.alignment = ViewModel.currentTheme.layout == ThemeData.LayoutStyle.TwoCol ? TextAlignmentOptions.Center : TextAlignmentOptions.Left;
+        txt.alignment = ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.TwoCol ? TextAlignmentOptions.Center : TextAlignmentOptions.Left;
     }
 }
 
