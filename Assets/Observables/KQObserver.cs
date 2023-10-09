@@ -38,8 +38,11 @@ public class KQObserver : MonoBehaviour
 		for(int i = 1; i < args.Length; i++)
         {
 			var argParsed = args[i].Split('=');
-			moduleParameters.Add(argParsed[0], (argParsed.Length == 1 ? "" : argParsed[1]));
-        }
+			if (!moduleParameters.ContainsKey(argParsed[0]))
+				moduleParameters.Add(argParsed[0], (argParsed.Length == 1 ? "" : argParsed[1]));
+			else
+				moduleParameters[argParsed[0]] = (argParsed.Length == 1 ? "" : argParsed[1]);
+		}
 		OnParameters();
     }
 
