@@ -73,6 +73,7 @@ public class ViewModel : MonoBehaviour
 		MapDB.currentMap.onChange.AddListener(OnMapChange);
 		if (defaultTheme != "")
 			SetTheme(defaultTheme);
+		else SetTheme(PlayerPrefs.GetString("theme", "oneCol"));
 		LSConsole.AddCommandHook("setTheme", "refreshes current theme, or sets the theme to [themeTag]", SetThemeCommand);
 		LSConsole.AddCommandHook("skipSetup", "set to [true/false], true will skip the setup dialog on launch", SkipSetupCommand);
 

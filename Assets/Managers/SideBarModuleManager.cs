@@ -69,7 +69,8 @@ public class SideBarModuleManager : MonoBehaviour
 						commentaryModule.transform.parent = transformToUse;
 						commentaryModule.transform.localScale = Vector3.one;
 						commentaryModule.SetParameters(parsedModule);
-						commentaryModule.transform.localPosition = new Vector3(0f + commentaryModule.offset.x, curY - (commentaryModule.size / 2f) + commentaryModule.offset.y, 0f);
+						var yPos = commentaryModule.absolutePos ? commentaryModule.offset.y : curY - (commentaryModule.size / 2f) + commentaryModule.offset.y;
+						commentaryModule.transform.localPosition = new Vector3(0f + commentaryModule.offset.x, yPos, 0f);
 						curY -= commentaryModule.size;
 					}
 				}

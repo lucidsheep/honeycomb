@@ -9,11 +9,15 @@ public class TeamNameObserver : KQObserver
 	bool dirty = false;
 	bool useBold = false;
 	bool forceLowercase = true;
-	// Use this for initialization
-	override public void Start()
+    // Use this for initialization
+
+    private void Awake()
+    {
+		txt = GetComponent<TextMeshPro>();
+	}
+    override public void Start()
 	{
 		base.Start();
-		txt = GetComponent<TextMeshPro>();
 		for (int i = 0; i < 2; i++)
 		{
 			var copiedIndex = i;
