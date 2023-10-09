@@ -94,6 +94,13 @@ public class PlayerStaticData : MonoBehaviour
         return p.pronouns;
     }
 
+    public static string GetSceneTag(int playerID)
+    {
+        var p = GetPlayer(playerID);
+        if (p == null) return "";
+        return p.sceneTag;
+    }
+
     public static (Sprite, int) GetProfilePic(int playerID)
     {
         var p = GetPlayer(playerID);
