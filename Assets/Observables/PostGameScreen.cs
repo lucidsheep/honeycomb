@@ -102,24 +102,33 @@ public class PostGameScreen : KQObserver
     {
 		var pos = new Vector3(-1.65f, .84f, 0f);
 		float scale = 1f;
-		switch(ViewModel.currentTheme.GetLayout())
-        {
-			case ThemeDataJson.LayoutStyle.OneCol_Right: break;
-			case ThemeDataJson.LayoutStyle.OneCol_Left:
-				pos.x *= -1f;
-				break;
-			case ThemeDataJson.LayoutStyle.TwoCol:
-				//hack for extra space with camp frame. need to include parameter to let theme adjust this
-				float campBump = (ViewModel.currentTheme.name == "campkq" || ViewModel.currentTheme.name == "postcamp") ? .18f : 0f;
-				pos.x = 0f;
-				pos.y = 0.23f + campBump;
-				scale = .88f;
-				break;
-			case ThemeDataJson.LayoutStyle.Game_Only:
-				pos = new Vector3(0f, -.12f, 0f);
-				scale = 1.26f;
-				break;
-        }
+		if (ViewModel.currentTheme.useCustomCanvas)
+		{
+			pos.x = ViewModel.currentTheme.customCanvasX;
+			pos.y = ViewModel.currentTheme.customCanvasY - ViewModel.bottomBarPadding.property - .12f;
+			scale = .9f; //todo - this is hardcoded
+		}
+		else
+		{
+			switch (ViewModel.currentTheme.GetLayout())
+			{
+				case ThemeDataJson.LayoutStyle.OneCol_Right: break;
+				case ThemeDataJson.LayoutStyle.OneCol_Left:
+					pos.x *= -1f;
+					break;
+				case ThemeDataJson.LayoutStyle.TwoCol:
+					//hack for extra space with camp frame. need to include parameter to let theme adjust this
+					float campBump = (ViewModel.currentTheme.name == "campkq" || ViewModel.currentTheme.name == "postcamp") ? .18f : 0f;
+					pos.x = 0f;
+					pos.y = 0.23f + campBump;
+					scale = .88f;
+					break;
+				case ThemeDataJson.LayoutStyle.Game_Only:
+					pos = new Vector3(0f, -.12f, 0f);
+					scale = 1.26f;
+					break;
+			}
+		}
 		pos.y += ViewModel.bottomBarPadding.property;
 		transform.localPosition = pos;
 		transform.localScale = Vector3.one * scale;

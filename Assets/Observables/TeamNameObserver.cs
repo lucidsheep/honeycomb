@@ -46,12 +46,15 @@ public class TeamNameObserver : KQObserver
     protected override void OnThemeChange()
     {
         base.OnThemeChange();
-		if(ViewModel.currentTheme.postgameHeaderFont != "")
+		if(ViewModel.currentTheme.headerFont != "")
         {
-			txt.font = FontDB.GetFont(ViewModel.currentTheme.postgameHeaderFont);
-			useBold = true;
-			forceLowercase = false;
-			dirty = true;
+			txt.font = FontDB.GetFont(ViewModel.currentTheme.headerFont);
+			if (ViewModel.currentTheme.headerFont != "defaultHeader")
+			{
+				useBold = true;
+				forceLowercase = false;
+				dirty = true;
+			}
         }
     }
 

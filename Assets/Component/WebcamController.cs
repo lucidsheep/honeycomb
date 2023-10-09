@@ -67,7 +67,12 @@ public class WebcamController : MonoBehaviour
         {
             position = new Vector3(2.63f, 3.53f, 0f);
             scale = 0.0025f;
-            if (ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.OneCol_Left)
+            if(ViewModel.currentTheme.useCustomCanvas)
+            {
+                position = new Vector3(3.65f, 2f + ViewModel.currentTheme.customCanvasY, 0f);
+                scale = 0.0022f;
+            }
+            else if (ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.OneCol_Left)
                 position.x += 1f;
             else if (ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.TwoCol)
             {
@@ -80,7 +85,13 @@ public class WebcamController : MonoBehaviour
             }
         } else
         {
-            if (ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.OneCol_Left)
+            if(ViewModel.currentTheme.useCustomCanvas)
+            {
+                position.x = ViewModel.currentTheme.customCanvasX;
+                position.y = ViewModel.currentTheme.customCanvasY - ViewModel.bottomBarPadding.property;
+                scale = ViewModel.currentTheme.customCanvasScale;
+            }
+            else if (ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.OneCol_Left)
                 position.x *= -1f;
             else if(ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.TwoCol)
             {

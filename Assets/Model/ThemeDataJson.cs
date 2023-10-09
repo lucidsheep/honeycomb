@@ -39,6 +39,10 @@ public class ThemeDataJson
     public bool showTicker, showPlayerCams, showMilestones, showCrownAnimation, startReversed;
     public int leaderboardID;
     public float sidebarPadding;
+    public bool useCustomCanvas;
+    public float customCanvasX;
+    public float customCanvasY;
+    public float customCanvasScale;
     public ThemeTeamColors blueTheme;
     public ThemeTeamColors goldTheme;
     public string[] sideBarPrimary;

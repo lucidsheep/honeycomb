@@ -57,7 +57,7 @@ public class TournamentLeaderboardManager : MonoBehaviour
 		var loggedInPlayers = new List<TournamentLeaderboardPlayer>();
 		foreach(var t in GameModel.instance.teams) { foreach(var p in t.players)
         {
-			if(p.hivemindID > 0)
+			if(p.hivemindID > 0 && p.hivemindID < 1000000) //over 1000000 is a tournament-only id, not eligible for leaderboards
             {
 				loggedInPlayers.Add(TournamentLeaderboardPlayer.PlayerModelToLeaderboardRow(p, null, sendAllStats));
             }

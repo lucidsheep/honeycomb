@@ -4447,7 +4447,7 @@ MonoBehaviour:
   backgroundGraphicContainers:
   - {fileID: 1001474565358818122}
   - {fileID: 4538637431201132806}
-  bgFilter: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
+  bgFilter: {r: 1, g: 1, b: 1, a: 1}
   theme:
     name: 
     layout: 
@@ -4569,6 +4569,7 @@ MonoBehaviour:
   - {fileID: 1119994536920078731, guid: ae7fefc9240184ee898ecb71425aa143, type: 3}
   - {fileID: 1621947411791464451, guid: 9d71684fc7e1a42eaa6f34e7fb0edfe1, type: 3}
   - {fileID: 1621947411791464451, guid: c3851cf4d54fc4e3299e6cfe27b4e6a8, type: 3}
+  - {fileID: 3282864357928725885, guid: 080c0eb7ea720417ca12df83b21d44c6, type: 3}
   curModules: []
   leftSidebar: {fileID: 7971284978406135557}
   rightSidebar: {fileID: 4681536881800815490}
