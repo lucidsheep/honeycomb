@@ -124,7 +124,7 @@ public class TickerNetworkManager : MonoBehaviour
                 mapName = data.map_name == "" ? "???" : MapDB.maps[data.map_name].display_name;
                 snailTrackLength = MapDB.maps[data.map_name].snail_track_width;
             }
-
+            
             blueTeam.berryScore = goldTeam.berryScore = blueTeam.queenScore = goldTeam.queenScore = blueTeam.snailScore = goldTeam.snailScore = 0;
 
             //todo - berries sometimes don't add up to 12. possibly some kick ins arn't being counted? also snail does not always add up to 100%
@@ -178,7 +178,7 @@ public class TickerNetworkManager : MonoBehaviour
 
     void OnThemeChange()
     {
-        transform.position = new Vector3(0f, -4.86f + (ViewModel.currentTheme.showTicker ? 0f : -2f), 0f);
+        transform.position = new Vector3(0f, -4.89f + (ViewModel.currentTheme.showTicker ? 0f : -2f), 0f);
     }
     public static void Init()
     {

@@ -33,6 +33,7 @@ public class WebSocketSharpWebSocketClient : IWebSocketClient
 
         var urlPrefix = isUsingSecureConnection ? "wss" : "ws";
 
+        Debug.Log("connecting " + urlPrefix + "://" + address + " secure: " + isUsingSecureConnection); 
         //_webSocketConnection = new WebSocket($"{urlPrefix}://{address}:{port}/Listener");
         _webSocketConnection = new WebSocket(urlPrefix + "://" + address);
         if(isUsingSecureConnection)

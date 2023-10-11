@@ -173,8 +173,10 @@ public class NetworkManager : MonoBehaviour
         instance.beginNetworkingFlag = true;
         if(localIP != "")
         {
-            instance.serverAddress = localIP;
+            Debug.Log("local mode");
+            instance.serverAddress = localIP + ":12749";
             instance.serverPort = 12749;
+            instance.useSecureSockets = false;
             localMode = true;
         }
 
@@ -186,7 +188,8 @@ public class NetworkManager : MonoBehaviour
         {
             cabinetEvents.serverAddress = instance.serverAddress;
             cabinetEvents.serverPort = instance.serverPort;
-
+            cabinetEvents.useSecureSockets = instance.useSecureSockets;
+            Debug.Log("connecting to " + cabinetEvents.serverAddress + ":" + cabinetEvents.serverPort);
         }
         else
         {
