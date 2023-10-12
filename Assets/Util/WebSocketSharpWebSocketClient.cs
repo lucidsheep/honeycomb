@@ -32,8 +32,6 @@ public class WebSocketSharpWebSocketClient : IWebSocketClient
         if (_webSocketConnection != null) return;
 
         var urlPrefix = isUsingSecureConnection ? "wss" : "ws";
-
-        Debug.Log("connecting " + urlPrefix + "://" + address + " secure: " + isUsingSecureConnection); 
         //_webSocketConnection = new WebSocket($"{urlPrefix}://{address}:{port}/Listener");
         _webSocketConnection = new WebSocket(urlPrefix + "://" + address);
         if(isUsingSecureConnection)
@@ -47,7 +45,6 @@ public class WebSocketSharpWebSocketClient : IWebSocketClient
         
         _webSocketConnection.OnClose += (sender, args) =>
         {
-            Debug.Log(args.Code.ToString());
             _webSocketConnection = null;
             Disconnected?.Invoke();
         };

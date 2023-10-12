@@ -4466,6 +4466,7 @@ MonoBehaviour:
     leaderboardID: 0
     sidebarPadding: 0
     useCustomCanvas: 0
+    postgameHideHeader: 0
     customCanvasX: 0
     customCanvasY: 0
     customCanvasScale: 0
@@ -4479,6 +4480,19 @@ MonoBehaviour:
       iconColor: 
     sideBarPrimary: []
     sideBarSecondary: []
+    boxScoreStyle:
+      name: 
+      useCustomPosition: 0
+      customPositionX: 0
+      customPositionY: 0
+      customScale: 0
+    playerCardStyle:
+      name: 
+      xOffset: 0
+      yOffset: 0
+      width: 0
+      scale: 0
+    positionTweaks: []
   themeList:
   - {fileID: 11400000, guid: 45c15c2b4f0514311a33c9c203fb3f60, type: 2}
   - {fileID: 11400000, guid: 408e3b8cfa672417982c7d29bd8b08a2, type: 2}
@@ -4630,6 +4644,8 @@ MonoBehaviour:
     fontName: defaultHeader
   - font: {fileID: 11400000, guid: fde807863e84b4ef992ebb837160e986, type: 2}
     fontName: defaultFont
+  - font: {fileID: 11400000, guid: 899bd5293910e4c73bbb2ec9318dd05e, type: 2}
+    fontName: electrolize
 --- !u!114 &3953148250283245154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4647,6 +4663,11 @@ MonoBehaviour:
   - {fileID: 6037398074245946859, guid: 69af786a65b474a6fbbef21241acc7e5, type: 3}
   - {fileID: -1697214059453694578, guid: 9f21b0331ff5844dc9c923ae7667ec0b, type: 3}
   - {fileID: 3146608573864202273, guid: d6db21a91cf55491b83e974fdda849ec, type: 3}
+  boxScores:
+  - {fileID: 4577985997614243457, guid: 74bd0d852fe6449a480b09c4c94b7e36, type: 3}
+  - {fileID: 8030671955221456812, guid: f270fdc8596934c9499abf724d99c3d4, type: 3}
+  playerCards:
+  - {fileID: 1949158740447203311, guid: 3eb77c6b61d5742b9b575af13f5867a4, type: 3}
 --- !u!1 &1546578203106074057
 GameObject:
   m_ObjectHideFlags: 0
@@ -10207,6 +10228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17e2ff6dc37f04e63a8e76c3a4a4397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugFade: 100
 --- !u!114 &7687642838016663383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14300,6 +14322,14 @@ PrefabInstance:
     - target: {fileID: 5991230332708195893, guid: 297fdd20028884413a96fa368e9f3818, type: 3}
       propertyPath: m_Name
       value: Postgame
+      objectReference: {fileID: 0}
+    - target: {fileID: 5991230332924704741, guid: 297fdd20028884413a96fa368e9f3818, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5991230333590318493, guid: 297fdd20028884413a96fa368e9f3818, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 297fdd20028884413a96fa368e9f3818, type: 3}

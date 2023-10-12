@@ -69,7 +69,7 @@ public class WebcamController : MonoBehaviour
             scale = 0.0025f;
             if(ViewModel.currentTheme.useCustomCanvas)
             {
-                position = new Vector3(3.65f, 2f + ViewModel.currentTheme.customCanvasY, 0f);
+                position = new Vector3(4.19f, 2f + ViewModel.currentTheme.customCanvasY, 0f);
                 scale = 0.0022f;
             }
             else if (ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.OneCol_Left)

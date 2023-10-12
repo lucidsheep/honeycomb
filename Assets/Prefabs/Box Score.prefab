@@ -2051,6 +2051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bf46c4e43e9947b3821ab7e6ff397a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moduleName: defaultBoxScore
   blueName: {fileID: 4577985996167777673}
   goldName: {fileID: 4577985997678289440}
   queenCol: {fileID: 4577985997268838183}
@@ -2062,6 +2063,7 @@ MonoBehaviour:
   highlightStart: {x: 1.4, y: 0.19}
   highlightBerry: 0.5
   highlightSnail: 0.57
+  highlightGold: -0.19
   usePercent: 1
   blueBGs:
   - {fileID: 4577985997165158514}

@@ -4,6 +4,7 @@ using TMPro;
 
 public class PostgamePlayerCard : MonoBehaviour
 {
+	public string moduleName = "defualtCard";
 	public SpriteRenderer positionIcon;
 	public TextMeshPro playerName, leftCol, rightCol;
 	public SpriteRenderer[] crowns;

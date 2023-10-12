@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class PostGameScreen : KQObserver
 {
 	public GlobalFade fader;
-	public BoxScore boxScore;
+	public BoxScoreBase boxScore;
 	public PostgamePlayerCard[] playerCards;
 	public GameObject summaryPage;
 	public TextMeshPro title, subText, seriesText;
@@ -44,7 +44,7 @@ public class PostGameScreen : KQObserver
 		set
         {
 			_state = value;
-			combinedPostgame.transform.localPosition = new Vector3(-20f * _state, 0f, 0f);
+			combinedPostgame.transform.localPosition = new Vector3(-20f * _state, -.2f, 0f);
         }
     }
 	int _actualState = 0;
@@ -133,10 +133,22 @@ public class PostGameScreen : KQObserver
 		transform.localPosition = pos;
 		transform.localScale = Vector3.one * scale;
 		SetupSecondaryScreen();
-
-		if(ViewModel.currentTheme.postgameHeaderFont != "")
+		SetupBoxScore();
+		SetupPlayerCards();
+		fader.SetFadeSubjects();
+		if (ViewModel.currentTheme.postgameHeaderFont != "")
         {
 			title.font = FontDB.GetFont(ViewModel.currentTheme.postgameHeaderFont);
+        }
+		if (ViewModel.currentTheme.postgameDetailFont != "")
+        {
+			subText.font = seriesText.font = FontDB.GetFont(ViewModel.currentTheme.postgameDetailFont);
+        }
+		var t = ViewModel.currentTheme.GetTweak("postgameDetailText");
+		if(t != null)
+        {
+			subText.transform.localScale = Vector3.one * t.scale;
+			subText.transform.localPosition = new Vector3(t.x, t.y, 0f);
         }
     }
 
@@ -152,9 +164,55 @@ public class PostGameScreen : KQObserver
 			postgameSecondaryScreen = Instantiate(MainLayoutModuleManager.GetPostgameScreen(ViewModel.currentTheme.postgameScreen).gameObject, combinedPostgame.transform);
 			postgameSecondaryScreen.transform.localPosition = new Vector3(20f, 0f, 0f);
         }
-		fader.SetFadeSubjects();
+		
     }
 
+	void SetupBoxScore()
+    {
+		if(boxScore != null)
+        {
+			Destroy(boxScore.gameObject);
+			boxScore = null;
+        }
+
+		var styleName = ViewModel.currentTheme.boxScoreStyle == null ? "defaultBoxScore" : ViewModel.currentTheme.boxScoreStyle.name;
+		boxScore = Instantiate(MainLayoutModuleManager.GetBoxScore(styleName), transform);
+		var pos = new Vector3(-3.65f, 2.35f, 0f);
+		if (ViewModel.currentTheme.boxScoreStyle != null && ViewModel.currentTheme.boxScoreStyle.useCustomPosition)
+		{
+			boxScore.transform.localScale = Vector3.one * ViewModel.currentTheme.boxScoreStyle.customScale;
+			pos = new Vector3(ViewModel.currentTheme.boxScoreStyle.customPositionX, ViewModel.currentTheme.boxScoreStyle.customPositionY, 0f);
+		}
+		boxScore.transform.localPosition = pos;
+    }
+
+	void SetupPlayerCards()
+	{
+		foreach (var pc in playerCards)
+		{
+			if(pc != null)
+				Destroy(pc.gameObject);
+		}
+
+		var styleName = "defaultCard";
+		var startPos = new Vector2(-5.31f, -1.47f);
+		var width = 3.49f;
+		var scale = 1f;
+		if (ViewModel.currentTheme.playerCardStyle != null)
+		{
+			styleName = ViewModel.currentTheme.playerCardStyle.name;
+			startPos = new Vector2(ViewModel.currentTheme.playerCardStyle.xOffset, ViewModel.currentTheme.playerCardStyle.yOffset);
+			width = ViewModel.currentTheme.playerCardStyle.width;
+			scale = ViewModel.currentTheme.playerCardStyle.scale;
+		}
+		for (int i = 0; i < 4; i++)
+		{
+			var card = Instantiate(MainLayoutModuleManager.GetPlayerCard(styleName), combinedPostgame.transform);
+			card.transform.localPosition = new Vector3(startPos.x + (width * i), startPos.y, 0f);
+			card.transform.localScale = Vector3.one * scale;
+			playerCards[i] = card;
+		}
+	}
 	public static void ForceClosePostgame()
     {
 		instance.OnGameStart();
@@ -207,7 +265,7 @@ public class PostGameScreen : KQObserver
 			delayDisplaySeq = DOTween.Sequence().AppendInterval(2.5f).AppendCallback(() => StartInstantReplay(winningTeam, winType));
 		else
 			delayDisplaySeq = DOTween.Sequence().AppendInterval(3f).AppendCallback(() => SetVisible(true));
-		title.text = (blueWins ? "Blue" : "Gold") + " Victory";
+		title.text = ViewModel.currentTheme.postgameHideHeader ? "" : (blueWins ? "Blue" : "Gold") + " Victory";
 		subText.text = MapDB.currentMap.property.display_name + " | " + Util.FormatTime(GameModel.instance.gameTime.property);
 		boxScore.OnPostgame(winningTeam, winType);
 		minimap.sprite = MapDB.currentMap.property.thumbnail;
@@ -319,7 +377,7 @@ public class PostGameScreen : KQObserver
     {
 		if(postgameSecondaryScreen != null)
 			postgameSecondaryScreen.SetActive(isActive);
-		combinedPostgame.SetActive(isActive);
+		//combinedPostgame.SetActive(isActive);
 		//boxScore.gameObject.SetActive(isActive);
 		//foreach (var go in gameObject.GetComponentsInChildren<GameObject>())
 			//go.SetActive(isActive);

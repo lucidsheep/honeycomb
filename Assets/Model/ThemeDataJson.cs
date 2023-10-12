@@ -26,6 +26,32 @@ public class ThemeTeamColors
     }
 }
 [System.Serializable]
+public class PostgameBoxScore
+{
+    public string name;
+    public bool useCustomPosition;
+    public float customPositionX;
+    public float customPositionY;
+    public float customScale;
+}
+
+[System.Serializable]
+public class PostgamePlayerCardStyle
+{
+    public string name;
+    public float xOffset;
+    public float yOffset;
+    public float width;
+    public float scale;
+}
+
+[System.Serializable]
+public class PositionTweak
+{
+    public string name;
+    public float x, y, scale;
+}
+[System.Serializable]
 public class ThemeDataJson
 {
     public enum LayoutStyle { OneCol_Right, OneCol_Left, Game_Only, TwoCol }
@@ -40,6 +66,7 @@ public class ThemeDataJson
     public int leaderboardID;
     public float sidebarPadding;
     public bool useCustomCanvas;
+    public bool postgameHideHeader;
     public float customCanvasX;
     public float customCanvasY;
     public float customCanvasScale;
@@ -47,6 +74,9 @@ public class ThemeDataJson
     public ThemeTeamColors goldTheme;
     public string[] sideBarPrimary;
     public string[] sideBarSecondary;
+    public PostgameBoxScore boxScoreStyle;
+    public PostgamePlayerCardStyle playerCardStyle;
+    public PositionTweak[] positionTweaks;
 
     public LayoutStyle GetLayout()
     {
@@ -61,6 +91,17 @@ public class ThemeDataJson
     }
 
     public ThemeTeamColors GetTeamTheme(int id) { if (id == 0) return blueTheme; return goldTheme; }
+
+    public PositionTweak GetTweak(string elementName)
+    {
+        if (positionTweaks == null) return null;
+
+        foreach(var t in positionTweaks)
+        {
+            if (elementName == t.name) return t;
+        }
+        return null;
+    }
 
 }
 

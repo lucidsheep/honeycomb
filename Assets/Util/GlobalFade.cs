@@ -4,6 +4,8 @@ using TMPro;
 
 public class GlobalFade : MonoBehaviour
 {
+	public float debugFade = 100f;
+	float oldDebugFade = 100f;
 	SpriteRenderer[] srs;
 	TextMeshPro[] tmps;
 	MeshRenderer[] players;
@@ -19,7 +21,16 @@ public class GlobalFade : MonoBehaviour
 		SetFadeSubjects();
 	}
 
-	void SetAlpha()
+    private void Update()
+    {
+        if(oldDebugFade != debugFade)
+        {
+			oldDebugFade = debugFade;
+			_alpha = debugFade;
+			SetAlpha();
+        }
+    }
+    void SetAlpha()
     {
 		foreach (var s in srs)
 		{
@@ -33,6 +44,7 @@ public class GlobalFade : MonoBehaviour
 	}
 	public void SetFadeSubjects()
     {
+		Debug.Log("set fade subjects");
 		srs = GetComponentsInChildren<SpriteRenderer>();
 		tmps = GetComponentsInChildren<TextMeshPro>();
 		players = GetComponentsInChildren<MeshRenderer>();
