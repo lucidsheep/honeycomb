@@ -43,6 +43,9 @@ public class PostgamePlayerCardStyle
     public float yOffset;
     public float width;
     public float scale;
+    public string numberFont;
+    public string statFont;
+    public string nameFont;
 }
 
 [System.Serializable]

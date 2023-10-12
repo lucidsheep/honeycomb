@@ -4492,6 +4492,9 @@ MonoBehaviour:
       yOffset: 0
       width: 0
       scale: 0
+      numberFont: 
+      statFont: 
+      nameFont: 
     positionTweaks: []
   themeList:
   - {fileID: 11400000, guid: 45c15c2b4f0514311a33c9c203fb3f60, type: 2}
@@ -4646,6 +4649,12 @@ MonoBehaviour:
     fontName: defaultFont
   - font: {fileID: 11400000, guid: 899bd5293910e4c73bbb2ec9318dd05e, type: 2}
     fontName: electrolize
+  - font: {fileID: 11400000, guid: 9542356860af84a4aab352c453cb6cd7, type: 2}
+    fontName: wccItalic
+  - font: {fileID: 11400000, guid: bf5f0f4d70d16435ba42619f3eea8b00, type: 2}
+    fontName: wccBold
+  - font: {fileID: 11400000, guid: 24a852e2784524b94be172fe9cc26a43, type: 2}
+    fontName: league
 --- !u!114 &3953148250283245154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4668,6 +4677,7 @@ MonoBehaviour:
   - {fileID: 8030671955221456812, guid: f270fdc8596934c9499abf724d99c3d4, type: 3}
   playerCards:
   - {fileID: 1949158740447203311, guid: 3eb77c6b61d5742b9b575af13f5867a4, type: 3}
+  - {fileID: 1949158740447203311, guid: 4cbe978972ec3421ab2829ed83a8d565, type: 3}
 --- !u!1 &1546578203106074057
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,7 +27,8 @@ public class PostgamePlayerCard : MonoBehaviour
 		var theme = ViewModel.currentTheme.GetTeamTheme(teamID);
 		string suffix = teamID == 0 ? "blue" : "gold";
 		themeBG.sprite = AppLoader.GetStreamingSprite("postgamePlayerCard_" + suffix);
-		namePlate.SetActive(themeBG.sprite == null);
+		if(namePlate != null)
+			namePlate.SetActive(themeBG.sprite == null);
 		foreach (var bg in primaryBGs)
 			SetColorPreserveAlpha(bg, theme.pColor);
 		foreach (var bg in secondaryBGs)
@@ -86,6 +87,13 @@ public class PostgamePlayerCard : MonoBehaviour
         {
 			leftCol.font = rightCol.font = FontDB.GetFont(ViewModel.currentTheme.postgameCardFont);
         }
+
+		if(ViewModel.currentTheme.playerCardStyle != null)
+        {
+			leftCol.font = FontDB.GetFont(ViewModel.currentTheme.playerCardStyle.numberFont);
+			rightCol.font = FontDB.GetFont(ViewModel.currentTheme.playerCardStyle.statFont);
+			playerName.font = FontDB.GetFont(ViewModel.currentTheme.playerCardStyle.nameFont);
+		}
 	}
 }
 
