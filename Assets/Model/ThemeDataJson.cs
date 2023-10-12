@@ -36,6 +36,16 @@ public class PostgameBoxScore
 }
 
 [System.Serializable]
+public class MainBarStyle
+{
+    public string name;
+    public bool useCustomPosition;
+    public float customPositionX;
+    public float customPositionY;
+    public float customScale;
+}
+
+[System.Serializable]
 public class PostgamePlayerCardStyle
 {
     public string name;
@@ -77,6 +87,7 @@ public class ThemeDataJson
     public ThemeTeamColors goldTheme;
     public string[] sideBarPrimary;
     public string[] sideBarSecondary;
+    public MainBarStyle barStyle;
     public PostgameBoxScore boxScoreStyle;
     public PostgamePlayerCardStyle playerCardStyle;
     public PositionTweak[] positionTweaks;

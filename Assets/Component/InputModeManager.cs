@@ -7,8 +7,7 @@ public class InputModeManager : MonoBehaviour
 {
     public float heightPercent = .125f;
     public static bool inputModeEnabled = false;
-    public GameObject masterObject;
-    public TMP_InputField blueTeamName, goldTeamName, blueTeamScore, goldTeamScore, setScore;
+    MainBarInputArea masterObject { get { return ViewModel.instance.mainBar.inputArea; } }
     //public Button
 
     private void Update()
@@ -31,12 +30,12 @@ public class InputModeManager : MonoBehaviour
         int blue = UIState.blue;
         int gold = UIState.gold;
         inputModeEnabled = true;
-        masterObject.SetActive(true);
-        blueTeamName.text = GameModel.instance.teams[blue].teamName.property;
-        goldTeamName.text = GameModel.instance.teams[gold].teamName.property;
-        blueTeamScore.text = GameModel.instance.teams[blue].setWins.property + "";
-        goldTeamScore.text = GameModel.instance.teams[gold].setWins.property + "";
-        setScore.text = GameModel.instance.setPoints.property + "";
+        masterObject.gameObject.SetActive(true);
+        masterObject.blueTeamName.text = GameModel.instance.teams[blue].teamName.property;
+        masterObject.goldTeamName.text = GameModel.instance.teams[gold].teamName.property;
+        masterObject.blueTeamScore.text = GameModel.instance.teams[blue].setWins.property + "";
+        masterObject.goldTeamScore.text = GameModel.instance.teams[gold].setWins.property + "";
+        masterObject.setScore.text = GameModel.instance.setPoints.property + "";
     }
 
     public void EndInputMode()
@@ -45,13 +44,13 @@ public class InputModeManager : MonoBehaviour
         int gold = UIState.gold;
 
         inputModeEnabled = false;
-        masterObject.SetActive(false);
-        GameModel.instance.teams[blue].teamName.property = blueTeamName.text;
-        GameModel.instance.teams[gold].teamName.property = goldTeamName.text;
+        masterObject.gameObject.SetActive(false);
+        GameModel.instance.teams[blue].teamName.property = masterObject.blueTeamName.text;
+        GameModel.instance.teams[gold].teamName.property = masterObject.goldTeamName.text;
         int blueScore = -1, goldScore = -1, setPoints = -1;
-        int.TryParse(blueTeamScore.text, out blueScore);
-        int.TryParse(goldTeamScore.text, out goldScore);
-        int.TryParse(setScore.text, out setPoints);
+        int.TryParse(masterObject.blueTeamScore.text, out blueScore);
+        int.TryParse(masterObject.goldTeamScore.text, out goldScore);
+        int.TryParse(masterObject.setScore.text, out setPoints);
 
         GameModel.instance.setPoints.property = setPoints >= 0 ? setPoints : 0;
         GameModel.instance.teams[blue].setWins.property = blueScore >= 0 ? blueScore : 0;
@@ -66,7 +65,7 @@ public class InputModeManager : MonoBehaviour
         int gold = UIState.gold;
 
         GameModel.instance.ResetSet();
-        blueTeamScore.text = GameModel.instance.teams[blue].setWins.property.ToString();
-        goldTeamScore.text = GameModel.instance.teams[gold].setWins.property.ToString();
+        masterObject.blueTeamScore.text = GameModel.instance.teams[blue].setWins.property.ToString();
+        masterObject.goldTeamScore.text = GameModel.instance.teams[gold].setWins.property.ToString();
     }
 }

@@ -31,7 +31,7 @@ public class ViewModel : MonoBehaviour
 
 	public bool appView = false;
 
-	public GameObject mainTransform;
+	public MainBarObserver mainBar;
 	public Canvas webcamCanvas;
 	public SpriteRenderer topLevelGraphicContainer;
 	public SpriteRenderer[] backgroundGraphicContainers;
@@ -44,7 +44,7 @@ public class ViewModel : MonoBehaviour
 	public static ThemeDataJson currentTheme { get { return instance.theme; } }
 	public static UnityEvent onThemeChange = new UnityEvent();
 
-	public static Transform stage { get { return instance.mainTransform.transform; } }
+	public static Transform stage { get { return instance.mainBar.transform; } }
 
 	Sequence setPointTimeout;
 	Sequence pipSeq;
@@ -320,6 +320,7 @@ public class ViewModel : MonoBehaviour
 		if (newTheme != null)
 		{
 			instance.theme = newTheme;
+			instance.SetMainBar();
 			switch (newTheme.GetLayout())
 			{
 				case ThemeDataJson.LayoutStyle.OneCol_Left:
@@ -335,10 +336,18 @@ public class ViewModel : MonoBehaviour
 			bottomBarPadding.property = newTheme.showTicker ? .30f : 0f;
 			instance.topLevelGraphicContainer.sprite = AppLoader.GetStreamingSprite("mainFrame");
 			instance.backgroundGraphicContainers[0].sprite = AppLoader.GetStreamingSprite("background");
+			
 			onThemeChange.Invoke();
 		}
     }
 
+	void SetMainBar()
+    {
+		if (mainBar != null)
+			Destroy(mainBar.gameObject);
+		mainBar = Instantiate(MainLayoutModuleManager.GetMainBar(currentTheme.barStyle == null ? "" : currentTheme.barStyle.name), transform.parent);
+
+    }
 	public static void DestroyVirtualDesktop()
     {
 		if (!instance.vdActive) return;

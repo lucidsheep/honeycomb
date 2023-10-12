@@ -5,12 +5,18 @@ public class MainBarObserver : KQObserver
 {
 	public PlayerCameraObserver blueCam;
 	public PlayerCameraObserver goldCam;
+	public MainBarInputArea inputArea;
 
-	// Use this for initialization
-	public override void Start()
+    // Use this for initialization
+
+    private void Awake()
+    {
+		ViewModel.onThemeChange.AddListener(OnThemeChange);
+	}
+    public override void Start()
 	{
 		base.Start();
-		ViewModel.onThemeChange.AddListener(OnThemeChange);
+		
 	}
 
 	void OnThemeChange()
