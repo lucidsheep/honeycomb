@@ -39,6 +39,8 @@ public class ScoreboardQueenObserver : MonoBehaviour
 		if (score <= 0 || queenPoints[teamID] > 3) return;
 
 		var staticCrown = teamID == UIState.blue ? staticCrowns[queenPoints[teamID] - 1] : staticCrowns[5 - queenPoints[teamID]];
+		if (staticCrown == null || staticCrown.main == null)
+			return; //todo - why
 		var isBlue = teamID == UIState.blue;
 		var isCenter = queenPoints[teamID] == 3;
 		Color blue = UIState.inverted ? goldFaded : blueFaded;

@@ -15,6 +15,7 @@ public class JumboAnimQueenKill : JumboAnim
 
     virtual public void SetupAnim(int bgID, PlayerModel playerData)
 	{
+		//transform.localScale = Vector3.one * .1f;
 		var playerName = playerData.displayName;
 		var playerSprite = SpriteDB.allSprites[playerData.teamID].playerSprites[playerData.positionID].soldier_idle;
 		var playerAttackSprite = SpriteDB.allSprites[playerData.teamID].playerSprites[playerData.positionID].soldier_attack;

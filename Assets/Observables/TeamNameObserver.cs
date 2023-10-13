@@ -7,8 +7,9 @@ public class TeamNameObserver : KQObserver
 	TextMeshPro txt;
 	string teamName;
 	bool dirty = false;
-	bool useBold = false;
-	bool forceLowercase = true;
+	public bool useBold = false;
+	public bool forceLowercase = true;
+	public bool forceUppercase = false;
     // Use this for initialization
 
     private void Awake()
@@ -38,6 +39,8 @@ public class TeamNameObserver : KQObserver
 			var s = (useBold ? "<b>" : "") + GameModel.instance.teams[team].teamName.property + (useBold ? "</b>" : "");
 			if (forceLowercase)
 				s = s.ToLower();
+			if (forceUppercase)
+				s = s.ToUpper();
 			txt.text = s;
 			dirty = false;
 		}
