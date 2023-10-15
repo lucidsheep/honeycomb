@@ -143,6 +143,8 @@ public class SetupScreen : MonoBehaviour
 
 	string GetThemeName()
     {
+		//hack
+		return "wccpdx";
 		switch(themeSelector.value)
         {
 			case THEME_ONECOL: case THEME_UNDEFINED: return "oneCol";
@@ -155,6 +157,7 @@ public class SetupScreen : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+
 		if (setupInProgress && AppLoader.SKIP_SETUP)
 			OnDoneClicked();
 		if(Input.GetKeyDown(KeyCode.Tab))

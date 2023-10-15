@@ -4474,6 +4474,12 @@ MonoBehaviour:
       iconColor: 
     sideBarPrimary: []
     sideBarSecondary: []
+    barStyle:
+      name: 
+      useCustomPosition: 0
+      customPositionX: 0
+      customPositionY: 0
+      customScale: 0
     boxScoreStyle:
       name: 
       useCustomPosition: 0

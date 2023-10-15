@@ -345,7 +345,7 @@ public class ViewModel : MonoBehaviour
     {
 		if (mainBar != null)
 			Destroy(mainBar.gameObject);
-		mainBar = Instantiate(MainLayoutModuleManager.GetMainBar(currentTheme.barStyle == null ? "" : currentTheme.barStyle.name), transform.parent);
+		mainBar = Instantiate(MainLayoutModuleManager.GetMainBar(currentTheme == null || currentTheme.barStyle == null ? "" : currentTheme.barStyle.name), transform.parent);
 
     }
 	public static void DestroyVirtualDesktop()

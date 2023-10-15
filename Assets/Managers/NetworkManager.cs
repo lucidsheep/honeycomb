@@ -359,6 +359,12 @@ public class NetworkManager : MonoBehaviour
                 jsonData = new GameEventJSON();
                 jsonData.event_type = eventType;
                 jsonData.values = args.Split(',');
+                if(jsonData.event_type == "alive")
+                {
+                    //cabinet alive message, send response
+                    Debug.Log("cabinet isAlive");
+                    cabinetEvents.SendMessageToServer("![k[im alive],v[null]]!");
+                }
             }
             else
             {
