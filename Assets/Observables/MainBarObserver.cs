@@ -5,6 +5,7 @@ public class MainBarObserver : KQObserver
 {
 	public PlayerCameraObserver blueCam;
 	public PlayerCameraObserver goldCam;
+	public MainBarModule scoreBar;
 	public MainBarInputArea inputArea;
 
     // Use this for initialization
@@ -21,6 +22,7 @@ public class MainBarObserver : KQObserver
 
 	void OnThemeChange()
     {
+		SetScorebar();
 		Vector3 newPos = new Vector3(0f, -4.24f + ViewModel.bottomBarPadding.property, 0f);
 		float scale = 1f;
 		float camX = 7.2f;
@@ -50,6 +52,13 @@ public class MainBarObserver : KQObserver
 
 		//gameObject.SetActive(ViewModel.currentTheme.layout != ThemeData.LayoutStyle.Game_Only);
 		//-3.94
+    }
+
+	void SetScorebar()
+    {
+		if (scoreBar != null)
+			Destroy(scoreBar.gameObject);
+		scoreBar = Instantiate(MainLayoutModuleManager.GetMainBar(ViewModel.currentTheme.barStyle == null ? "defaultBar" : ViewModel.currentTheme.barStyle.name), transform);
     }
 	// Update is called once per frame
 	void Update()

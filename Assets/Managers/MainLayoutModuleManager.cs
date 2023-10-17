@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class MainLayoutModuleManager : MonoBehaviour
 {
-	public List<MainBarObserver> mainBars;
+	public List<MainBarModule> mainBars;
 	public List<PostGameScreenObserver> postgameScreens;
 	public List<BoxScoreBase> boxScores;
 	public List<PostgamePlayerCard> playerCards;
@@ -20,9 +20,12 @@ public class MainLayoutModuleManager : MonoBehaviour
 		return instance.postgameScreens.Find(x => x.moduleName == screenName);
     }
 
-	public static MainBarObserver GetMainBar(string barName)
+	public static MainBarModule GetMainBar(string barName)
     {
-		return instance.mainBars.Find(x => x.moduleName == barName);
+		var ret = instance.mainBars.Find(x => x.moduleName == barName);
+		if (ret == null)
+			return instance.mainBars[0];
+		return ret;
     }
 
 	public static BoxScoreBase GetBoxScore(string boxName)

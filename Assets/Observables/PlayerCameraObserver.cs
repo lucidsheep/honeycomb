@@ -97,12 +97,11 @@ public class PlayerCameraObserver : KQObserver
         aspectRatio = (AspectRatio)PlayerPrefs.GetInt(webcamName + "Ratio", 0);
         if (state == WebcamState.On)
             StartCamera();
+        ViewModel.onThemeChange.AddListener(OnTheme);
     }
     override public void Start()
     {
         base.Start();
-        ViewModel.onThemeChange.AddListener(OnTheme);
-
         if (!commandHooks)
         {
             LSConsole.AddCommandHook("setCamera", "query the status of [blueCamera | goldCamera | commentaryCamera]. Add a [deviceName] to switch to switch cam to that device", SetCamera);

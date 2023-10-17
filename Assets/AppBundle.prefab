@@ -4668,8 +4668,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainBars:
-  - {fileID: 2525609430956403972, guid: 6aae708465e8a435fa3f05648b06b95a, type: 3}
-  - {fileID: 5120078972060838022, guid: ea15607a44f0e416fa2cdda96936bbae, type: 3}
+  - {fileID: 8278666156924049290, guid: 210774969e4af45ce96e29cccd40cc6a, type: 3}
+  - {fileID: 5265151286151429123, guid: 2ceeb44c3fb844020897b949446cdfd4, type: 3}
   postgameScreens:
   - {fileID: 6037398074245946859, guid: 69af786a65b474a6fbbef21241acc7e5, type: 3}
   - {fileID: -1697214059453694578, guid: 9f21b0331ff5844dc9c923ae7667ec0b, type: 3}

@@ -320,7 +320,6 @@ public class ViewModel : MonoBehaviour
 		if (newTheme != null)
 		{
 			instance.theme = newTheme;
-			instance.SetMainBar();
 			switch (newTheme.GetLayout())
 			{
 				case ThemeDataJson.LayoutStyle.OneCol_Left:
@@ -341,13 +340,6 @@ public class ViewModel : MonoBehaviour
 		}
     }
 
-	void SetMainBar()
-    {
-		if (mainBar != null)
-			Destroy(mainBar.gameObject);
-		mainBar = Instantiate(MainLayoutModuleManager.GetMainBar(currentTheme == null || currentTheme.barStyle == null ? "" : currentTheme.barStyle.name), transform.parent);
-
-    }
 	public static void DestroyVirtualDesktop()
     {
 		if (!instance.vdActive) return;

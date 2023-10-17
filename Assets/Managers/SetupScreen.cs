@@ -143,8 +143,6 @@ public class SetupScreen : MonoBehaviour
 
 	string GetThemeName()
     {
-		//hack
-		return "wccpdx";
 		switch(themeSelector.value)
         {
 			case THEME_ONECOL: case THEME_UNDEFINED: return "oneCol";

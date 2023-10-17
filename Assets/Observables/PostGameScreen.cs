@@ -198,7 +198,7 @@ public class PostGameScreen : KQObserver
 		var startPos = new Vector2(-5.31f, -1.47f);
 		var width = 3.49f;
 		var scale = 1f;
-		if (ViewModel.currentTheme.playerCardStyle != null)
+		if (ViewModel.currentTheme.playerCardStyle != null && ViewModel.currentTheme.playerCardStyle.scale > 0f)
 		{
 			styleName = ViewModel.currentTheme.playerCardStyle.name;
 			startPos = new Vector2(ViewModel.currentTheme.playerCardStyle.xOffset, ViewModel.currentTheme.playerCardStyle.yOffset);

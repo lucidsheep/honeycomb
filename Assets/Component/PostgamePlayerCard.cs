@@ -88,7 +88,7 @@ public class PostgamePlayerCard : MonoBehaviour
 			leftCol.font = rightCol.font = FontDB.GetFont(ViewModel.currentTheme.postgameCardFont);
         }
 
-		if(ViewModel.currentTheme.playerCardStyle != null)
+		if(ViewModel.currentTheme.playerCardStyle != null && ViewModel.currentTheme.playerCardStyle.scale > 0f)
         {
 			leftCol.font = FontDB.GetFont(ViewModel.currentTheme.playerCardStyle.numberFont);
 			rightCol.font = FontDB.GetFont(ViewModel.currentTheme.playerCardStyle.statFont);
