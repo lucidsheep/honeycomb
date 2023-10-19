@@ -139,8 +139,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   spTemplate: {fileID: 7217171165059124424, guid: bc52b9973f0334a618c20f5ecd5e496f, type: 3}
 --- !u!114 &398393001653321560
 MonoBehaviour:
@@ -158,8 +160,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   cardTemplates:
   - {fileID: 8709821548570468159, guid: 7579d6c3bff9a4dbbab9b00da6978e05, type: 3}
   - {fileID: 2327035649265556368, guid: da8ffea527c934868be895b09b99a172, type: 3}
@@ -188,8 +192,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   cardTemplates:
   - {fileID: 8709821548570468159, guid: 7d2c78a360dfc4a949b0769ee8cbaa86, type: 3}
   - {fileID: 8709821548570468159, guid: 90779346f49f84ee6a954c0450b09a77, type: 3}
@@ -218,8 +224,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   cardTemplates:
   - {fileID: 4557080097041636742, guid: 70892f11f6816484288f718f0522c9d0, type: 3}
   - {fileID: 4557080097041636742, guid: 70892f11f6816484288f718f0522c9d0, type: 3}
@@ -248,8 +256,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   queenKillAnim: {fileID: 4345971322459571981, guid: 87a8029b0cf994f8b99198e179311fab, type: 3}
 --- !u!114 &398393001653321572
 MonoBehaviour:
@@ -267,8 +277,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   warriorText: {fileID: 398393003599251908}
   speedText: {fileID: 0}
   speedWarriorText: {fileID: 398393003495380752}
@@ -288,8 +300,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   label: {fileID: 398393002223838843}
 --- !u!114 &6755892774512804134
 MonoBehaviour:
@@ -307,8 +321,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   instantMilestoneInterval: 15
   passiveMilestoneInterval: 30
   playerMilestoneInterval: 60
@@ -1807,9 +1823,12 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   txt: {fileID: 398393001896337831}
+  usePercent: 0
 --- !u!114 &398393001896337828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1826,12 +1845,20 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   anims:
-  - {fileID: 7036060550961298622, guid: f0739a0df52614c0b8e24e7ffcdd65f5, type: 3}
-  - {fileID: 7036060550961298622, guid: 67a6bb206e6294f1f8234caeb2cbede9, type: 3}
+  - {fileID: 7036060550961298622, guid: 783be1988aab14e0b84058393786b680, type: 3}
+  - {fileID: 7036060550961298622, guid: bf9302ac872874ae2961e21dfe175b6e, type: 3}
   spawnArea: {fileID: 398393002729788792}
+  animStyle: 1
+  animX: -1.19
+  animScale: 3.53
+  queenHeight: 0.31
+  snailHeight: 0
+  berryHeight: -0.73
 --- !u!1 &398393001935907657
 GameObject:
   m_ObjectHideFlags: 0
@@ -5042,7 +5069,7 @@ Transform:
   m_GameObject: {fileID: 398393002671224078}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.66, y: -8.7, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 398393002721550769}
@@ -5089,7 +5116,7 @@ SpriteRenderer:
   m_SortingLayerID: -1552878567
   m_SortingLayer: 12
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 2e779c8cf23714f3880ce3b7d173a25e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d9921fab8a1e94459a30e40360b530f2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5583,8 +5610,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   timeLabel: {fileID: 398393002341789919}
 --- !u!114 &398393002721550782
 MonoBehaviour:
@@ -5602,8 +5631,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   berryIcon: {fileID: 398393003614572425}
   berryLabel: {fileID: 398393003007359287}
   berryWarningColor: {r: 0.99215686, g: 0.49803922, b: 0.6392157, a: 1}
@@ -5691,8 +5722,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   centerText: {fileID: 0}
   snailIcon: {fileID: 0}
   blueBG: {fileID: 0}
@@ -6246,8 +6279,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   spTemplate: {fileID: 7217171165059124424, guid: bc52b9973f0334a618c20f5ecd5e496f, type: 3}
 --- !u!114 &398393002872166359
 MonoBehaviour:
@@ -6265,8 +6300,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   cardTemplates:
   - {fileID: 8709821548570468159, guid: 7579d6c3bff9a4dbbab9b00da6978e05, type: 3}
   - {fileID: 2327035649265556368, guid: da8ffea527c934868be895b09b99a172, type: 3}
@@ -6295,8 +6332,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   cardTemplates:
   - {fileID: 8709821548570468159, guid: 7d2c78a360dfc4a949b0769ee8cbaa86, type: 3}
   - {fileID: 8709821548570468159, guid: 90779346f49f84ee6a954c0450b09a77, type: 3}
@@ -6325,8 +6364,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   cardTemplates:
   - {fileID: 4557080097041636742, guid: e2ce4c3ad9f9b4f40a7c86ca571afb8f, type: 3}
   - {fileID: 4557080097041636742, guid: e2ce4c3ad9f9b4f40a7c86ca571afb8f, type: 3}
@@ -6355,8 +6396,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   warriorText: {fileID: 398393001945072735}
   speedText: {fileID: 0}
   speedWarriorText: {fileID: 398393001880222203}
@@ -6376,8 +6419,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   label: {fileID: 398393002708352837}
 --- !u!114 &2965089396462984247
 MonoBehaviour:
@@ -6395,8 +6440,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   instantMilestoneInterval: 15
   passiveMilestoneInterval: 30
   playerMilestoneInterval: 60
@@ -7678,9 +7725,12 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   txt: {fileID: 398393003227166206}
+  usePercent: 0
 --- !u!114 &398393003227166203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7697,12 +7747,20 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   anims:
-  - {fileID: 7036060550961298622, guid: f0739a0df52614c0b8e24e7ffcdd65f5, type: 3}
-  - {fileID: 7036060550961298622, guid: 67a6bb206e6294f1f8234caeb2cbede9, type: 3}
+  - {fileID: 7036060550961298622, guid: 783be1988aab14e0b84058393786b680, type: 3}
+  - {fileID: 7036060550961298622, guid: bf9302ac872874ae2961e21dfe175b6e, type: 3}
   spawnArea: {fileID: 398393002729788792}
+  animStyle: 1
+  animX: -1.19
+  animScale: 3.53
+  queenHeight: 0.31
+  snailHeight: 0
+  berryHeight: -0.73
 --- !u!1 &398393003238929645
 GameObject:
   m_ObjectHideFlags: 0
@@ -7874,8 +7932,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   topBar: {fileID: 0}
   bottomBar: {fileID: 0}
   titleText: {fileID: 398393003555613906}
@@ -7895,8 +7955,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   topBar: {fileID: 0}
   bottomBar: {fileID: 0}
   titleText: {fileID: 398393003379409392}
@@ -8102,8 +8164,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   useBold: 0
   forceLowercase: 0
   forceUppercase: 1
@@ -9178,8 +9242,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   useBold: 0
   forceLowercase: 0
   forceUppercase: 1
@@ -9785,90 +9851,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!1 &1689754651093681182
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3770011394241164991}
-  - component: {fileID: 3651769359708511412}
-  m_Layer: 0
-  m_Name: Square (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3770011394241164991
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1689754651093681182}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.75, y: 0.12, z: 0}
-  m_LocalScale: {x: 1.85, y: 1.85, z: 0.925}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 2969235835806519899}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &3651769359708511412
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1689754651093681182}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -641196909
-  m_SortingLayer: 15
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 2747690628134850419, guid: a9716c16a44a94eed9b5c90fbf4d9bdd, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!1 &2893136555417500415
 GameObject:
   m_ObjectHideFlags: 0
@@ -9990,11 +9972,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2969235835806519899}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.03}
+  m_AnchoredPosition: {x: 0, y: 0.13}
   m_SizeDelta: {x: 21.5, y: 4.45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1759384954191878721
@@ -10017,7 +9999,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4461963590726424182, guid: 24c5927429cdc4e719e88f55c2bb16a9, type: 2}
+  - {fileID: 3503669942494949224, guid: bf5f0f4d70d16435ba42619f3eea8b00, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10059,12 +10041,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'warm-up
+  m_text: 'WARM-UP
 
-    game'
+    GAME'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 24c5927429cdc4e719e88f55c2bb16a9, type: 2}
-  m_sharedMaterial: {fileID: -4461963590726424182, guid: 24c5927429cdc4e719e88f55c2bb16a9, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bf5f0f4d70d16435ba42619f3eea8b00, type: 2}
+  m_sharedMaterial: {fileID: 3503669942494949224, guid: bf5f0f4d70d16435ba42619f3eea8b00, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10088,13 +10070,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 8
   m_fontSizeMax: 20
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -10149,8 +10131,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   useBold: 0
   forceLowercase: 1
   forceUppercase: 0
@@ -10313,90 +10297,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: db9eb545c3f7141db977b4e3a70314ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!1 &4034552950498140793
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 607666213968783369}
-  - component: {fileID: 6832918066102601895}
-  m_Layer: 0
-  m_Name: Square (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &607666213968783369
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4034552950498140793}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.75, y: 0.12, z: 0}
-  m_LocalScale: {x: 1.85, y: 1.85, z: 0.925}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 2969235835806519899}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6832918066102601895
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4034552950498140793}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -641196909
-  m_SortingLayer: 15
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 2747690628134850419, guid: a9716c16a44a94eed9b5c90fbf4d9bdd, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -10782,8 +10682,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8931099334577342980}
-  - {fileID: 607666213968783369}
-  - {fileID: 3770011394241164991}
   - {fileID: 2714649409346890284}
   m_Father: {fileID: 398393003275332148}
   m_RootOrder: 31
@@ -10804,12 +10702,14 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   objs:
   - {fileID: 8824712777082035921}
-  - {fileID: 4034552950498140793}
-  - {fileID: 1689754651093681182}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 3182266765866084735}
 --- !u!1 &8670483400167717485
 GameObject:
@@ -10921,8 +10821,8 @@ Transform:
   m_GameObject: {fileID: 8824712777082035921}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.17, z: 0}
-  m_LocalScale: {x: 2.31, y: 1.52, z: 1.88}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.86, y: 1.2238961, z: 1.5137663}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2969235835806519899}
   m_RootOrder: 0

@@ -5,12 +5,19 @@ using TMPro;
 public class MatchPreviewPlayer : MonoBehaviour
 {
 	public ProfilePicture avatar;
-	public TextMeshPro nameTxt;
+	public TextMeshPro nameTxt, sceneTxt, pronounTxt;
 	public Sprite defaultAvatar;
+
+	public enum TagStyle { COLORIZE, UNBOLD, BOLD, SIZE, NONE}
+	public TagStyle tagStyle = TagStyle.COLORIZE;
+	public bool tagsFirst = false;
+	public float tagSize = 30f;
+	public bool sizeIsRatio = false;
 	// Use this for initialization
 	void Start()
 	{
-
+		if (GetComponentInParent<GlobalFade>() != null && sceneTxt != null)
+			GetComponentInParent<GlobalFade>().SetBaseAlpha(sceneTxt, 0.4627451f);
 	}
 
 	// Update is called once per frame
@@ -21,28 +28,65 @@ public class MatchPreviewPlayer : MonoBehaviour
 
 	public void Init(PlayerStaticData.PlayerData player)
     {
+		bool usedPronouns = false, usedScene = false;
 		if (player.profilePic != null)
 			avatar.SetPicture(player.profilePic, player.profilePicRotation, .55f);
 		else
 			avatar.SetPicture(defaultAvatar);
-		nameTxt.text = player.name + " " + FormatTags(player.pronouns, player.sceneTag);
-    }
+		
+		if(sceneTxt != null)
+        {
+			sceneTxt.text = player.sceneTag.ToUpper();
+			usedScene = true;
+        }
+		if(pronounTxt != null)
+        {
+			pronounTxt.text = player.pronouns.ToUpper();
+			usedPronouns = true;
+        }
+		
+		var tags = FormatTags(usedPronouns ? "" : player.pronouns, usedScene ? "" : player.sceneTag, "00aa00", (sizeIsRatio ? nameTxt.fontSize * tagSize : tagSize));
+		if (tags == "")
+			nameTxt.text = player.name;
+		else
+			nameTxt.text = (tagsFirst ? tags + " " : "") + player.name + (!tagsFirst ? " " + tags : "");
+	}
 
 	public void Clear()
     {
 		avatar.SetPicture(defaultAvatar);
 		nameTxt.text = "";
+		if (sceneTxt != null)
+			sceneTxt.text = "";
+		if (pronounTxt != null)
+			pronounTxt.text = "";
     }
-	static string FormatTags(string pronouns, string scene, string sceneColor = "00aa00", float size = 30f)
+	string FormatTags(string pronouns, string scene, string sceneColor = "00aa00", float size = 30f)
 	{
 		string ret = "";
 		if (pronouns != "")
-			ret += "<size=" + size + "><mark=#E540D277 padding=\"10, 10, 0, 0\"><b>" + pronouns.ToUpper() + "</b></mark></size>";
+			ret += Format(pronouns, size, "E540D2");
 		if (scene == "")
-			return ret;
+			return " " + ret;
 		if (ret != "")
 			ret += " ";
-		return ret + "<size=" + size + "><mark=#" + sceneColor + "77 padding=\"10, 10, 0, 0\"><b>" + scene.ToUpper() + "</b></mark></size>";
+		return " " + ret + Format(scene, size, sceneColor);
 	}
+
+	string Format(string input, float size, string color)
+    {
+		switch(tagStyle)
+        {
+			case TagStyle.COLORIZE:
+				return "<size=" + size + "><mark=#" + color + "77 padding=\"10, 10, 0, 0\"><b>" + input.ToUpper() + "</b></mark></size>";
+			case TagStyle.UNBOLD:
+				return "<size=" + size + "></b>" + input.ToUpper() + "</size><b>";
+			case TagStyle.BOLD:
+				return "<size=" + size + "><b>" + input.ToUpper() + "</size></b>";
+			case TagStyle.SIZE:
+				return "<size=" + size + ">" + input.ToUpper() + "</size>";
+			default: return input;
+		}
+    }
 }
 

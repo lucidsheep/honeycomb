@@ -11,6 +11,7 @@ public class GlobalFade : MonoBehaviour
 	MeshRenderer[] players;
 
 	Dictionary<SpriteRenderer, float> baseAlphas = new Dictionary<SpriteRenderer, float>();
+	Dictionary<TextMeshPro, float> baseAlphaText = new Dictionary<TextMeshPro, float>();
 	float _alpha = 1f;
 	public float alpha {get { return _alpha; } set {
 			_alpha = value;
@@ -38,7 +39,10 @@ public class GlobalFade : MonoBehaviour
 			s.color = new Color(s.color.r, s.color.g, s.color.b, adjustedAlpha);
 		}
 		foreach (var t in tmps)
-			t.color = new Color(t.color.r, t.color.g, t.color.b, _alpha);
+		{
+			float adjustedAlpha = baseAlphaText.ContainsKey(t) ? baseAlphaText[t] * _alpha : _alpha;
+			t.color = new Color(t.color.r, t.color.g, t.color.b, adjustedAlpha);
+		}
 		foreach (var v in players)
 			v.material.SetColor("_Color", new Color(1f, 1f, 1f, _alpha));
 	}
@@ -58,5 +62,10 @@ public class GlobalFade : MonoBehaviour
     {
 		baseAlphas.Add(sr, baseAlpha);
     }
+
+	public void SetBaseAlpha(TextMeshPro sr, float baseAlpha)
+	{
+		baseAlphaText.Add(sr, baseAlpha);
+	}
 }
 

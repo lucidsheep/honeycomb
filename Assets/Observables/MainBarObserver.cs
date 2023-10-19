@@ -26,6 +26,8 @@ public class MainBarObserver : KQObserver
 		Vector3 newPos = new Vector3(0f, -4.24f + ViewModel.bottomBarPadding.property, 0f);
 		float scale = 1f;
 		float camX = 7.2f;
+		float camY = -.79f;
+		float camScale = 1f;
 		switch(ViewModel.currentTheme.GetLayout())
         {
 			case ThemeDataJson.LayoutStyle.Game_Only:
@@ -45,9 +47,17 @@ public class MainBarObserver : KQObserver
 				break;
 
         }
+		if(ViewModel.currentTheme.barStyle.cameraScale > 0f)
+        {
+			camX = ViewModel.currentTheme.barStyle.cameraX;
+			camY = ViewModel.currentTheme.barStyle.cameraY;
+			camScale = ViewModel.currentTheme.barStyle.cameraScale;
+			blueCam.iconsVisible = goldCam.iconsVisible = !ViewModel.currentTheme.barStyle.hideCameraIcons;
+		}
 		transform.localPosition = newPos;
-		blueCam.transform.localPosition = new Vector3(-camX, -.79f, -3.3f);
-		goldCam.transform.localPosition = new Vector3(camX, -.79f, -3.3f);
+		blueCam.transform.localPosition = new Vector3(-camX, camY, -3.3f);
+		goldCam.transform.localPosition = new Vector3(camX, camY, -3.3f);
+		blueCam.transform.localScale = goldCam.transform.localScale = Vector3.one * camScale;
 		transform.localScale = Vector3.one * scale;
 
 		//gameObject.SetActive(ViewModel.currentTheme.layout != ThemeData.LayoutStyle.Game_Only);

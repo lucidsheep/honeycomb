@@ -5,6 +5,7 @@ public class ProfilePicture : MonoBehaviour
 {
 	public SpriteRenderer sr;
 	public SpriteMask mask;
+	public bool isSquare = false;
 	// Use this for initialization
 	void Awake()
 	{
@@ -31,7 +32,7 @@ public class ProfilePicture : MonoBehaviour
 		}
 
 		sr.sprite = pic;
-		sr.transform.localScale = new Vector3(1f * (hFlip ? -1f : 1f), 1f, 1f) * scale;
+		sr.transform.localScale = new Vector3(1f * (hFlip ? -1f : 1f), 1f, 1f) * scale * (isSquare ? 1.5f : 1f);
 		sr.transform.localRotation = Quaternion.Euler(0f, 0f, -90f * rotationLevel);
 	}
 

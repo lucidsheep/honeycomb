@@ -7,6 +7,7 @@ public class MainLayoutModuleManager : MonoBehaviour
 	public List<PostGameScreenObserver> postgameScreens;
 	public List<BoxScoreBase> boxScores;
 	public List<PostgamePlayerCard> playerCards;
+	public List<MatchPreviewScreen> previewScreens;
 
 	static MainLayoutModuleManager instance;
 	// Use this for initialization
@@ -41,6 +42,14 @@ public class MainLayoutModuleManager : MonoBehaviour
 		var ret = instance.playerCards.Find(x => x.moduleName == playerCardName);
 		if (ret == null)
 			return instance.playerCards[0];
+		return ret;
+	}
+
+	public static MatchPreviewScreen GetMatchPreview(string screenName)
+	{
+		var ret = instance.previewScreens.Find(x => x.moduleName == screenName);
+		if (ret == null)
+			return instance.previewScreens[0];
 		return ret;
 	}
 }

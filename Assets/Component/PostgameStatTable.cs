@@ -17,7 +17,8 @@ public class PostgameStatTable : MonoBehaviour
 
     public void OnPostgame()
 	{
-		themeBG.sprite = AppLoader.GetStreamingSprite("postgameStatTable");
+		if(themeBG != null)
+			themeBG.sprite = AppLoader.GetStreamingSprite("postgameStatTable");
 		if (miniTable)
 		{
 			for (int i = 0; i < cols.Length; i++)

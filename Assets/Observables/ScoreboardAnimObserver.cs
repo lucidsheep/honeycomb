@@ -4,9 +4,16 @@ using DG.Tweening;
 
 public class ScoreboardAnimObserver : KQObserver
 {
+	public enum AnimStyle { SWEEP, BLINK, NONE }
 	ScoreboardObserver observer;
 	public GameObject[] anims;
 	public GameObject spawnArea;
+	public AnimStyle animStyle = AnimStyle.SWEEP;
+	public float animX = 0f;
+	public float animScale = 1f;
+	public float queenHeight = .31f;
+	public float snailHeight = 0f;
+	public float berryHeight = -.8f;
 	// Use this for initialization
 	void Start()
 	{
@@ -19,13 +26,29 @@ public class ScoreboardAnimObserver : KQObserver
 
 	void DoAnim(int pos)
     {
-		var yPos = pos == -1 ? .31f : pos == 1 ? -.8f : 0f;
+		if (animStyle == AnimStyle.NONE) return;
+
+		var yPos = pos == -1 ? queenHeight : pos == 1 ? berryHeight : snailHeight;
 		var anim = Instantiate(anims[team], spawnArea.transform);
-		anim.transform.localPosition = new Vector3(targetID == 0 ? 0f : -0f, yPos, 0f);
-		anim.transform.localScale = new Vector3(1f, 1f, 1f);
-		anim.transform.localRotation = Quaternion.Euler(0f, 0f, targetID == 0 ? 90f : 270f);
-		anim.transform.DOLocalMoveX(.72f * (targetID == 0 ? -4f : 4f), .5f).SetEase(Ease.OutQuad)
-			.OnComplete(() => Destroy(anim.gameObject));
+		anim.transform.localPosition = new Vector3(targetID == 0 ? animX : -animX, yPos, 0f);
+		anim.transform.localScale = Vector3.one * animScale;
+
+		if (animStyle == AnimStyle.SWEEP)
+		{
+			anim.transform.localRotation = Quaternion.Euler(0f, 0f, targetID == 0 ? 90f : 270f);
+			anim.transform.DOLocalMoveX(.72f * (targetID == 0 ? -4f : 4f), .5f).SetEase(Ease.OutQuad)
+				.OnComplete(() => Destroy(anim.gameObject));
+		} else if(animStyle == AnimStyle.BLINK)
+        {
+			var sr = anim.GetComponent<SpriteRenderer>();
+			sr.color = new Color(1f, 1f, 1f, 0f);
+			sr.DOColor(Color.white, 1f);
+			DOTween.Sequence()
+				.Append(sr.DOColor(Color.white, .5f).SetEase(Ease.OutElastic))
+				.AppendInterval(.5f)
+				.Append(sr.DOColor(new Color(1f,1f,1f,0f), .5f).SetEase(Ease.InQuad))
+				.AppendCallback(() => Destroy(anim));
+        }
 
     }
 	// Update is called once per frame

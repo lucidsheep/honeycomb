@@ -10,6 +10,7 @@ public class ScoreboardObserver : KQObserver
 
 	bool dirty = false;
 	public TextMeshPro txt;
+	public bool usePercent = true;
 	string snailText = "--";
 
 	// Use this for initialization
@@ -44,7 +45,7 @@ public class ScoreboardObserver : KQObserver
 	void OnSnailPercentage(int before, int after)
     {
 		snailCount.property = after;
-		snailText = after <= 0 ? "--" : (after + "%");
+		snailText = after <= 0 ? "--" : usePercent ? (after + "%") : after.ToString();
 		UpdateLabel();
     }
 	void UpdateLabel()

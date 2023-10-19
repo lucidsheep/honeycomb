@@ -356,14 +356,20 @@ public class AppLoader : MonoBehaviour
 
     public static Sprite GetStreamingSprite(string assetName)
     {
+        return GetStreamingSprite(assetName, new Vector2(.5f, .5f));
+    }
+
+    public static Sprite GetStreamingSprite(string assetName, Vector2 pivot)
+    {
         string path = Application.streamingAssetsPath + slash + "themes" + slash + ViewModel.currentTheme.name + slash + assetName + ".png";
         if (File.Exists(path))
         {
             Debug.Log("loading " + path);
             Texture2D ret = new Texture2D(8, 8);
             ret.LoadImage(File.ReadAllBytes(path), true);
-            return Sprite.Create(ret, new Rect(0f, 0f, ret.width, ret.height), new Vector2(.5f, .5f));
-        } else
+            return Sprite.Create(ret, new Rect(0f, 0f, ret.width, ret.height), pivot);
+        }
+        else
         {
             Debug.Log("file not found at " + path);
         }

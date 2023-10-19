@@ -36,6 +36,16 @@ public class PostgameBoxScore
 }
 
 [System.Serializable]
+public class MatchPreviewStyle
+{
+    public string name;
+    public bool useCustomPosition;
+    public float customPositionX;
+    public float customPositionY;
+    public float customScale;
+}
+
+[System.Serializable]
 public class MainBarStyle
 {
     public string name;
@@ -43,6 +53,10 @@ public class MainBarStyle
     public float customPositionX;
     public float customPositionY;
     public float customScale;
+    public float cameraX;
+    public float cameraY;
+    public float cameraScale;
+    public bool hideCameraIcons;
 }
 
 [System.Serializable]
@@ -74,6 +88,7 @@ public class ThemeDataJson
     public string headerFont, postgameHeaderFont, postgameCardFont, postgameDetailFont;
     public string postgameScreen;
     public string mainBarStyle;
+    public string matchPreviewStyle;
     public string videoSet;
     public bool showTicker, showPlayerCams, showMilestones, showCrownAnimation, startReversed;
     public int leaderboardID;
@@ -89,6 +104,7 @@ public class ThemeDataJson
     public string[] sideBarSecondary;
     public MainBarStyle barStyle;
     public PostgameBoxScore boxScoreStyle;
+    public MatchPreviewStyle matchPreview;
     public PostgamePlayerCardStyle playerCardStyle;
     public PositionTweak[] positionTweaks;
 

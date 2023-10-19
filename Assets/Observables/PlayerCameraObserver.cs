@@ -31,6 +31,7 @@ public class PlayerCameraObserver : KQObserver
     public string webcamName;
     public SpriteRenderer frame;
     public Image[] icons;
+    public bool iconsVisible = true;
 
     AspectRatio _ratio;
     public AspectRatio aspectRatio { get { return _ratio; } set
@@ -301,6 +302,7 @@ public class PlayerCameraObserver : KQObserver
         if (targetID < 0) return;
         for (int i = 0; i < 5; i++)
         {
+            icons[i].gameObject.SetActive(iconsVisible);
             icons[i].sprite = SpriteDB.allSprites[team].playerSprites[4 - i].icon;
             icons[i].GetComponent<RectTransform>().sizeDelta = Vector2.one * (aspectRatio == AspectRatio.Wide ? 100 : 75);
             icons[i].GetComponent<RectTransform>().anchorMax = icons[i].GetComponent<RectTransform>().anchorMin = new Vector2(icons[i].GetComponent<RectTransform>().anchorMin.x, aspectRatio == AspectRatio.Wide ? .875f : .125f);

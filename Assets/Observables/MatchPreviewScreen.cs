@@ -74,9 +74,10 @@ public class MatchPreviewScreen : KQObserver
 		transform.localPosition = pos;
 		transform.localScale = Vector3.one * scale;
 
-		if (ViewModel.currentTheme.postgameHeaderFont != "")
-		{
-			blueTeamName.font = goldTeamName.font = FontDB.GetFont(ViewModel.currentTheme.postgameHeaderFont);
+		if(ViewModel.currentTheme.matchPreview.useCustomPosition)
+        {
+			transform.localPosition = new Vector3(ViewModel.currentTheme.matchPreview.customPositionX, ViewModel.currentTheme.matchPreview.customPositionY, 0f);
+			transform.localScale = Vector3.one * ViewModel.currentTheme.matchPreview.customScale;
 		}
 	}
 	private void OnTournamentData(HMMatchState data)

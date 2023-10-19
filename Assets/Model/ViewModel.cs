@@ -32,6 +32,7 @@ public class ViewModel : MonoBehaviour
 	public bool appView = false;
 
 	public MainBarObserver mainBar;
+	public MatchPreviewScreen matchPreview;
 	public Canvas webcamCanvas;
 	public SpriteRenderer topLevelGraphicContainer;
 	public SpriteRenderer[] backgroundGraphicContainers;
@@ -335,11 +336,18 @@ public class ViewModel : MonoBehaviour
 			bottomBarPadding.property = newTheme.showTicker ? .30f : 0f;
 			instance.topLevelGraphicContainer.sprite = AppLoader.GetStreamingSprite("mainFrame");
 			instance.backgroundGraphicContainers[0].sprite = AppLoader.GetStreamingSprite("background");
-			
+			SetMatchPreviewScreen(newTheme.matchPreview == null ? "" : newTheme.matchPreview.name);
 			onThemeChange.Invoke();
 		}
     }
 
+	static void SetMatchPreviewScreen(string styleName)
+    {
+		if (instance.matchPreview != null)
+			Destroy(instance.matchPreview.gameObject);
+
+		instance.matchPreview = Instantiate(MainLayoutModuleManager.GetMatchPreview(styleName), instance.transform.parent);
+    }
 	public static void DestroyVirtualDesktop()
     {
 		if (!instance.vdActive) return;
