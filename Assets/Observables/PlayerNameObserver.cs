@@ -52,7 +52,7 @@ public class PlayerNameObserver : KQObserver
 				var id = GameModel.instance.teams[targetID].players[i].hivemindID;
 				txt += FormatName(GameModel.instance.teams[targetID].players[i].playerName.property, i) + " " + FormatPronouns(PlayerStaticData.GetPronouns(id)) + "\n";
 				if(!presetMode)
-					icons[lineNum].sprite = SpriteDB.allSprites[targetID].playerSprites[i].icon;
+					icons[lineNum].sprite = SpriteDB.GetIcon(targetID, i);
 				lineNum++;
 			}
 

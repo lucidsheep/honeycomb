@@ -51,7 +51,7 @@ public class PostgamePlayerCard : MonoBehaviour
 		if (pic != null)
 		{
 			profileFrame.SetPicture(pic, rotation, .55f);
-			positionIcon.sprite = SpriteDB.allSprites[teamID].playerSprites[playerID].icon;
+			positionIcon.sprite = SpriteDB.GetIcon(teamID, playerID);
 		}
 		else
 		{

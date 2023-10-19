@@ -23,7 +23,7 @@ public class PostgamePlayerLine : MonoBehaviour
 			profile.SetPicture(pic, rotation, .55f);
         } else
         {
-			profile.SetPicture(SpriteDB.allSprites[player.teamID].playerSprites[player.positionID].icon, 0, .25f);
+			profile.SetPicture(SpriteDB.GetIcon(player.teamID, player.positionID), 0, .25f);
 
 		}
 		if(bg != null)

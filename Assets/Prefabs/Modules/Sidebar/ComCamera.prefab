@@ -203,8 +203,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.08, y: 0.08}
-  m_SizeDelta: {x: -0.16, y: -0.16}
+  m_AnchoredPosition: {x: 0.12, y: 0.04}
+  m_SizeDelta: {x: -0.16, y: -0.12}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &6133425173541896323
 CanvasRenderer:
@@ -298,11 +298,15 @@ MonoBehaviour:
   moduleName: commentaryCamera
   size: 1.85
   bgContainer: {fileID: 5874688973878555026}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
+  absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   cameraImage: {fileID: 1330669528802430802}
   webcamName: commentaryCamera
   frame: {fileID: 4425415310909205606}
   icons: []
+  iconsVisible: 1
   cameraIsPlaying: 0
 --- !u!223 &6688697840899523217
 Canvas:

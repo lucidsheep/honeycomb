@@ -16,8 +16,8 @@ public class EventFeedObserver : PlayerFeedObserver
 		{
 			//Debug.Log("Kill event for team " + values.teamID + ", my tid= " + targetID);
 			var card = PushNewCard();
-			card.player.sprite = SpriteDB.allSprites[team].playerSprites[values.playerID].icon;
-			card.target.sprite = SpriteDB.allSprites[1 - team].playerSprites[values.targetID].icon;
+			card.player.sprite = SpriteDB.GetIcon(team, values.playerID);
+			card.target.sprite = SpriteDB.GetIcon(1 - team, values.targetID);
 		}
 		if(eType == GameEventType.GAME_END_DETAIL)
         {
