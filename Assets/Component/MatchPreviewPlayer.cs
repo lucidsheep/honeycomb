@@ -44,7 +44,8 @@ public class MatchPreviewPlayer : MonoBehaviour
 			pronounTxt.text = player.pronouns.ToUpper();
 			usedPronouns = true;
         }
-		
+		nameTxt.text = player.name;
+		nameTxt.ForceMeshUpdate(); //needed to calculate pronoun size
 		var tags = FormatTags(usedPronouns ? "" : player.pronouns, usedScene ? "" : player.sceneTag, "00aa00", (sizeIsRatio ? nameTxt.fontSize * tagSize : tagSize));
 		if (tags == "")
 			nameTxt.text = player.name;

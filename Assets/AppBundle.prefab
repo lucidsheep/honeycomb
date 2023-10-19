@@ -3812,6 +3812,12 @@ MonoBehaviour:
       customPositionX: 0
       customPositionY: 0
       customScale: 0
+    matchPreview:
+      name: 
+      useCustomPosition: 0
+      customPositionX: 0
+      customPositionY: 0
+      customScale: 0
     playerCardStyle:
       name: 
       xOffset: 0
@@ -3952,6 +3958,7 @@ MonoBehaviour:
   serverPort: 8080
   isSecureConnection: 1
   activeTournament: 0
+  leaderboardScene: kqpdx
 --- !u!114 &247699985227940698
 MonoBehaviour:
   m_ObjectHideFlags: 0

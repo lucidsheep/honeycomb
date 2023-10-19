@@ -13,6 +13,7 @@ public class TournamentLeaderboardManager : MonoBehaviour
 	public int serverPort;
 	public bool isSecureConnection;
 	public int activeTournament = -1;
+	public string leaderboardScene = "";
 
 	public static UnityEvent<TournamentLeaderboard> OnLeaderboardReceived = new UnityEvent<TournamentLeaderboard>();
     private void Awake()
@@ -49,6 +50,7 @@ public class TournamentLeaderboardManager : MonoBehaviour
 
 		if (!connection.isConnected) return;
 		if (GameModel.instance.isWarmup) return; //warmups don't count
+		if (leaderboardScene != "" && leaderboardScene != NetworkManager.instance.sceneName) return;
 
 		bool sendAllStats = GameModel.currentTournamentID == activeTournament || activeTournament == 0;
 

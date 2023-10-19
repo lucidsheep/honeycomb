@@ -12,6 +12,7 @@ public class WCCPlayerNameDisplay : MonoBehaviour
 	public ProfilePicture profile;
 	public Sprite[] offIcons;
 	public Sprite[] onIcons;
+	public bool pronounsFirst;
 
 	bool curState = true;
 	// Use this for initialization
@@ -27,7 +28,7 @@ public class WCCPlayerNameDisplay : MonoBehaviour
 			
 	}
 
-	public void SetDisplay(string name, string scene, bool instant = false)
+	public void SetDisplay(string name, string scene, string pronouns, bool instant = false)
     {
 		if(name == "")
         {
@@ -54,6 +55,8 @@ public class WCCPlayerNameDisplay : MonoBehaviour
 			curState = true;
 
 			playerName.text = name;
+			playerName.ForceMeshUpdate(); //need this to calculate size for pronouns
+			playerName.text = (pronounsFirst ? FormatPronouns(pronouns) + " " : "") + name + (!pronounsFirst ? " " + FormatPronouns(pronouns) : "");
 			sceneTag.text = scene;
 
 			if (instant)
@@ -71,5 +74,11 @@ public class WCCPlayerNameDisplay : MonoBehaviour
 			}
         }
     }
+
+	string FormatPronouns(string pronouns)
+    {
+		var size = playerName.fontSize / 2f;
+		return "<size=" + size + ">" + pronouns.ToUpper() + "</size>";
+	}
 }
 

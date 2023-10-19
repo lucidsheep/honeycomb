@@ -53,8 +53,10 @@ MonoBehaviour:
   moduleName: wccBlueRoster
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   playerSlots:
   - {fileID: 5210137685017293634}
   - {fileID: 5210137685597646195}
@@ -111,6 +113,10 @@ PrefabInstance:
     - target: {fileID: 6830957936205249718, guid: 62a3c73c90b0c43df8ccbdba9c1491db, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830957936205249719, guid: 62a3c73c90b0c43df8ccbdba9c1491db, type: 3}
+      propertyPath: pronounsFirst
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6830957936205249721, guid: 62a3c73c90b0c43df8ccbdba9c1491db, type: 3}
       propertyPath: m_Name
@@ -189,6 +195,10 @@ PrefabInstance:
       propertyPath: position
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6830957936205249719, guid: 62a3c73c90b0c43df8ccbdba9c1491db, type: 3}
+      propertyPath: pronounsFirst
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6830957936205249721, guid: 62a3c73c90b0c43df8ccbdba9c1491db, type: 3}
       propertyPath: m_Name
       value: WCCPlayerSlotBlue (3)
@@ -265,6 +275,10 @@ PrefabInstance:
     - target: {fileID: 6830957936205249719, guid: 62a3c73c90b0c43df8ccbdba9c1491db, type: 3}
       propertyPath: position
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830957936205249719, guid: 62a3c73c90b0c43df8ccbdba9c1491db, type: 3}
+      propertyPath: pronounsFirst
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6830957936205249721, guid: 62a3c73c90b0c43df8ccbdba9c1491db, type: 3}
       propertyPath: m_Name
@@ -343,6 +357,10 @@ PrefabInstance:
       propertyPath: position
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6830957936205249719, guid: 62a3c73c90b0c43df8ccbdba9c1491db, type: 3}
+      propertyPath: pronounsFirst
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6830957936205249721, guid: 62a3c73c90b0c43df8ccbdba9c1491db, type: 3}
       propertyPath: m_Name
       value: WCCPlayerSlotBlue (1)
@@ -419,6 +437,10 @@ PrefabInstance:
     - target: {fileID: 6830957936205249719, guid: 62a3c73c90b0c43df8ccbdba9c1491db, type: 3}
       propertyPath: position
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830957936205249719, guid: 62a3c73c90b0c43df8ccbdba9c1491db, type: 3}
+      propertyPath: pronounsFirst
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6830957936205249721, guid: 62a3c73c90b0c43df8ccbdba9c1491db, type: 3}
       propertyPath: m_Name

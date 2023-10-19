@@ -155,6 +155,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f248a039dc45d415e80c1a3683d74b21, type: 3}
   - {fileID: 21300000, guid: 0c20abe66dc6f43f78014d0b8dcb8ff5, type: 3}
   - {fileID: 21300000, guid: f18c2895cd55a4fcfaebf8e1d80551fc, type: 3}
+  pronounsFirst: 0
 --- !u!1 &6830957936538783955
 GameObject:
   m_ObjectHideFlags: 0
