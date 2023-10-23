@@ -41,18 +41,19 @@ public class TournamentLeaderboardPlayer
 			ret.berries += player.curGameStats.berriesDeposited.property + player.curGameStats.berriesKicked.property;
 			ret.berries_kicked += player.curGameStats.berriesKicked.property;
 			ret.deaths += player.curGameStats.deaths.property;
-			ret.kills_all += player.curGameStats.kills.property;
 			ret.kills_military += player.curGameStats.militaryKills.property;
 			ret.kills_queen += player.curGameStats.queenKills.property;
 			if (player.positionID == 2) //stat is for non-queen players only
 			{
 				ret.kills_queen_aswarrior += 0;
 				ret.warrior_deaths += 0;
+				ret.kills_all += 0; //used for space cadet
 			}
 			else
 			{
 				ret.kills_queen_aswarrior += ret.kills_queen;
 				ret.warrior_deaths += player.curGameStats.militaryDeaths.property;
+				ret.kills_all += player.curGameStats.kills.property;
 			}
 			ret.snail += player.curGameStats.snailMoved.property;
 			ret.snail_deaths = player.curGameStats.snailDeaths.property;

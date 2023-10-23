@@ -44,8 +44,10 @@ public class ScoreboardAnimObserver : KQObserver
 			sr.color = new Color(1f, 1f, 1f, 0f);
 			sr.DOColor(Color.white, 1f);
 			DOTween.Sequence()
-				.Append(sr.DOColor(Color.white, .5f).SetEase(Ease.OutElastic))
-				.AppendInterval(.5f)
+				.Append(sr.DOColor(Color.white, .1f).SetEase(Ease.InQuad))
+				.Append(sr.DOColor(new Color(1f, 1f, 1f, 0f), .1f).SetEase(Ease.InQuad))
+				.Append(sr.DOColor(Color.white, .1f).SetEase(Ease.InQuad))
+				.AppendInterval(.3f)
 				.Append(sr.DOColor(new Color(1f,1f,1f,0f), .5f).SetEase(Ease.InQuad))
 				.AppendCallback(() => Destroy(anim));
         }

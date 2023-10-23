@@ -309,8 +309,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   objs:
   - {fileID: 1533610623126926228}
   - {fileID: 6395757673863679804}
@@ -685,8 +687,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   useBold: 0
   forceLowercase: 1
   forceUppercase: 0
@@ -1189,9 +1193,12 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   txt: {fileID: 7690098040415571170}
+  usePercent: 1
 --- !u!114 &7690098040415571169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1208,12 +1215,20 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   anims:
   - {fileID: 7036060550961298622, guid: f0739a0df52614c0b8e24e7ffcdd65f5, type: 3}
   - {fileID: 7036060550961298622, guid: 67a6bb206e6294f1f8234caeb2cbede9, type: 3}
   spawnArea: {fileID: 7690098041664600125}
+  animStyle: 0
+  animX: 0
+  animScale: 1
+  queenHeight: 0.31
+  snailHeight: 0
+  berryHeight: -0.8
 --- !u!1 &7690098040434054328
 GameObject:
   m_ObjectHideFlags: 0
@@ -2307,8 +2322,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   spTemplate: {fileID: 7217171165059124424, guid: bc52b9973f0334a618c20f5ecd5e496f, type: 3}
 --- !u!114 &7690098040591454749
 MonoBehaviour:
@@ -2326,8 +2343,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   cardTemplates:
   - {fileID: 8709821548570468159, guid: 7579d6c3bff9a4dbbab9b00da6978e05, type: 3}
   - {fileID: 2327035649265556368, guid: da8ffea527c934868be895b09b99a172, type: 3}
@@ -2356,8 +2375,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   cardTemplates:
   - {fileID: 8709821548570468159, guid: 7d2c78a360dfc4a949b0769ee8cbaa86, type: 3}
   - {fileID: 8709821548570468159, guid: 90779346f49f84ee6a954c0450b09a77, type: 3}
@@ -2386,8 +2407,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   cardTemplates:
   - {fileID: 4557080097041636742, guid: 70892f11f6816484288f718f0522c9d0, type: 3}
   - {fileID: 4557080097041636742, guid: 70892f11f6816484288f718f0522c9d0, type: 3}
@@ -2412,12 +2435,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc291cf7fb7d4650915e11e067f6a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetID: 0
+  targetID: -1
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   queenKillAnim: {fileID: 4345971322459571981, guid: 87a8029b0cf994f8b99198e179311fab, type: 3}
 --- !u!114 &7690098040591454753
 MonoBehaviour:
@@ -2435,8 +2460,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   warriorText: {fileID: 7690098042403644545}
   speedText: {fileID: 0}
   speedWarriorText: {fileID: 7690098042040121941}
@@ -2456,8 +2483,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   label: {fileID: 7690098041161780030}
 --- !u!114 &3674400256052391011
 MonoBehaviour:
@@ -2475,8 +2504,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   instantMilestoneInterval: 15
   passiveMilestoneInterval: 30
   playerMilestoneInterval: 60
@@ -6989,8 +7020,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   spTemplate: {fileID: 7217171165059124424, guid: bc52b9973f0334a618c20f5ecd5e496f, type: 3}
 --- !u!114 &7690098041522485906
 MonoBehaviour:
@@ -7008,8 +7041,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   cardTemplates:
   - {fileID: 8709821548570468159, guid: 7579d6c3bff9a4dbbab9b00da6978e05, type: 3}
   - {fileID: 2327035649265556368, guid: da8ffea527c934868be895b09b99a172, type: 3}
@@ -7038,8 +7073,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   cardTemplates:
   - {fileID: 8709821548570468159, guid: 7d2c78a360dfc4a949b0769ee8cbaa86, type: 3}
   - {fileID: 8709821548570468159, guid: 90779346f49f84ee6a954c0450b09a77, type: 3}
@@ -7068,8 +7105,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   cardTemplates:
   - {fileID: 4557080097041636742, guid: e2ce4c3ad9f9b4f40a7c86ca571afb8f, type: 3}
   - {fileID: 4557080097041636742, guid: e2ce4c3ad9f9b4f40a7c86ca571afb8f, type: 3}
@@ -7098,8 +7137,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   warriorText: {fileID: 7690098040838662426}
   speedText: {fileID: 0}
   speedWarriorText: {fileID: 7690098040434054334}
@@ -7119,8 +7160,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   label: {fileID: 7690098041214407168}
 --- !u!114 &5051290726572863858
 MonoBehaviour:
@@ -7138,8 +7181,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   instantMilestoneInterval: 15
   passiveMilestoneInterval: 30
   playerMilestoneInterval: 60
@@ -7963,8 +8008,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   centerText: {fileID: 7690098040933031690}
   snailIcon: {fileID: 7690098042335349010}
   blueBG: {fileID: 0}
@@ -8041,8 +8088,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   timeLabel: {fileID: 7690098040978857370}
 --- !u!114 &7690098041672797435
 MonoBehaviour:
@@ -8060,8 +8109,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   berryIcon: {fileID: 7690098042390651596}
   berryLabel: {fileID: 7690098041921770610}
   berryWarningColor: {r: 0.99215686, g: 0.49803922, b: 0.6392157, a: 1}
@@ -8592,9 +8643,12 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   txt: {fileID: 7690098041771432123}
+  usePercent: 1
 --- !u!114 &7690098041771432126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8611,12 +8665,20 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   anims:
   - {fileID: 7036060550961298622, guid: f0739a0df52614c0b8e24e7ffcdd65f5, type: 3}
   - {fileID: 7036060550961298622, guid: 67a6bb206e6294f1f8234caeb2cbede9, type: 3}
   spawnArea: {fileID: 7690098041664600125}
+  animStyle: 0
+  animX: 0
+  animScale: 1
+  queenHeight: 0.31
+  snailHeight: 0
+  berryHeight: -0.8
 --- !u!1 &7690098041833542510
 GameObject:
   m_ObjectHideFlags: 0
@@ -10515,8 +10577,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   useBold: 0
   forceLowercase: 1
   forceUppercase: 0
@@ -10633,8 +10697,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   topBar: {fileID: 7677944661587342331}
   bottomBar: {fileID: 7690098041613024805}
   titleText: {fileID: 7690098042447544727}
@@ -10654,8 +10720,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   topBar: {fileID: 5352004703910062886}
   bottomBar: {fileID: 7690098041913685564}
   titleText: {fileID: 7690098042153987253}
@@ -11567,8 +11635,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   useBold: 0
   forceLowercase: 1
   forceUppercase: 0

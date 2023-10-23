@@ -13,9 +13,9 @@ public class JumboAnim : MonoBehaviour
 	public TextMeshPro titleTxt;
 	public TextMeshPro subtitleTxt;
 
-	GlobalFade alpha;
+	protected GlobalFade alpha;
 	// Use this for initialization
-	void Start()
+	void Awake()
 	{
 		alpha = GetComponent<GlobalFade>();
 	}

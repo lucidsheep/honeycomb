@@ -3,7 +3,7 @@ using System.Collections;
 
 public class JumboAnimObserver : KQObserver
 {
-	public JumboAnimQueenKillCentered queenKillAnim;
+	public JumboAnimQueenKill queenKillAnim;
 
 	JumboAnim curAnim;
 	float animTimeLeft = 0f;
@@ -19,7 +19,7 @@ public class JumboAnimObserver : KQObserver
     {
 		if (GameModel.instance.isWarmup.property) return;
 
-		if (type == GameEventType.PLAYER_KILL && data.targetID == 2)
+		if (type == GameEventType.PLAYER_KILL && data.targetID == 2 && (targetID == data.teamID || targetID == -1))
         {
 			var anim = StartAnim(queenKillAnim);
 			if (anim == null) return; //should not play anim

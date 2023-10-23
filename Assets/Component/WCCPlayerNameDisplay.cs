@@ -77,7 +77,7 @@ public class WCCPlayerNameDisplay : MonoBehaviour
 
 	string FormatPronouns(string pronouns)
     {
-		var size = playerName.fontSize / 2f;
+		var size = playerName.fontSize * .75f;
 		return "<size=" + size + ">" + pronouns.ToUpper() + "</size>";
 	}
 }
