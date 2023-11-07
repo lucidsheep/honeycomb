@@ -33,7 +33,9 @@ public class JumboAnimQueenKillWCC : JumboAnimQueenKill
 		transform.localPosition = new Vector3(0f, -0.4f, 0f);
 		var xMove = 1.3f;
 		DOTween.Sequence()
+			.AppendInterval(.06f)
 			.Append(transform.DOLocalMoveX(sideID == 0 ? -xMove : xMove, .5f).SetEase(Ease.OutBack))
+			//.Join(animPlayer.targetMaterialRenderer.material.DOColor(Color.white, .5f))
 			//.Join(DOTween.To(() => alpha.alpha, x => alpha.alpha = x, 0f, .25f).From())
 			.AppendInterval(actualAnimTime)
 			.Append(transform.DOLocalMoveX(0f, .5f).SetEase(Ease.InBack));

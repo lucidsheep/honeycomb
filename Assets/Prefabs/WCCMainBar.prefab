@@ -9972,7 +9972,6 @@ GameObject:
   - component: {fileID: 2714649409346890284}
   - component: {fileID: 1759384954191878721}
   - component: {fileID: 3052048318403437954}
-  - component: {fileID: 2293435397330534615}
   m_Layer: 0
   m_Name: BlueName (1)
   m_TagString: Untagged
@@ -10136,29 +10135,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1759384954191878721}
   m_maskType: 0
---- !u!114 &2293435397330534615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3182266765866084735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 883ffcea4f78f4608a7d68dae474feee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetID: 0
-  moduleName: 
-  size: 0
-  bgContainer: {fileID: 0}
-  normalBG: {fileID: 0}
-  offset: {x: 0, y: 0}
-  absolutePos: 0
-  bgCustomPivot: {x: 0.5, y: 0.5}
-  useBold: 0
-  forceLowercase: 1
-  forceUppercase: 0
 --- !u!1 &3433878330695155271
 GameObject:
   m_ObjectHideFlags: 0
@@ -10600,7 +10576,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2969235835806519899
 Transform:
   m_ObjectHideFlags: 0
@@ -10640,8 +10616,6 @@ MonoBehaviour:
   bgCustomPivot: {x: 0.5, y: 0.5}
   objs:
   - {fileID: 8824712777082035921}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 3182266765866084735}
 --- !u!1 &8670483400167717485
 GameObject:

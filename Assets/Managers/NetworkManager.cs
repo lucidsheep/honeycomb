@@ -330,7 +330,7 @@ public class NetworkManager : MonoBehaviour
                         {
                             //store next set data and start countdown for showing match preview
                             GameModel.newSetTeamData = matchData;
-                            GameModel.newSetTimeout = 10f;
+                            GameModel.newSetTimeout = .1f;
                             if (matchData.current_match.is_warmup)
                                 GameModel.instance.isWarmup.property = true;
                         }

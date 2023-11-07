@@ -386,8 +386,10 @@ MonoBehaviour:
   moduleName: 
   size: 0
   bgContainer: {fileID: 0}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   fader: {fileID: 5991230332708195881}
   boxScore: {fileID: 0}
   playerCards:
