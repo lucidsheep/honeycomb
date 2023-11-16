@@ -48,6 +48,7 @@ public class NetworkManager : MonoBehaviour
     public UnityEvent<int, int> onTournamentTeamIDs = new UnityEvent<int, int>();
     public UnityEvent<int, int, int> onTournamentTeamWinLossData = new UnityEvent<int, int, int>();
     public UnityEvent<int> onGameID = new UnityEvent<int>();
+    public UnityEvent<TeamGameStats> onTeamGameData = new UnityEvent<TeamGameStats>();
 
     public Queue<string> LogQueue;
 
@@ -330,7 +331,7 @@ public class NetworkManager : MonoBehaviour
                         {
                             //store next set data and start countdown for showing match preview
                             GameModel.newSetTeamData = matchData;
-                            GameModel.newSetTimeout = .1f;
+                            GameModel.newSetTimeout = 3f;
                             if (matchData.current_match.is_warmup)
                                 GameModel.instance.isWarmup.property = true;
                         }
@@ -872,6 +873,7 @@ public class NetworkManager : MonoBehaviour
                 var result = JsonUtility.FromJson<HMTournamentResponse>(webRequest.downloadHandler.text);
                 Debug.Log("found " + result.count + " sets for team " + teamID);
                 int wins = 0, losses = 0;
+                bool isBlue = false;
                 foreach (var matchData in result.results)
                 {
                     if (matchData == null) continue;
@@ -880,13 +882,87 @@ public class NetworkManager : MonoBehaviour
                     {
                         wins += matchData.blue_score;
                         losses += matchData.gold_score;
+                        isBlue = true;
                     } else
                     {
                         wins += matchData.gold_score;
                         losses += matchData.blue_score;
                     }
+                    instance.StartCoroutine(GetTournamentTeamMatchDataP1(teamID, matchData.id, isBlue));
                 }
                 instance.onTournamentTeamWinLossData.Invoke(teamID, wins, losses);
+            }
+            else
+            {
+                Debug.Log("request failed reason: " + webRequest.result.ToString());
+            }
+        }
+    }
+    
+    static IEnumerator GetTournamentTeamMatchDataP1(int teamID, int setID, bool isBlue)
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get("https://kqhivemind.com/api/game/game/?tournament_match_id=" + setID))
+        {
+            yield return webRequest.SendWebRequest();
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                var result = JsonUtility.FromJson<HMGameResponse>(webRequest.downloadHandler.text);
+                Debug.Log("found " + result.count + " games for team " + teamID + " set " + setID);
+                foreach (var gameData in result.results)
+                {
+                    if (gameData == null) continue;
+                    instance.StartCoroutine(GetTournamentTeamMatchDataP2(teamID, gameData.id, isBlue));
+                }
+            }
+            else
+            {
+                Debug.Log("request failed reason: " + webRequest.result.ToString());
+            }
+        }
+    }
+
+    static IEnumerator GetTournamentTeamMatchDataP2(int teamID, int gameID, bool isBlue)
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get("https://kqhivemind.com/api/game/game/" + gameID + "/stats/"))
+        {
+            yield return webRequest.SendWebRequest();
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                var result = JsonUtility.FromJson<HMGameStats>(webRequest.downloadHandler.text);
+                Debug.Log("game ID " + gameID + " data found");
+                int mil_kills = 0, mil_deaths = 0, snail = 0;
+                string mapName = result.map;
+                string winCondition = result.win_condition;
+                bool didWin = isBlue ? result.winning_team == "blue" : result.winning_team == "gold";
+
+                int berries = isBlue ? result.berries.blue : result.berries.gold;
+                HMPlayerStat military_kills = HMPlayerStat.CreateHMStatArray(webRequest.downloadHandler.text, "military_kills");
+                HMPlayerStat military_deaths = HMPlayerStat.CreateHMStatArray(webRequest.downloadHandler.text, "military_deaths");
+                HMPlayerStat snail_meters = HMPlayerStat.CreateHMStatArray(webRequest.downloadHandler.text, "snail_meters");
+
+                int i = isBlue ? 2 : 1;
+                while(i <= 10)
+                {
+                    var s = i.ToString();
+                    mil_kills += military_kills[s];
+                    mil_deaths += military_deaths[s];
+                    snail += snail_meters[s];
+
+                    i += 2;
+                }
+
+                var data = new TeamGameStats();
+                data.didWin = didWin;
+                data.teamID = teamID;
+                data.gameID = gameID;
+                data.winCondition = winCondition;
+                data.mapName = mapName;
+                data.militaryKills = mil_kills;
+                data.militaryDeaths = mil_deaths;
+                data.berries = berries;
+                data.snailLengths = snail;
+
+                instance.onTeamGameData.Invoke(data);
             }
             else
             {

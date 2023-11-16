@@ -115,6 +115,20 @@ public class HMPlayerStat
             }
         }
     }
+
+    public static HMPlayerStat CreateHMStatArray(string message, string arrayName)
+    {
+        var ret = new HMPlayerStat();
+        int startIndex = message.IndexOf(arrayName) + arrayName.Length + 2;
+        int endIndex = message.IndexOf('}', startIndex + 1);
+        if (startIndex > -1 && endIndex - startIndex > 5) //watch for empty array case
+        {
+            var substring = message.Substring(startIndex, endIndex - startIndex);
+            //do conversion thingy and pray
+            ret.ConvertJson(substring);
+        }
+        return ret;
+    }
 }
 [System.Serializable]
 public class HMInGameStats
@@ -132,26 +146,9 @@ public class HMInGameStats
     public HMPlayerStat queen_kills;
     public HMPlayerStat snail_distance;
     public HMPlayerStat total_berries;
+
 }
 
-/*
- *             "type": "overlaysettings",
-            "overlay_id": self.id,
-            "ingame_theme": self.ingame_theme,
-            "postgame_theme": self.postgame_theme,
-            "match_theme": self.match_theme,
-            "match_preview_theme": self.match_preview_theme,
-            "player_cams_theme": self.player_cams_theme,
-            "cabinet_name": self.cabinet.name,
-            "show_players": self.show_players,
-            "blue_team": self.blue_team,
-            "blue_score": self.blue_score,
-            "gold_team": self.gold_team,
-            "gold_score": self.gold_score,
-            "show_score": self.show_score,
-            "match_win_max": self.match_win_max,
-        }))
-*/
 [System.Serializable]
 public class HMOverlaySettings
 {
@@ -225,6 +222,94 @@ public class HMCabinetResponse
     public string previous;
     public HMCabinet[] results;
 }
+
+[System.Serializable]
+public class HMGameResponse
+{
+    public int count;
+    public string next;
+    public string previous;
+    public HMGame[] results;
+}
+
+[System.Serializable]
+public class HMGame
+{
+    public int id, match, qp_match, tournament_match;
+    public string map_name, start_time, end_time, status, win_condition, winning_team, player_count, cabinet_version;
+    //cabinet{}
+    //scene{}
+    //users[{}]
+}
+
+//most stats need to be converted to HMPlayerStats
+//https://kqhivemind.com/api/game/game/911259/stats/
+
+[System.Serializable]
+public class HMGameStats
+{
+    public HMTeamIntData berries;
+    public string map, win_condition, winning_team;
+}
+
+//Honeycomb converted aggregation of team stats for a game
+public class TeamGameStats
+{
+    public int teamID, gameID, militaryKills, militaryDeaths, snailLengths, berries;
+    public bool didWin;
+    public string mapName, winCondition;
+
+}
+
+public class TeamTournamentStats : TeamGameStats
+{
+    public int[] mapWins, mapLosses;
+
+    public TeamTournamentStats(int id)
+    {
+        teamID = id;
+        mapWins = new int[] { 0, 0, 0, 0 };
+        mapLosses = new int[] { 0, 0, 0, 0 };
+
+        militaryKills = militaryDeaths = snailLengths = berries = 0;
+    }
+
+    public void AddGame(TeamGameStats game)
+    {
+        militaryKills += game.militaryKills;
+        militaryDeaths += game.militaryDeaths;
+        berries += game.berries;
+        snailLengths += game.snailLengths;
+
+        var ind = -1;
+        if (game.mapName == "Day") ind = 0;
+        else if (game.mapName == "Night") ind = 1;
+        else if (game.mapName == "Dusk") ind = 2;
+        else if (game.mapName == "Twilight") ind = 3;
+
+        if(ind > -1)
+        {
+            if (game.didWin)
+                mapWins[ind]++;
+            else
+                mapLosses[ind]++;
+        }
+    }
+}
+
+[System.Serializable]
+public class HMTeamIntData
+{
+    public int blue;
+    public int gold;
+}
+
+[System.Serializable]
+public class HMTeamStringData
+{
+    public string blue;
+    public string gold;
+}
 /*
  *             "scene_name": "kqpdx",
             "cabinet_id": 26,
@@ -274,7 +359,7 @@ public class HMTournamentMatch
 {
     public HMTournament tournament;
     public string linked_match_id, stage_name, round_name, video_link;
-    public int blue_score, gold_score, bracket, blue_team, gold_team, active_cabinet;
+    public int blue_score, gold_score, bracket, blue_team, gold_team, active_cabinet, id;
     public bool is_flipped, is_complete, is_warmup;
 }
 

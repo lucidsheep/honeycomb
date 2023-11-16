@@ -20,6 +20,9 @@ public class MatchPreviewScreen : KQObserver
 	bool screenVisible = false;
 	TournamentTeamData blueTeamData = new TournamentTeamData();
 	TournamentTeamData goldTeamData = new TournamentTeamData();
+	TeamTournamentStats blueTeamGameData = new TeamTournamentStats(0);
+	TeamTournamentStats goldTeamGameData = new TeamTournamentStats(0);
+	HMMatchState curMatchData = new HMMatchState();
 
 	Tweener showHideAnim;
 	static MatchPreviewScreen instance;
@@ -37,6 +40,7 @@ public class MatchPreviewScreen : KQObserver
 		GameModel.onDelayedTournamentData.AddListener(OnTournamentData);
 		NetworkManager.instance.onTournamentTeamIDs.AddListener(OnTournamentTeamIDs);
 		NetworkManager.instance.onTournamentTeamWinLossData.AddListener(OnTournamentTeamDetail);
+		NetworkManager.instance.onTeamGameData.AddListener(OnTeamGameData);
 		for(int i = 0; i < 5; i++)
         {
 			bluePlayers[i].avatar.SetLayer(i + 10);
@@ -48,7 +52,9 @@ public class MatchPreviewScreen : KQObserver
 		fade.alpha = 0f;
 	}
 
-	override protected void OnThemeChange()
+
+
+    override protected void OnThemeChange()
 	{
 		var pos = new Vector3(-1.64f, .96f, 0f);
 		float scale = 1f;
@@ -102,30 +108,14 @@ public class MatchPreviewScreen : KQObserver
     {
 		blueTeamData.id = blue;
 		goldTeamData.id = gold;
-    }
 
-	void OnTournamentTeamDetail(int id, int wins, int losses)
-    {
-		TournamentTeamData toUse = id == blueTeamData.id ? blueTeamData : id == goldTeamData.id ? goldTeamData : null;
-		if (toUse == null) return;
-		toUse.wins = wins;
-		toUse.losses = losses;
-    }
-	void OpenScreen(HMMatchState matchData)
-    {
-		blueTeamName.text = matchData.current_match.blue_team;
-		goldTeamName.text = matchData.current_match.gold_team;
-		blueTeamScore.text = blueTeamData.wins + "-" + blueTeamData.losses;
-		goldTeamScore.text = goldTeamData.wins + "-" + goldTeamData.losses;
-		roundName.text = matchData.current_match.round_name;
-		winCondition.text = (matchData.current_match.wins_per_match > 0) ? "Best of " + ((matchData.current_match.wins_per_match * 2) - 1)
-																		 : "Straight " + matchData.current_match.rounds_per_match;
-		screenVisible = true;
 		var blueTeamPlayerData = PlayerStaticData.GetTournamentPlayers(blueTeamData.id);
 		var goldTeamPlayerData = PlayerStaticData.GetTournamentPlayers(goldTeamData.id);
+		blueTeamGameData = new TeamTournamentStats(blueTeamData.id);
+		goldTeamGameData = new TeamTournamentStats(goldTeamData.id);
 
-		for(int i = 0; i < 5; i++)
-        {
+		for (int i = 0; i < 5; i++)
+		{
 			if (blueTeamPlayerData.Count > i)
 				bluePlayers[i].Init(blueTeamPlayerData[i]);
 			else
@@ -136,9 +126,42 @@ public class MatchPreviewScreen : KQObserver
 			else
 				goldPlayers[i].Clear();
 		}
+	}
+
+	void OnTournamentTeamDetail(int id, int wins, int losses)
+    {
+		TournamentTeamData toUse = id == blueTeamData.id ? blueTeamData : id == goldTeamData.id ? goldTeamData : null;
+		if (toUse == null) return;
+		toUse.wins = wins;
+		toUse.losses = losses;
+		UpdateUI();
+    }
+
+	private void OnTeamGameData(TeamGameStats data)
+	{
+		var dataToUse = data.teamID == blueTeamData.id ? blueTeamGameData : goldTeamGameData;
+		dataToUse.AddGame(data);
+	}
+
+	void OpenScreen(HMMatchState matchData)
+    {
+		curMatchData = matchData;
+		screenVisible = true;
 		if (showHideAnim != null) showHideAnim.Complete();
 		showHideAnim = DOTween.To(() => fade.alpha, x => fade.alpha = x, 1f, .5f);
+		UpdateUI();
     }
+
+	void UpdateUI()
+    {
+		blueTeamName.text = curMatchData.current_match.blue_team;
+		goldTeamName.text = curMatchData.current_match.gold_team;
+		blueTeamScore.text = blueTeamData.wins + "-" + blueTeamData.losses;
+		goldTeamScore.text = goldTeamData.wins + "-" + goldTeamData.losses;
+		roundName.text = curMatchData.current_match.round_name;
+		winCondition.text = (curMatchData.current_match.wins_per_match > 0) ? "Best of " + ((curMatchData.current_match.wins_per_match * 2) - 1)
+																		 : "Straight " + curMatchData.current_match.rounds_per_match;
+	}
 	void CloseScreen()
     {
 		screenVisible = false;
