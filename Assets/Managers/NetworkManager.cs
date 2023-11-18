@@ -46,6 +46,7 @@ public class NetworkManager : MonoBehaviour
     public UnityEvent<HMMatchState> tournamentEventDispatcher = new UnityEvent<HMMatchState>();
     public UnityEvent<string, GameEventData> rawEventDispatcher = new UnityEvent<string, GameEventData>();
     public UnityEvent<int, int> onTournamentTeamIDs = new UnityEvent<int, int>();
+    public UnityEvent<int> onTournamentTeamPlayers = new UnityEvent<int>();
     public UnityEvent<int, int, int> onTournamentTeamWinLossData = new UnityEvent<int, int, int>();
     public UnityEvent<int> onGameID = new UnityEvent<int>();
     public UnityEvent<TeamGameStats> onTeamGameData = new UnityEvent<TeamGameStats>();
@@ -848,7 +849,7 @@ public class NetworkManager : MonoBehaviour
                     }
                     PlayerStaticData.AddPlayer(playerData.user, playerData);
                 }
-
+                instance.onTournamentTeamPlayers.Invoke(teamID);
             }
             else
             {
@@ -859,6 +860,8 @@ public class NetworkManager : MonoBehaviour
 
     static void GetTournamentTeamData(int blueTeam, int goldTeam)
     {
+        //need to clear fake players, since they will get duplicated by new calls to HM team lists
+        PlayerStaticData.ClearFakePlayers();
         instance.StartCoroutine(GetTournamentTeamWinLoss(blueTeam));
         instance.StartCoroutine(GetTournamentTeamWinLoss(goldTeam));
     }

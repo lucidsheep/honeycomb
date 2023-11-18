@@ -48,7 +48,6 @@ public class GlobalFade : MonoBehaviour
 	}
 	public void SetFadeSubjects()
     {
-		Debug.Log("set fade subjects");
 		srs = GetComponentsInChildren<SpriteRenderer>();
 		tmps = GetComponentsInChildren<TextMeshPro>();
 		players = GetComponentsInChildren<MeshRenderer>();

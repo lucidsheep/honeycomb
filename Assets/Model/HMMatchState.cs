@@ -264,6 +264,7 @@ public class TeamGameStats
 public class TeamTournamentStats : TeamGameStats
 {
     public int[] mapWins, mapLosses;
+    public int totalGames;
 
     public TeamTournamentStats(int id)
     {
@@ -271,7 +272,7 @@ public class TeamTournamentStats : TeamGameStats
         mapWins = new int[] { 0, 0, 0, 0 };
         mapLosses = new int[] { 0, 0, 0, 0 };
 
-        militaryKills = militaryDeaths = snailLengths = berries = 0;
+        militaryKills = militaryDeaths = snailLengths = berries = totalGames = 0;
     }
 
     public void AddGame(TeamGameStats game)
@@ -280,6 +281,7 @@ public class TeamTournamentStats : TeamGameStats
         militaryDeaths += game.militaryDeaths;
         berries += game.berries;
         snailLengths += game.snailLengths;
+        totalGames++;
 
         var ind = -1;
         if (game.mapName == "Day") ind = 0;
@@ -293,6 +295,31 @@ public class TeamTournamentStats : TeamGameStats
                 mapWins[ind]++;
             else
                 mapLosses[ind]++;
+        }
+    }
+    public string GetMap(bool best)
+    {
+        if (totalGames == 0)
+            return "???";
+        int bestScore = 99999 * (best ? -1 : 1);
+        int bestInd = -1;
+        for(int i = 0; i < 4; i++)
+        {
+            int thisScore = mapWins[i] - mapLosses[i];
+            if((best && thisScore > bestScore)
+            || (!best && thisScore < bestScore))
+            {
+                bestScore = thisScore;
+                bestInd = i;
+            }
+        }
+        switch(bestInd)
+        {
+            case 0: return "Day";
+            case 1: return "Night";
+            case 2: return "Dusk";
+            case 3: return "Twilight";
+            default: return "???";
         }
     }
 }

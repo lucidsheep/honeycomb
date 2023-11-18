@@ -269,5 +269,17 @@ public class PlayerStaticData : MonoBehaviour
         return playerDB[playerID].tournamentData != null;
     }
 
+    public static void ClearFakePlayers()
+    {
+        List<int> idsToRemove = new List<int>();
+        foreach(var player in playerDB)
+        {
+            if (player.Key >= 1000000)
+                idsToRemove.Add(player.Key);
+        }
+        foreach (var id in idsToRemove)
+            playerDB.Remove(id);
+    }
+
 }
 

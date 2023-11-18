@@ -17,19 +17,25 @@ public class MatchPreviewScreen : KQObserver
 	public MatchPreviewPlayer[] goldPlayers;
 	public GlobalFade fade;
 
+	public enum StatType { MilitaryKD, Berries, Snail, BestMap, WorstMap }
+	StatType curStatDisplay = StatType.WorstMap;
+	MatchPreviewStatPanel statPanel;
+	int numStats = 5;
+	float statCycleTimer;
+
 	bool screenVisible = false;
 	TournamentTeamData blueTeamData = new TournamentTeamData();
 	TournamentTeamData goldTeamData = new TournamentTeamData();
 	TeamTournamentStats blueTeamGameData = new TeamTournamentStats(0);
 	TeamTournamentStats goldTeamGameData = new TeamTournamentStats(0);
 	HMMatchState curMatchData = new HMMatchState();
-
 	Tweener showHideAnim;
 	static MatchPreviewScreen instance;
 
     private void Awake()
     {
 		instance = this;
+		statPanel = GetComponentInChildren<MatchPreviewStatPanel>();
     }
 
     // Use this for initialization
@@ -41,7 +47,8 @@ public class MatchPreviewScreen : KQObserver
 		NetworkManager.instance.onTournamentTeamIDs.AddListener(OnTournamentTeamIDs);
 		NetworkManager.instance.onTournamentTeamWinLossData.AddListener(OnTournamentTeamDetail);
 		NetworkManager.instance.onTeamGameData.AddListener(OnTeamGameData);
-		for(int i = 0; i < 5; i++)
+		NetworkManager.instance.onTournamentTeamPlayers.AddListener(OnTeamPlayerData);
+		for (int i = 0; i < 5; i++)
         {
 			bluePlayers[i].avatar.SetLayer(i + 10);
 			goldPlayers[i].avatar.SetLayer(i + 10);
@@ -52,7 +59,51 @@ public class MatchPreviewScreen : KQObserver
 		fade.alpha = 0f;
 	}
 
-
+    private void Update()
+    {
+        if(statPanel != null && screenVisible)
+        {
+			statCycleTimer -= Time.deltaTime;
+			if(statCycleTimer <= 0f)
+            {
+				statCycleTimer += 6f;
+				curStatDisplay = (StatType)((int)curStatDisplay + 1);
+				if ((int)curStatDisplay >= numStats)
+					curStatDisplay = 0;
+				string blue, gold, center;
+				switch(curStatDisplay)
+                {
+					case StatType.MilitaryKD:
+						center = "Military K/D";
+						blue = blueTeamGameData.militaryKills + "-" + blueTeamGameData.militaryDeaths;
+						gold = goldTeamGameData.militaryKills + "-" + goldTeamGameData.militaryDeaths;
+						break;
+					case StatType.Berries:
+						center = "Berries Run";
+						blue = blueTeamGameData.berries.ToString();
+						gold = goldTeamGameData.berries.ToString();
+						break;
+					case StatType.Snail:
+						center = "Snail Meters";
+						blue = blueTeamGameData.snailLengths.ToString();
+						gold = goldTeamGameData.snailLengths.ToString();
+						break;
+					case StatType.BestMap:
+						center = "Best Map";
+						blue = blueTeamGameData.GetMap(true);
+						gold = goldTeamGameData.GetMap(true);
+						break;
+					case StatType.WorstMap:
+						center = "Worst Map";
+						blue = blueTeamGameData.GetMap(false);
+						gold = goldTeamGameData.GetMap(false);
+						break;
+					default: center = blue = gold = ""; break;
+				}
+				statPanel.SetDisplay(center, blue, gold);
+            }
+        }
+    }
 
     override protected void OnThemeChange()
 	{
@@ -66,7 +117,7 @@ public class MatchPreviewScreen : KQObserver
 				break;
 			case ThemeDataJson.LayoutStyle.TwoCol:
 				//hack for extra space with camp frame. need to include parameter to let theme adjust this
-				//float campBump = (ViewModel.currentTheme.themeName == "campkq" || ViewModel.currentTheme.themeName == "postcamp") ? .18f : 0f;
+				//float campBump = (ViewModel.currentTheme.themeName == "caxmpkq" || ViewModel.currentTheme.themeName == "postcamp") ? .18f : 0f;
 				pos.x = 0f;
 				pos.y = 0.36f;
 				scale = .88f;
@@ -109,22 +160,31 @@ public class MatchPreviewScreen : KQObserver
 		blueTeamData.id = blue;
 		goldTeamData.id = gold;
 
-		var blueTeamPlayerData = PlayerStaticData.GetTournamentPlayers(blueTeamData.id);
-		var goldTeamPlayerData = PlayerStaticData.GetTournamentPlayers(goldTeamData.id);
 		blueTeamGameData = new TeamTournamentStats(blueTeamData.id);
 		goldTeamGameData = new TeamTournamentStats(goldTeamData.id);
 
+		for(int i = 0; i < 5; i++)
+        {
+			bluePlayers[i].Clear();
+			goldPlayers[i].Clear();
+        }
+
+		OnTeamPlayerData(blueTeamData.id);
+		OnTeamPlayerData(goldTeamData.id);
+
+	}
+
+	void OnTeamPlayerData(int teamID)
+    {
+		if (blueTeamData.id != teamID && goldTeamData.id != teamID) return;
+
+		var playerData = PlayerStaticData.GetTournamentPlayers(teamID);
+		var arrToUse = blueTeamData.id == teamID ? bluePlayers : goldPlayers;
+
 		for (int i = 0; i < 5; i++)
 		{
-			if (blueTeamPlayerData.Count > i)
-				bluePlayers[i].Init(blueTeamPlayerData[i]);
-			else
-				bluePlayers[i].Clear();
-
-			if (goldTeamPlayerData.Count > i)
-				goldPlayers[i].Init(goldTeamPlayerData[i]);
-			else
-				goldPlayers[i].Clear();
+			if (playerData.Count > i)
+				arrToUse[i].Init(playerData[i]);
 		}
 	}
 
@@ -154,17 +214,27 @@ public class MatchPreviewScreen : KQObserver
 
 	void UpdateUI()
     {
-		blueTeamName.text = curMatchData.current_match.blue_team;
-		goldTeamName.text = curMatchData.current_match.gold_team;
 		blueTeamScore.text = blueTeamData.wins + "-" + blueTeamData.losses;
 		goldTeamScore.text = goldTeamData.wins + "-" + goldTeamData.losses;
-		roundName.text = curMatchData.current_match.round_name;
-		winCondition.text = (curMatchData.current_match.wins_per_match > 0) ? "Best of " + ((curMatchData.current_match.wins_per_match * 2) - 1)
-																		 : "Straight " + curMatchData.current_match.rounds_per_match;
+
+		if(curMatchData != null && curMatchData.current_match != null)
+        {
+			blueTeamName.text = curMatchData.current_match.blue_team;
+			goldTeamName.text = curMatchData.current_match.gold_team;
+			roundName.text = curMatchData.current_match.round_name;
+			winCondition.text = (curMatchData.current_match.wins_per_match > 0) ? "Best of " + ((curMatchData.current_match.wins_per_match * 2) - 1)
+															 : "Straight " + curMatchData.current_match.rounds_per_match;
+		}
+		else
+        {
+			blueTeamName.text = goldTeamName.text = roundName.text = winCondition.text = "";
+        }
+
 	}
 	void CloseScreen()
     {
 		screenVisible = false;
+		if (statPanel != null) statPanel.HideDisplay();
 		if (showHideAnim != null) showHideAnim.Complete();
 		showHideAnim = DOTween.To(() => fade.alpha, x => fade.alpha = x, 0f, .5f);
 	}
