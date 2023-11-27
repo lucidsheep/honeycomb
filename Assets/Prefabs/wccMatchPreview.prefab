@@ -307,7 +307,6 @@ MonoBehaviour:
   blueStatText: {fileID: 7398971542497049166}
   goldStatText: {fileID: 1525035669539631178}
   centerText: {fileID: 2700218164737701654}
-  centerTextFade: {fileID: 0}
   leftPanel: {fileID: 8975571062023948771}
   rightPanel: {fileID: 5174508426842034624}
 --- !u!1 &1032659678927952703
@@ -3142,6 +3141,7 @@ MonoBehaviour:
   - {fileID: 3681500907981737995}
   - {fileID: 6742198094236628452}
   fade: {fileID: 4984863197932453715}
+  statsToCycle: 000000000600000007000000050000000300000004000000
 --- !u!114 &4984863197932453715
 MonoBehaviour:
   m_ObjectHideFlags: 0

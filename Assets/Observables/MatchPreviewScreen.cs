@@ -16,9 +16,11 @@ public class MatchPreviewScreen : KQObserver
 	public MatchPreviewPlayer[] bluePlayers;
 	public MatchPreviewPlayer[] goldPlayers;
 	public GlobalFade fade;
+	public StatType[] statsToCycle;
 
-	public enum StatType { MilitaryKD, Berries, Snail, BestMap, WorstMap }
-	StatType curStatDisplay = StatType.WorstMap;
+	[System.Serializable]
+	public enum StatType { MilitaryKD, Berries, Snail, BestMap, WorstMap, GameTimeAvg, BerriesAvg, SnailPerMinute }
+	int curStatDisplay = 0;
 	MatchPreviewStatPanel statPanel;
 	int numStats = 5;
 	float statCycleTimer;
@@ -67,11 +69,9 @@ public class MatchPreviewScreen : KQObserver
 			if(statCycleTimer <= 0f)
             {
 				statCycleTimer += 6f;
-				curStatDisplay = (StatType)((int)curStatDisplay + 1);
-				if ((int)curStatDisplay >= numStats)
-					curStatDisplay = 0;
+				curStatDisplay = (curStatDisplay + 1 >= statsToCycle.Length ? 0 : curStatDisplay + 1);
 				string blue, gold, center;
-				switch(curStatDisplay)
+				switch(statsToCycle[curStatDisplay])
                 {
 					case StatType.MilitaryKD:
 						center = "Military K/D";
@@ -97,6 +97,21 @@ public class MatchPreviewScreen : KQObserver
 						center = "Worst Map";
 						blue = blueTeamGameData.GetMap(false);
 						gold = goldTeamGameData.GetMap(false);
+						break;
+					case StatType.BerriesAvg:
+						center = "Berries Per Game";
+						blue = blueTeamGameData.totalGames <= 0 ? "0" : Math.Round((float)blueTeamGameData.berries / (float)blueTeamGameData.totalGames, 1).ToString();
+						gold = goldTeamGameData.totalGames <= 0 ? "0" : Math.Round((float)goldTeamGameData.berries / (float)goldTeamGameData.totalGames, 1).ToString();
+						break;
+					case StatType.GameTimeAvg:
+						center = "Average Game Length";
+						blue = blueTeamGameData.totalGames <= 0 ? "0:00" : Util.FormatTime(Mathf.Floor(blueTeamGameData.totalSeconds / blueTeamGameData.totalGames));
+						gold = goldTeamGameData.totalGames <= 0 ? "0:00" : Util.FormatTime(Mathf.Floor(goldTeamGameData.totalSeconds / goldTeamGameData.totalGames));
+						break;
+					case StatType.SnailPerMinute:
+						center = "Snail Per Minute";
+						blue = blueTeamGameData.totalSeconds <= 0 || blueTeamGameData.totalGames <= 0 ? "0.0" : Math.Round((float)blueTeamGameData.snailLengths / Mathf.Floor(blueTeamGameData.totalSeconds / blueTeamGameData.totalGames) * 60f, 1).ToString();
+						gold = goldTeamGameData.totalSeconds <= 0 || goldTeamGameData.totalGames <= 0 ? "0.0" : Math.Round((float)goldTeamGameData.snailLengths / Mathf.Floor(goldTeamGameData.totalSeconds / goldTeamGameData.totalGames) * 60f, 1).ToString();
 						break;
 					default: center = blue = gold = ""; break;
 				}

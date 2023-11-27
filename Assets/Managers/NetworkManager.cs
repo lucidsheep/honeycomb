@@ -964,6 +964,7 @@ public class NetworkManager : MonoBehaviour
                 data.militaryDeaths = mil_deaths;
                 data.berries = berries;
                 data.snailLengths = snail;
+                data.totalSeconds = Mathf.FloorToInt(result.length_sec);
 
                 instance.onTeamGameData.Invoke(data);
             }

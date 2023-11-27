@@ -250,12 +250,13 @@ public class HMGameStats
 {
     public HMTeamIntData berries;
     public string map, win_condition, winning_team;
+    public float length_sec;
 }
 
 //Honeycomb converted aggregation of team stats for a game
 public class TeamGameStats
 {
-    public int teamID, gameID, militaryKills, militaryDeaths, snailLengths, berries;
+    public int teamID, gameID, militaryKills, militaryDeaths, snailLengths, berries, totalSeconds;
     public bool didWin;
     public string mapName, winCondition;
 
@@ -272,7 +273,7 @@ public class TeamTournamentStats : TeamGameStats
         mapWins = new int[] { 0, 0, 0, 0 };
         mapLosses = new int[] { 0, 0, 0, 0 };
 
-        militaryKills = militaryDeaths = snailLengths = berries = totalGames = 0;
+        militaryKills = militaryDeaths = snailLengths = berries = totalGames = totalSeconds = 0;
     }
 
     public void AddGame(TeamGameStats game)
@@ -282,6 +283,7 @@ public class TeamTournamentStats : TeamGameStats
         berries += game.berries;
         snailLengths += game.snailLengths;
         totalGames++;
+        totalSeconds += game.totalSeconds;
 
         var ind = -1;
         if (game.mapName == "Day") ind = 0;
@@ -303,6 +305,8 @@ public class TeamTournamentStats : TeamGameStats
             return "???";
         int bestScore = 99999 * (best ? -1 : 1);
         int bestInd = -1;
+        int numTies = 0;
+        int tiedInd = -1;
         for(int i = 0; i < 4; i++)
         {
             int thisScore = mapWins[i] - mapLosses[i];
@@ -311,7 +315,19 @@ public class TeamTournamentStats : TeamGameStats
             {
                 bestScore = thisScore;
                 bestInd = i;
+                numTies = 0;
+            } else if(thisScore == bestScore)
+            {
+                numTies++;
+                tiedInd = i;
             }
+        }
+        if(numTies == 1) //pick randomly between two candidates
+        {
+            bestInd = Random.Range(0, 2) == 1 ? tiedInd : bestInd;
+        } else if(numTies > 1) //too many candidates, answer is unknown
+        {
+            return "???";
         }
         switch(bestInd)
         {
