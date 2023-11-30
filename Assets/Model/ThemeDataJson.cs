@@ -90,6 +90,7 @@ public class ThemeDataJson
     public string mainBarStyle;
     public string matchPreviewStyle;
     public string videoSet;
+    public string playerCamRatio;
     public bool showTicker, showPlayerCams, showMilestones, showCrownAnimation, startReversed;
     public int leaderboardID;
     public float sidebarPadding;
@@ -120,6 +121,15 @@ public class ThemeDataJson
         }
     }
 
+    public PlayerCameraObserver.AspectRatio GetAspectRatio()
+    {
+        switch(playerCamRatio)
+        {
+            case "ultrawide":
+            case "Ultrawide": return PlayerCameraObserver.AspectRatio.Ultrawide;
+            case "wide": case "Wide": default: return PlayerCameraObserver.AspectRatio.Wide;
+        }
+    }
     public ThemeTeamColors GetTeamTheme(int id) { if (id == 0) return blueTheme; return goldTheme; }
 
     public PositionTweak GetTweak(string elementName)

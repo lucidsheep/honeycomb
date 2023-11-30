@@ -31,16 +31,18 @@ public class KQObserver : MonoBehaviour
 		bool useDefaultBG = false;
 		if (!ViewModel.instance.appView || bgContainer == null)
 			useDefaultBG = true;
-
-		var sprite = AppLoader.GetStreamingSprite(moduleName, bgCustomPivot);
-		if (sprite != null)
+		else
 		{
-			bgContainer.sprite = sprite;
-		} else
-        {
-			useDefaultBG = true;
-        }
-
+			var sprite = AppLoader.GetStreamingSprite(moduleName, bgCustomPivot);
+			if (sprite != null)
+			{
+				bgContainer.sprite = sprite;
+			}
+			else
+			{
+				useDefaultBG = true;
+			}
+		}
 		if(bgContainer != null)
 			bgContainer.gameObject.SetActive(!useDefaultBG);
 		if (normalBG != null)

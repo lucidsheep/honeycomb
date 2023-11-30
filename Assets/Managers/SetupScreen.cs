@@ -15,6 +15,7 @@ public class SetupScreen : MonoBehaviour
 		public PlayerCameraObserver.AspectRatio aspectRatio;
 		public TMP_Text sourceText;
 		public TMP_Text ratioText;
+		public PlayerCameraObserver previewCamera;
     }
 	public static bool setupInProgress = false;
 
@@ -68,14 +69,15 @@ public class SetupScreen : MonoBehaviour
 		themeSelector.value = themeOption == THEME_UNDEFINED ? THEME_CUSTOM : themeOption;
 		var gameplayCamID = PlayerPrefs.GetInt("gameplayCameraID", 0);
 		webcamController.ChangeCamera(gameplayCamID);
-		PlayerCameraObserver.camerasUpdatedEvent.AddListener(OnCamerasUpdated);
+		//PlayerCameraObserver.camerasUpdatedEvent.AddListener(OnCamerasUpdated);
 		for(int i = 0; i < cameraStates.Length; i++)
         {
 			if (cameraStates[i].name == "gameplayCamera")
 			{
 				cameraStates[i].aspectRatio = PlayerCameraObserver.AspectRatio.Wide;
-				cameraStates[i].id = PlayerPrefs.GetInt("gameplayCameraID", 0);
-				cameraStates[i].deviceName = PlayerCameraObserver.GetSourceName(cameraStates[i].id);
+				cameraStates[i].deviceName =
+					PlayerPrefs.GetString("gameplayCameraName", PlayerCameraObserver.GetSourceName(PlayerPrefs.GetInt("gameplayCameraID", 0)));
+				cameraStates[i].id = PlayerCameraObserver.GetCameraID(cameraStates[i].deviceName);
 			}
 			else
 			{
@@ -86,7 +88,8 @@ public class SetupScreen : MonoBehaviour
 				cameraStates[i].deviceName = cam.deviceName;
 				cameraStates[i].id = cam.deviceIndex;
 			}
-
+			if(cameraStates[i].previewCamera != null)
+				cameraStates[i].previewCamera.StartCamera();
 		}
 		OnCamerasUpdated();
 
@@ -176,6 +179,11 @@ public class SetupScreen : MonoBehaviour
         {
 			camera.ratioText.text = camera.aspectRatio.ToString();
 			camera.sourceText.text = camera.deviceName;
+			if (camera.previewCamera != null)
+            {
+				camera.previewCamera.deviceName = ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.Game_Only ? "Off" : camera.deviceName;
+				camera.previewCamera.StartCamera();
+            }
 		}
 	}
 
@@ -283,7 +291,7 @@ public class SetupScreen : MonoBehaviour
 			if (camera.name == "gameplayCamera")
 			{
 				webcamController.ChangeCamera(camera.id);
-				PlayerPrefs.SetInt("gameplayCameraID", camera.id);
+				PlayerPrefs.SetString("gameplayCameraName", camera.deviceName);
 			}
 			else
 			{

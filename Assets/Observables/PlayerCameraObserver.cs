@@ -32,6 +32,7 @@ public class PlayerCameraObserver : KQObserver
     public SpriteRenderer frame;
     public Image[] icons;
     public bool iconsVisible = true;
+    public bool freezeSize = false;
 
     AspectRatio _ratio;
     public AspectRatio aspectRatio { get { return _ratio; } set
@@ -61,6 +62,7 @@ public class PlayerCameraObserver : KQObserver
                         _deviceIndex = i;
                         _deviceName = value;
                         PlayerPrefs.SetString(webcamName + "Device", value);
+                        Debug.Log("camera " + webcamName + " device set to " + value);
                         return;
                     }
                 }
@@ -259,6 +261,10 @@ public class PlayerCameraObserver : KQObserver
     }
     void OnTheme()
     {
+        if(webcamName != "commentaryCamera")
+        {
+            aspectRatio = ViewModel.currentTheme.GetAspectRatio();
+        }
         SetState();
         //if(webcamName == "commentaryCamera")
         //    frame.gameObject.SetActive(bgContainer.sprite == null);
@@ -299,7 +305,7 @@ public class PlayerCameraObserver : KQObserver
 
     void SetIcons()
     {
-        if (targetID < 0) return;
+        if (targetID < 0 || icons.Length < 5) return;
         for (int i = 0; i < 5; i++)
         {
             icons[i].gameObject.SetActive(iconsVisible);
@@ -323,6 +329,7 @@ public class PlayerCameraObserver : KQObserver
 
         return WebCamTexture.devices[id].name;
     }
+
     public static AspectRatio GetAspectRatio(string camName)
     {
 
@@ -360,9 +367,9 @@ public class PlayerCameraObserver : KQObserver
 
     public int GetCameraID()
     {
-        return GetCameraID(webcamName, _deviceName);
+        return GetCameraID(_deviceName);
     }
-    public static int GetCameraID(string camName, string deviceName)
+    public static int GetCameraID(string deviceName)
     {
         for (int i = 0; i < WebCamTexture.devices.Length; i++)
         {
@@ -433,6 +440,8 @@ public class PlayerCameraObserver : KQObserver
 
     void SetCameraView()
     {
+        if (freezeSize) return;
+
         float width = aspectRatio == AspectRatio.Ultrawide ? 3120f : 1920f;
         float height = 1080f;
         /*

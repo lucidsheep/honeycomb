@@ -1,6 +1,16 @@
 # Honeycomb
 
-Honeycomb is a free overlay system for Killer Queen. It can be used in combination with OBS to broadcast many different aspects of the game, including team names, instant replays, and post-game stats.
+Honeycomb is a free overlay system for streaming and watching Killer Queen. It can be used in combination with OBS to broadcast many different aspects of the game, including team names, score information, instant replays, and post-game stats.
+
+- [Setup](#setup)
+- [Setting Team Names / Scores](#names)
+- [Dev Console](#console)
+- [Honeycomb App](#app)
+	- [Configuration Screen](#config)
+	- [Local Mode](#localmode)
+	- [Custom Themes](#customthemes)
+- [FAQ/Troubleshooting](#faq)
+- [Credits](#credits)
 
 There are three different styles for Honeycomb. The most flexible and feature-rich is a an app-based overlay that can leverage your streaming PC's GPU and CPU to the fullest to do cool things™. Here's a full breakdown of each version of Honeycomb:
 
@@ -20,7 +30,7 @@ There are three different styles for Honeycomb. The most flexible and feature-ri
 |BuzzBar bottom ticker|❌|❌|✅|
 |Automatic Webcam Management|❌|❌|✅|
 
-## Setup
+## Setup <a name="setup"></a>
 First, ensure your scene and cabinet are properly integrated into HiveMind. See  [this guide](https://kqhivemind.com/wiki/Basic_Client_Setup)  for getting things set up! Make a note of your HiveMind scene and cabinet name for setting up Honeycomb.
 
 The rest will depend on which version of Honeycomb you'd like to use.
@@ -38,15 +48,15 @@ The rest will depend on which version of Honeycomb you'd like to use.
    -  MacOS (coming soon)
    - Linux (coming soon)
  2. Run the downloaded client. It will auto-update itself to the newest version and restart.
- 3. In OBS add a Game Window source, and target honeycomb.exe. Scale the source to fill the entire area.
+ 3. In OBS add a Game Capture source, and target honeycomb.exe. Scale the source to fill the entire area.
 
 See the Configuration section for entering settings in the app.
 
-## Setting Team Names and Scores
+## Setting Team Names and Scores <a name="teamnames"></a>
 
 Team names and scores are automatically pulled from HiveMind and should not need to be manually adjusted. If needed, you can override the current names and score by clicking near the bottom of the screen. In the web version, you will need to click "Interact" in OBS first and then click inside the window.
 
-[screenshot]
+![screenshot](https://kq.style/md/editmode.png)
 
 1.  Set team names for each team.
 2.  Set number of games won for each team. This is automatically tallied by the scoreboard, but you can use this for manual adjustment when needed.
@@ -54,33 +64,36 @@ Team names and scores are automatically pulled from HiveMind and should not need
 4.  Click "New Set" when a new set is about to begin. This resets both team scores to 0 and resets all tracked data from the last series of games.
 5.  When you are done with adjustments, click the "Done" button to save and exit the edit interface.
 
-## Dev Console
+## Dev Console <a name="console"></a>
 Access the console by pressing tilde `~` and then entering a command. Use the `help` command to get a list of available commands. Press tilde again to close the console.
 
 If something goes wrong in the overlay, a good first step is to check the console. Click inside the text to select the entire log; from here you can copy it and send to a Honeycomb developer.
 
 Dev console is not available in the Scorebar web version.
 
-# Honeycomb App
+# Honeycomb App <a name="app"></a>
 The rest of this documentation pertains to settings and features only available in the app version.
 
-### Configuration Window
-[window]
-1. Hivemind / Local mode toggle. See Local Mode.
-2. Theme: choose between multiple layouts for the overlay:
+### Configuration Window <a name="config"></a>
+![screenshot](https://kq.style/md/setup.png)
+1. Hivemind / Local mode toggle. See [Local Mode](#localmode).
+2. Enter scene and cabinet information from HiveMind. In Local Mode, enter IP address of cabinet.
+3. Theme: choose between multiple layouts for the overlay:
    - One Column: A single wide column on the right side of gameplay.
    - Two Column: Two smaller columns on either side of gameplay.
    - Two Columns + Ticker: Two columns, with added ticker at the bottom.
-   - Game Only: Only shows gameplay (no columns or ticker). Will still show elements that overlap gameplay, such as Instant Replay, Postgame, and Match Preview.
-   - Custom: Enter a name for a custom theme.
-  3. Ticker Cabs: Enter cabinet names to track on the bottom ticker (optional)
-  4. Camera Config: For each of the four cameras, click the button below to cycle through available cameras. You can also choose "Frame Only" to show a blank space (useful if you want to manage cameras in OBS) or "Off" to disable a camera entirely. For Blue and Gold cameras, you can select between Wide and Ultrawide; Ultrawide will crop the cameras at a wider aspect ratio.
-  5. Low Resolution Cameras: Enable this to render non-gameplay cameras at a lower resolution and framerate. This is useful to improve performance.
-  6.  Instant Replay: Enable and the overlay will replay the last 6 seconds of gameplay after the game ends, along with a transition video. Use of this requires more memory and GPU usage, and may cause issues on slower machines. Disable to improve performance.
-  7. Image Recognition (beta): Enable an advanced player position tracking system that does fun things, including putting hats on players and putting players "on fire" when performing well. This is an advanced feature that utilizes machine learning models, and requires a dedicated GPU (at least a GTX 1070) to run decently.
-  8. Project as Webcam: Using a third party driver, the overlay acts like a webcam and shows up as one in OBS. This is broken as of OBS 29.1 and should not be checked unless Kevin set it up for you :)
+   - Game Only: Only shows gameplay (no columns, scorebar or ticker). Will still show elements that overlap gameplay, such as Instant Replay, Postgame, and Match Preview.
+   - Custom: Enter a name for a [custom theme](#customthemes).
+  4. Cabs for Ticker: Enter cabinet names to track on the bottom ticker (optional)
+  5. Camera Config: For each of the four cameras, click the button below to cycle through available cameras. You can also choose "Frame Only" to show a blank space inside a frame (useful if you want to manage cameras in OBS) or "Off" to disable a camera entirely.
+  6. Low Resolution Cameras: Enable this to render non-gameplay cameras at a lower resolution and framerate. This is useful to improve performance.
+  7.  Instant Replay: Enable and the overlay will replay the last 6 seconds of gameplay after the game ends, along with a transition video. Use of this requires more memory and GPU usage, and may cause issues on slower machines. Disable to improve performance.
+  8. Hats (beta): Enable an advanced player position tracking system that does fun things, including putting hats on players and putting players "on fire" when performing well. This is an advanced feature that utilizes machine learning models, and requires a dedicated GPU (at least a GTX 1070) to run decently.
+  9. Project as Webcam: Using a third party driver, the overlay acts like a webcam and shows up as one in OBS. This is broken as of OBS 29.1 and should not be checked unless Kevin set it up for you :)
+  10. Done: Click to exit the setup screen and start Honeycomb.
 
-### Local Mode
+### Local Mode <a name="localmode"></a>
+
 When recording or projecting gameplay in non-networked environments, you can use Local Mode to get stats directly from a cabinet, instead of from HiveMind. 
 1. Create a local network that connects your streaming PC and KQ cabinet. This can be done with a router or by sharing the computer's internet connection over Ethernet. 
 2. In the Configuration Window, click the "HiveMind" button in the top left to switch into Local Mode.
@@ -89,14 +102,17 @@ When recording or projecting gameplay in non-networked environments, you can use
 
 Note that HiveMind features like logging in and running tournaments will not work in Local Mode.
 
-## FAQ / Troubleshooting
+### Custom Themes <a name="customthemes"></a>
+Honeycomb has a built-in theming system to allow custom backgrounds and art, as well as choosing which elements will display on the sidebars and post-game. For more information, see the dedicated page for [Custom Themes](https://kq.style/md/theming.md).
+
+## FAQ / Troubleshooting <a name="faq"></a>
 #### The app is slow / laggy!
 - Disable Instant Replay and Image Recognition
 - Check "Low Resolution Cameras", or disable player cameras (set to Frame Only or Off). You can use OBS for player cameras, it has a more optimized process for rendering them.
 - In Windows Task Manager, find the honeycomb.exe process and set its priority to "high".
 - If you're a C# developer, [contribute](https://github.com/lucidsheep/honeycomb) to the project, it needs a lot of optimization :) 
 #### A game started and the post-game stats are still up
-- Ensure stats are still coming through (is the rest of the overlay still getting score updates?). If they are not, the internet may have broken, make sure to reconnect the cabinet. You may need to restart the overlay app to fix theconnection.
+- Ensure stats are still coming through (is the rest of the overlay still getting score updates?). If they are not, the internet may have broken, make sure to reconnect the cabinet. You may need to restart the overlay app to fix the connection.
 - If other stats are coming through, the overlay most likely missed the game start signal. Open the console (with `~`), enter `startGame` and hit enter to force the postgame screen to close. Hit `~` again to close the console.
 #### The snail percentage is off / snail keeps going up after the game ends
 - Due to a limitation in how game events work, snail progress is estimated and assumes the player is always moving forward. This can't be fixed unless more precise stats are implemented on the cabinet.
@@ -110,18 +126,18 @@ Note that HiveMind features like logging in and running tournaments will not wor
 - The ultimate end-game for Honeycomb is an all-in-one solution for streaming KQ, cutting OBS out of the equation. That would be a significant undertaking, though.
 #### How do you determine which players show up on the post-game player cards?
 - I have a proprietary algorithm that evaluates player actions and awards or takes away points for game actions. The top four scoring players are shown in the post-game.
-- On the app version, [WPA](https://en.wikipedia.org/wiki/Win_probability_added) (win probability added) is also factored in using the Win Prediction feature. So an action that swings the prediction strongly for (or against) your team will factor into top player analysis.
+- On the app version, [WPA](https://en.wikipedia.org/wiki/Win_probability_added) (win probability added) is also factored in using the Win Prediction feature. An action that swings the prediction strongly for (or against) a team will factor into top player analysis.
 
 #### Speaking of which, how does win prediction work?
 - Win prediction (aka KQuity) is a game prediction model [created by Rob Neuhaus](https://github.com/rrenaud/KQuity). It combines multiple vectors from game data (such as berries deposited, snail position, queen lives, and warriors up) across thousands of recorded HiveMind games to come up with an estimate of which team is currently winning.
-- In other words, it takes the current game state and compares it to similar situations within its library of millions of game states, and takes the average of which teams ended up winning in those similar games to create a prediction percentage.
+- In other words, it looks at the current game state and compares it to similar situations within its library of millions of game states, and takes the average of which teams ended up winning in those similar games to create a prediction percentage.
 #### What is a snail meter? What is a snail length? What is a snail?
 - A Snail meter is the distance a snail moves when a normal drone moves it for one second (approximately `20.896215463` pixels). A snail length is the same thing as a snail meter, we just have inconsistent naming.
 - The snail holds great power. It may or may not be the reincarnation of a vengeful god. For more info, please watch: [Killer Queen Lore](https://www.youtube.com/watch?v=dQw4w9WgXcQ).
 
 #### I want to contribute! I want to send you money!
 - [Please do contribute!](https://github.com/lucidsheep/honeycomb) The project is written in C# and uses Unity 2021.2 LTS. The code is poorly documented, so please contact me if you need any guidance or would like to submit a pull request.
-- This is a passion project and I'm not taking donations. Please direct any of your money to [keeping the HiveMind servers running](https://www.patreon.com/kqhivemind/posts), this project would not be possible without the incredible work that goes into it and its very generous APIs.
+- This is a passion project and I'm not taking donations. Please direct your money to [keeping the HiveMind servers running](https://www.patreon.com/kqhivemind/posts), this project would not be possible without the incredible work that goes into it and its very generous APIs.
 - I will, however, always accept a drink. I'd love to chat with you at a KQ event soon!
 
 #### Who are you, anyway?
@@ -132,3 +148,31 @@ Note that HiveMind features like logging in and running tournaments will not wor
 - Yes.
 #### Are you just aimlessly adding questions to procrastinate doing real work?
 - Possibly.
+
+## Credits <a name="credits"></a>
+* **Lead Programmer, Creative:** Kevin John
+* **Lead Designer, Art Producer:** Daniel Bueno
+* **Code Contributions:** Ben Engel
+* **Design Contributions, Feedback:**
+	* Mel Brown
+	* Logan David
+	* Dylan Higgins
+	* Imandra McKenzie
+* **Special Thanks**
+	* Killer Queen PDX Community
+	* Abby Cossentino
+	* Chris Delp
+	* Jason Galginaitis
+	* Joseph Miller
+	* Rob Neuhaus
+	* Mikio Quinn
+	* Alyssa Sweeney
+
+Honeycomb is built on the shoulders of these great projects and libraries:
+- [HiveMind](https://gitlab.com/kqhivemind/hivemind)
+- [Emoji Search](https://forum.unity.com/threads/full-emoji-support-api-emoji-sequen.660310/)
+- [ExifLib](https://www.codeproject.com/Articles/36342/ExifLib-A-Fast-Exif-Data-Extractor-for-NET)
+- [WebSocket-Sharp](https://github.com/sta/websocket-sharp)
+- [XZing](https://github.com/shadowmint/unity-zxing)
+- [Yolov5-Unity](https://github.com/egor-ulianov/yolov5-unity)
+- [UnityCapture](https://github.com/schellingb/UnityCapture)
