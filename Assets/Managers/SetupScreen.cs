@@ -76,7 +76,7 @@ public class SetupScreen : MonoBehaviour
 			{
 				cameraStates[i].aspectRatio = PlayerCameraObserver.AspectRatio.Wide;
 				cameraStates[i].deviceName =
-					PlayerPrefs.GetString("gameplayCameraName", PlayerCameraObserver.GetSourceName(PlayerPrefs.GetInt("gameplayCameraID", 0)));
+					PlayerPrefs.GetString("gameplayCameraName");
 				cameraStates[i].id = PlayerCameraObserver.GetCameraID(cameraStates[i].deviceName);
 			}
 			else
@@ -290,7 +290,8 @@ public class SetupScreen : MonoBehaviour
 		{
 			if (camera.name == "gameplayCamera")
 			{
-				webcamController.ChangeCamera(camera.id);
+				Debug.Log("gameplay camera is " + camera.deviceName);
+				webcamController.ChangeCamera(camera.deviceName);
 				PlayerPrefs.SetString("gameplayCameraName", camera.deviceName);
 			}
 			else

@@ -9,7 +9,7 @@ using System;
 //todo - app update absolutely does not work on macos, not sure if there's an easy way to do it
 public class AppLoader : MonoBehaviour
 {
-    public static int APP_VERSION = 100;
+    public static int APP_VERSION = 105;
 
     public GameObject[] localBundles;
     public ProgressBar loadingBar;

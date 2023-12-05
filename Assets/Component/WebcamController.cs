@@ -48,11 +48,25 @@ public class WebcamController : MonoBehaviour
             rImage.material.mainTexture = rImage.texture = forcedTexture;
     }
 
+    private string SetGameplayCam(string[] args)
+    {
+        string cam = "";
+        for( int i = 0; i < args.Length; i++)
+        {
+            cam += args[i];
+            if (i + 1 < args.Length)
+                cam += " ";
+        }
+        gameCamera.ChangeCamera(cam);
+        return "setting gameplay cam to " + cam;
+    }
     private void Start()
     {
         GameModel.onGameModelComplete.AddListener(OnGameComplete);
         SetupScreen.onSetupComplete.AddListener(OnSetupComplete);
         ViewModel.onThemeChange.AddListener(OnThemeChange);
+
+        LSConsole.AddCommandHook("setGameplayCam", "set gameplay camera", SetGameplayCam);
     }
 
     public static (Vector3, float) GetPositionAndScale(bool minimized)
@@ -185,6 +199,7 @@ public class WebcamController : MonoBehaviour
         webcam.requestedWidth = 1080;
 
         webcam.deviceName = newDeviceName;
+        Debug.Log("webcam is " + webcam.deviceName);
         webcam.Play();
     }
 }
