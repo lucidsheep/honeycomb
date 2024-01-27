@@ -885,7 +885,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d44fcfcbb9d3c43848d1f4b062a9491b, type: 3}
   m_Color: {r: 0.5742701, g: 0.7594641, b: 0.8396226, a: 1}
   m_FlipX: 0
@@ -1537,7 +1537,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
+  m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &398393001880222203
 MonoBehaviour:
@@ -2063,7 +2063,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
+  m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &398393001945072735
 MonoBehaviour:
@@ -2952,7 +2952,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 2d55436b45c6c49c48b07c319748d00d, type: 3}
   m_Color: {r: 1, g: 0.8815874, b: 0.682243, a: 1}
   m_FlipX: 0
@@ -4781,7 +4781,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 2d55436b45c6c49c48b07c319748d00d, type: 3}
   m_Color: {r: 0.5742701, g: 0.7594641, b: 0.8396226, a: 1}
   m_FlipX: 0
@@ -5808,7 +5808,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d44fcfcbb9d3c43848d1f4b062a9491b, type: 3}
   m_Color: {r: 1, g: 0.8815874, b: 0.682243, a: 1}
   m_FlipX: 0
@@ -8845,7 +8845,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
+  m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &398393003495380752
 MonoBehaviour:
@@ -9437,7 +9437,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
+  m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &398393003599251908
 MonoBehaviour:

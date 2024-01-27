@@ -9,7 +9,7 @@ using System;
 //todo - app update absolutely does not work on macos, not sure if there's an easy way to do it
 public class AppLoader : MonoBehaviour
 {
-    public static int APP_VERSION = 108;
+    public static int APP_VERSION = 109;
 
     public GameObject[] localBundles;
     public ProgressBar loadingBar;
@@ -369,6 +369,14 @@ public class AppLoader : MonoBehaviour
             return Sprite.Create(ret, new Rect(0f, 0f, ret.width, ret.height), pivot);
         }
         return null;
+    }
+
+    public static string GetAssetPath(string assetName)
+    {
+       var path = Application.streamingAssetsPath + slash + "themes" + slash + ViewModel.currentTheme.name + slash + assetName;
+        if (File.Exists(path))
+            return path;
+        return "";
     }
 
     public static List<ThemeDataJson> GetThemeList()
