@@ -16,10 +16,10 @@ public class PlayerModel : IComparable
     }
     public static StatValueType[] GetStatList()
     {
-        return new StatValueType[] { StatValueType.KD, StatValueType.Berries, StatValueType.Snail, StatValueType.Gates, StatValueType.LongestLife, StatValueType.QueenKills, StatValueType.Pinces, StatValueType.ObjGuards, StatValueType.FormGuards, StatValueType.UpTime, StatValueType.BerryKicks, StatValueType.BumpAssists, StatValueType.SnailKills, StatValueType.SnailFeeds, StatValueType.Value, StatValueType.BerriesCombined, StatValueType.DroneKills, StatValueType.KDA };
+        return new StatValueType[] { StatValueType.KD, StatValueType.Berries, StatValueType.Snail, StatValueType.Gates, StatValueType.LongestLife, StatValueType.QueenKills, StatValueType.Pinces, StatValueType.ObjGuards, StatValueType.FormGuards, StatValueType.UpTime, StatValueType.BerryKicks, StatValueType.BumpAssists, StatValueType.SnailKills, StatValueType.SnailFeeds, StatValueType.Value, StatValueType.BerriesCombined, StatValueType.DroneKills, StatValueType.KDA, StatValueType.DroneKD };
     }
 
-    public enum StatValueType { KD, Berries, Snail, Gates, LongestLife, QueenKills, Pinces, ObjGuards, FormGuards, UpTime, BerryKicks, BumpAssists, SnailKills, SnailFeeds, Value, BerriesCombined, DroneKills, KDA }
+    public enum StatValueType { KD, Berries, Snail, Gates, LongestLife, QueenKills, Pinces, ObjGuards, FormGuards, UpTime, BerryKicks, BumpAssists, SnailKills, SnailFeeds, Value, BerriesCombined, DroneKills, KDA, DroneKD }
     public struct StatValue : System.IComparable
     {
         public int stylePoints;
@@ -68,7 +68,7 @@ public class PlayerModel : IComparable
                     case StatValueType.UpTime: return "Mil. Uptime";
                     case StatValueType.SnailFeeds: return "Snail Feed" + (plural ? "s" : "");
                     case StatValueType.Value: return "Value Score™";
-                    case StatValueType.DroneKills: return "Drone Kill" + (plural ? "s" : "");
+                    case StatValueType.DroneKills: case StatValueType.DroneKD: return "Drone Kill" + (plural ? "s" : "");
                     default: return "???";
                 }
             }
@@ -102,6 +102,7 @@ public class PlayerModel : IComparable
                     case StatValueType.UpTime: return num1 + "%";
                     case StatValueType.BerryKicks: return num1 + (num2 > 0 ? "(" + num2 + ")" : "");
                     case StatValueType.BerriesCombined: return num1 + (num2 > 0 ? "(" + num2 + ")" : "");
+                    case StatValueType.DroneKD: return num1 + "|" + num2;
                     default: return num1.ToString();
                 }
             }
@@ -115,7 +116,11 @@ public class PlayerModel : IComparable
     public string GetKDA()
     {
         //need special function since it combines two different statValues
-        return curGameDerivedStats[StatValueType.KD].fullNumber + "-" + (curGameDerivedStats[StatValueType.BumpAssists].num1 + curGameDerivedStats[StatValueType.Pinces].num1);
+        var assists = (curGameDerivedStats[StatValueType.BumpAssists].num1 + curGameDerivedStats[StatValueType.Pinces].num1);
+
+        if (assists <= 0) return curGameDerivedStats[StatValueType.KD].fullNumber;
+
+        return curGameDerivedStats[StatValueType.KD].fullNumber + "-" + assists;
     }
     static string dashIfZero(int num) { return num == 0 ? "-" : num.ToString(); }
     public struct CombinedStylePoints : System.IComparable

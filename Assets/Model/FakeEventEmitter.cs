@@ -136,7 +136,7 @@ public class FakeEventEmitter : MonoBehaviour
                 {
                     randTarget = UnityEngine.Random.Range(1, 10);
                 } while ((randPlayer % 2) + (randTarget % 2) != 1);
-                randTargetType = randTarget < 3 ? "Queen" : "Soldier";
+                randTargetType = randTarget < 3 ? "Queen" : "Worker";
                 if (type == "queenKill")
                 {
                     randPlayer = randPlayer % 2 == 0 ? 1 : 2;

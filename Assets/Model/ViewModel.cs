@@ -36,6 +36,7 @@ public class ViewModel : MonoBehaviour
 	public Canvas webcamCanvas;
 	public SpriteRenderer topLevelGraphicContainer;
 	public SpriteRenderer[] backgroundGraphicContainers;
+	public TextAsset[] localThemes;
 
 	public Color bgFilter;
 
@@ -63,7 +64,17 @@ public class ViewModel : MonoBehaviour
 		hideSetPoints[1] = new LSProperty<int>(0);
 		instance = this;
 
-		themeListJson = AppLoader.GetThemeList();
+		if(appView)
+			themeListJson = AppLoader.GetThemeList();
+		else
+        {
+			themeListJson = new List<ThemeDataJson>();
+			foreach (var text in localThemes)
+            {
+				
+				themeListJson.Add(JsonUtility.FromJson<ThemeDataJson>(text.text));
+			}
+        }
 		Debug.Log("found " + themeListJson.Count + " json themes");
 		foreach (var theme in themeListJson)
 			Debug.Log(theme.name);

@@ -172,8 +172,8 @@ public class MatchPreviewScreen : KQObserver
 
 	void OnTournamentTeamIDs(int blue, int gold)
     {
-		blueTeamData.id = blue;
-		goldTeamData.id = gold;
+		blueTeamData.id = !UIState.inverted ? blue : gold;
+		goldTeamData.id = !UIState.inverted ? gold : blue;
 
 		blueTeamGameData = new TeamTournamentStats(blueTeamData.id);
 		goldTeamGameData = new TeamTournamentStats(goldTeamData.id);

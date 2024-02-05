@@ -255,9 +255,11 @@ public class GameModel : MonoBehaviour
                 }
                 else
                 {
-                    //always award drone kill
+                    //always award drone kill and death
                     teams[data.teamID].players[data.playerID].curLifeStats.droneKills.property++;
                     teams[data.teamID].players[data.playerID].AddDerivedStat(PlayerModel.StatValueType.DroneKills, 10, 1);
+                    teams[data.teamID].players[data.playerID].AddDerivedStat(PlayerModel.StatValueType.DroneKD, 0, 1, 0);
+                    teams[1 - data.teamID].players[data.targetID].AddDerivedStat(PlayerModel.StatValueType.DroneKD, 0, 0, 1);
 
                     //try to determine if the drone kill was noteworthy (stopped a form or objective)
                     //todo - need to consider wraps - make duplicate gates and snail for ones close to the edge
