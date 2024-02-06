@@ -83,7 +83,21 @@ public class PlayerStaticData : MonoBehaviour
         foreach(var pd in playerDB.Values)
         {
             if (pd.tournamentData != null && pd.tournamentData.team == teamID)
+            {
                 ret.Add(pd);
+            }
+        }
+        //remove fake HM entries that have a similar signed in entry
+        //also removed logged in entries that can't be matched to a fake entry
+        var loggedIn = ret.FindAll(x => x.hivemindID < 1000000);
+        var tempUsers = ret.FindAll(x => x.hivemindID >= 1000000);
+        foreach(var check in loggedIn)
+        {
+            var temp = tempUsers.Find(x => x.name.Contains(check.name));
+            if (temp != null)
+                ret.Remove(temp);
+            else
+                ret.Remove(check);
         }
         return ret;
     }
