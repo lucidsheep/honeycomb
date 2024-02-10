@@ -85,8 +85,14 @@ public class PlayerStaticData : MonoBehaviour
             if (pd.tournamentData != null && pd.tournamentData.team == teamID)
             {
                 ret.Add(pd);
+                Debug.Log(pd.name);
             }
         }
+
+        /*
+         * todo - figure out a better merging function
+        Debug.Log("Found " + ret.Count + " team players total");
+
         //remove fake HM entries that have a similar signed in entry
         //also removed logged in entries that can't be matched to a fake entry
         var loggedIn = ret.FindAll(x => x.hivemindID < 1000000);
@@ -95,10 +101,17 @@ public class PlayerStaticData : MonoBehaviour
         {
             var temp = tempUsers.Find(x => x.name.Contains(check.name));
             if (temp != null)
+            {
+                Debug.Log(temp.name + " contains " + check.name);
                 ret.Remove(temp);
+            }
             else
+            {
+                Debug.Log("no name contains " + check.name);
                 ret.Remove(check);
+            }
         }
+        */
         return ret;
     }
     public static string GetPronouns(int playerID)
