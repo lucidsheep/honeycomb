@@ -42,5 +42,11 @@ public class ProfilePicture : MonoBehaviour
 		mask.frontSortingOrder = layer;
 		mask.backSortingOrder = layer - 1;
     }
+
+	public void SetColor(Color color)
+    {
+		if (mask == null) return;
+		mask.GetComponent<SpriteRenderer>().color = color;
+    }
 }
 
