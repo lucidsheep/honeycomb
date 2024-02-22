@@ -6,6 +6,7 @@ public class PlayerNameObserver : KQObserver
 { 
 	public TextMeshPro text;
 	public GameObject textContainer;
+	public GameObject mainBG;
 	public SpriteRenderer[] icons;
 	public float pronounSize = 2f;
 
@@ -13,6 +14,7 @@ public class PlayerNameObserver : KQObserver
 	bool dirty = false;
 	bool presetMode = false;
 	bool forceIcons = false;
+	bool hideIfEmpty = false;
 	// Use this for initialization
 	public override void Start()
 	{
@@ -57,6 +59,9 @@ public class PlayerNameObserver : KQObserver
 			}
 
 			text.text = txt;
+
+			if(mainBG != null)
+				mainBG.SetActive(txt != "");
         }
 	}
 
@@ -84,6 +89,7 @@ public class PlayerNameObserver : KQObserver
 		forceIcons = moduleParameters.ContainsKey("forceIcons");
 		if (moduleParameters.ContainsKey("pronounSize"))
 			pronounSize = float.Parse(moduleParameters["pronounSize"]);
+		hideIfEmpty = moduleParameters.ContainsKey("autoHide") && bool.Parse(moduleParameters["autoHide"]);
 	}
 }
 

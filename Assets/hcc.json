@@ -25,8 +25,8 @@
         "iconColor" : "EC7382"
     }, 
     "sideBarPrimary": [
-        "blueRoster|position=0.0625",
-        "goldRoster|position=-1.8125"
+        "blueRoster|position=0.0625|autoHide=true",
+        "goldRoster|position=-1.8125|autoHide=true"
     ],
     "sideBarSecondary": []
 
