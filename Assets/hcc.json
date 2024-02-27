@@ -13,6 +13,8 @@
     "startReversed": true,
     "mainBarStyle": "defaultMainBar",
     "videoSet": "hcc",
+    "videoURLBlue": "https://kq.style/etc/hcc.mp4",
+    "videoURLGold": "https://kq.style/etc/hcc.mp4",
     "leaderboardID": 0,
     "blueTheme" : {
         "primaryColor" : "894BA4",

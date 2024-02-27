@@ -90,6 +90,7 @@ public class ThemeDataJson
     public string mainBarStyle;
     public string matchPreviewStyle;
     public string videoSet;
+    public string videoURLBlue, videoURLGold;
     public string playerCamRatio;
     public bool showTicker, showPlayerCams, showMilestones, showCrownAnimation, startReversed;
     public int leaderboardID;

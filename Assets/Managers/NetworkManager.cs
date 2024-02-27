@@ -121,7 +121,7 @@ public class NetworkManager : MonoBehaviour
         hivemindEvents.OnConnectionEvent.AddListener(OnConnectionEvent_Hivemind);
 
 
-        WebSocketSharpWebSocketClient.GlobalLogLevel = networkLogLevel;
+        //WebSocketSharpWebSocketClient.GlobalLogLevel = networkLogLevel;
 
         if (!SetupScreen.setupInProgress)
             BeginNetworking();
@@ -148,8 +148,8 @@ public class NetworkManager : MonoBehaviour
 
     string NetworkLogLevel(string[] options)
     {
-        if (options.Length == 0)
-            return "Current log level: " + (cabinetEvents.socketClient as WebSocketSharpWebSocketClient).logLevel.ToString();
+        //if (options.Length == 0)
+        //    return "Current log level: " + (cabinetEvents.socketClient as WebSocketSharpWebSocketClient).logLevel.ToString();
 
         WebSocketSharp.LogLevel logLevel = WebSocketSharp.LogLevel.Error;
         switch(options[0])
@@ -160,7 +160,7 @@ public class NetworkManager : MonoBehaviour
             case "off": logLevel = WebSocketSharp.LogLevel.Fatal; break;
         }
 
-        WebSocketSharpWebSocketClient.GlobalLogLevel = logLevel;
+        //WebSocketSharpWebSocketClient.GlobalLogLevel = logLevel;
 
         //(hivemindSocketClient as WebSocketSharpWebSocketClient).logLevel = logLevel;
         //(webSocketClient as WebSocketSharpWebSocketClient).logLevel = logLevel;
@@ -169,9 +169,9 @@ public class NetworkManager : MonoBehaviour
     }
     public static void BeginNetworking(string localIP = "")
     {
-//        if (instance.usePrivateRelay)
-  //          instance.serverAddress = "kq.style/listener";
-
+        //        if (instance.usePrivateRelay)
+        //          instance.serverAddress = "kq.style/listener";
+        Debug.Log("begin networking");
         instance.beginNetworkingFlag = true;
         if(localIP != "")
         {

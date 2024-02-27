@@ -344,6 +344,7 @@ public class ViewModel : MonoBehaviour
 					totalTextWidth = 78f;
 					break;
 			}
+			UIState.inverted = newTheme.startReversed;
 			bottomBarPadding.property = newTheme.showTicker ? .30f : 0f;
 			instance.topLevelGraphicContainer.sprite = AppLoader.GetStreamingSprite("mainFrame");
 			instance.backgroundGraphicContainers[0].sprite = AppLoader.GetStreamingSprite("background");

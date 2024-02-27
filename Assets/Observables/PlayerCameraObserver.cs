@@ -96,15 +96,17 @@ public class PlayerCameraObserver : KQObserver
         }
         allCameras.Add(this);
 
-        deviceName = PlayerPrefs.GetString(webcamName + "Device", "Empty Frame");
-        aspectRatio = (AspectRatio)PlayerPrefs.GetInt(webcamName + "Ratio", 0);
-        if (state == WebcamState.On)
-            StartCamera();
         ViewModel.onThemeChange.AddListener(OnTheme);
     }
     override public void Start()
     {
         base.Start();
+
+        deviceName = PlayerPrefs.GetString(webcamName + "Device", "Empty Frame");
+        aspectRatio = (AspectRatio)PlayerPrefs.GetInt(webcamName + "Ratio", 0);
+        if (state == WebcamState.On)
+            StartCamera();
+
         if (!commandHooks)
         {
             LSConsole.AddCommandHook("setCamera", "query the status of [blueCamera | goldCamera | commentaryCamera]. Add a [deviceName] to switch to switch cam to that device", SetCamera);

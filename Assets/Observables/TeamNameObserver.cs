@@ -56,9 +56,9 @@ public class TeamNameObserver : KQObserver
 			{
 				useBold = true;
 				forceLowercase = false;
-				dirty = true;
 			}
         }
+		dirty = true;
     }
 
 }

@@ -229,13 +229,15 @@ public class MatchPreviewScreen : KQObserver
 
 	void UpdateUI()
     {
-		blueTeamScore.text = blueTeamData.wins + "-" + blueTeamData.losses;
-		goldTeamScore.text = goldTeamData.wins + "-" + goldTeamData.losses;
+		string blueScore = blueTeamData.wins + "-" + blueTeamData.losses;
+		string goldScore = goldTeamData.wins + "-" + goldTeamData.losses;
+		blueTeamScore.text = !UIState.inverted ? blueScore : goldScore;
+		goldTeamScore.text = !UIState.inverted ? goldScore : blueScore;
 
 		if(curMatchData != null && curMatchData.current_match != null)
         {
-			blueTeamName.text = curMatchData.current_match.blue_team;
-			goldTeamName.text = curMatchData.current_match.gold_team;
+			blueTeamName.text = !UIState.inverted ? curMatchData.current_match.blue_team : curMatchData.current_match.gold_team;
+			goldTeamName.text = !UIState.inverted ? curMatchData.current_match.gold_team : curMatchData.current_match.blue_team;
 			roundName.text = curMatchData.current_match.round_name;
 			winCondition.text = (curMatchData.current_match.wins_per_match > 0) ? "Best of " + ((curMatchData.current_match.wins_per_match * 2) - 1)
 															 : "Straight " + curMatchData.current_match.rounds_per_match;

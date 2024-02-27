@@ -90,12 +90,14 @@ public class PostGameScreen : KQObserver
 		//gameObject.SetActive(false);
 		replayRender = new RenderTexture(1920, 1080, 24);
 		LSConsole.AddCommandHook("postgame", "use with [start] or [stop] to control postgame screen", CommandPostgame);
+
+		SetVisible(false, true);
 	}
 
 	void OnSetupComplete()
     {
 		doInstantReplay = PlayerPrefs.GetInt("instantReplay") == 1;
-		SetVisible(false, true);
+		
 	}
 
 	void OnThemeChange()
@@ -150,7 +152,8 @@ public class PostGameScreen : KQObserver
 			subText.transform.localScale = Vector3.one * t.scale;
 			subText.transform.localPosition = new Vector3(t.x, t.y, 0f);
         }
-    }
+		SetVisible(false, true);
+	}
 
 	void SetupSecondaryScreen()
     {
@@ -344,8 +347,15 @@ public class PostGameScreen : KQObserver
 		*/
 		isVisible = newVal;
 		fader.DOKill();
-		bg.source = VideoSource.VideoClip;
-		bg.clip = blueWins ? VideoDB.blueVideos.postgame : VideoDB.goldVideos.postgame;
+		if (ViewModel.instance.appView)
+		{
+			bg.source = VideoSource.VideoClip;
+			bg.clip = blueWins ? VideoDB.blueVideos.postgame : VideoDB.goldVideos.postgame;
+		} else
+        {
+			bg.source = VideoSource.Url;
+			bg.url = blueWins ? ViewModel.currentTheme.videoURLBlue : ViewModel.currentTheme.videoURLGold;
+        }
 		if (ViewModel.instance.appView && newVal)
 			ViewModel.StartPIP(false);
 		else if(ViewModel.instance.appView && !newVal)
