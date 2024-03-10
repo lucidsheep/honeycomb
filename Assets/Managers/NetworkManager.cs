@@ -663,10 +663,6 @@ public class NetworkManager : MonoBehaviour
                 SignInPlayer(player);
             }
         }
-        //fill in additional info from tournament data
-        SyncStaticData();
-
-        //sync names with static data
     }
 
     void SignInPlayer(HMSignedInUser player)
@@ -763,28 +759,7 @@ public class NetworkManager : MonoBehaviour
             }
         }
     }
-    static void SyncStaticData()
-    {
-        
-        for (int t = 0; t < 2; t++)
-        {
-            for (int p = 0; p < 5; p++)
-            {
-                //for tournament teams, sync preset queen data
-                if (p == 2 && TournamentPresetData.GetQueenPresetID(t) > -1)
-                {
-                    var id = TournamentPresetData.GetQueenPresetID(t);
-                    GameModel.instance.teams[t].players[2].hivemindID = id;
-                }
-                //if we find static data already, set name
-                var hivemindID = GameModel.instance.teams[t].players[p].hivemindID;
-                var data = PlayerStaticData.GetPlayer(hivemindID);
-                if (data != null && data.name != "")
-                    GameModel.instance.teams[t].players[p].playerName.property = data.name;
-            }
-        }
-        //for everyone, set names
-    }
+
     public static void GetTournamentState()
     {
         instance.StartCoroutine(_GetTournamentState());
@@ -810,9 +785,7 @@ public class NetworkManager : MonoBehaviour
                     GameModel.instance.isWarmup.property = result.results[0].is_warmup;
                     GameModel.inTournamentMode = true;
                     instance.setCompleteFlag = false;
-                    TournamentPresetData.OnTournamentData(result.results[0].blue_team.ToString(), result.results[0].gold_team.ToString());
                     GetTournamentQueue(GameModel.currentTournamentID);
-                    //MaybeSendDiscord();
                 } else
                 {
                     Debug.Log("no tournament games found");
@@ -916,9 +889,6 @@ public class NetworkManager : MonoBehaviour
                 if (result.results.Length > 0)
                 {
                     instance.ProcessTournamentID(result.results[0].tournament.id);
-                    TournamentPresetData.OnTournamentData(result.results[0].blue_team.ToString(), result.results[0].gold_team.ToString());
-                    if (result.results[0].blue_score + result.results[0].gold_score == 0)
-                        MaybeSendDiscord();
                     GetTournamentPlayerData(result.results[0].blue_team, result.results[0].gold_team);
                     GetTournamentTeamData(result.results[0].blue_team, result.results[0].gold_team);
                     GetTournamentQueue(result.results[0].tournament.id);
@@ -1096,19 +1066,5 @@ public class NetworkManager : MonoBehaviour
             }
         }
     }
-    static void MaybeSendDiscord()
-    {
-        bool isDoubleElim = PlayerPrefs.GetInt("doubleElim") == 1;
-        Debug.Log("discord delim " + isDoubleElim + " blue " + (TournamentPresetData.blueTeam.property == null) + " gold " + (TournamentPresetData.goldTeam.property == null));
-        if (isDoubleElim && TournamentPresetData.blueTeam.property != null && TournamentPresetData.goldTeam.property != null)
-        {
-            //preset teams found, notify with discord message
-            var cabName = PlayerPrefs.GetString("cabName");
-            var twitchURL = PlayerPrefs.GetString("twitchURL");
-            var message = "<@&" + TournamentPresetData.blueTeam.property.discordID + "> and <@&" + TournamentPresetData.goldTeam.property.discordID + "> are now playing on " + cabName + "!";
-            if (twitchURL != "")
-                message += " Watch them on Twitch: <" + twitchURL + ">";
-            Discord.Send(message);
-        }
-    }
+
 }

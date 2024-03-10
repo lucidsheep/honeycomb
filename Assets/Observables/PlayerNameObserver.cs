@@ -10,12 +10,10 @@ public class PlayerNameObserver : KQObserver
 	public SpriteRenderer[] icons;
 	public float pronounSize = 2f;
 
-	TournamentTeamData presetTeamData;
 	bool dirty = false;
-	bool presetMode = false;
 	bool forceIcons = false;
 	bool hideIfEmpty = false;
-	// Use this for initialization
+
 	public override void Start()
 	{
 		base.Start();
@@ -23,25 +21,16 @@ public class PlayerNameObserver : KQObserver
 		{
 			GameModel.instance.teams[targetID].players[p].playerName.onChange.AddListener((b, a) => dirty = true);
 		}
-		if (targetID == 0) TournamentPresetData.blueTeam.onChange.AddListener(OnPresetTeamData);
-		else TournamentPresetData.goldTeam.onChange.AddListener(OnPresetTeamData);
 		PlayerStaticData.onPlayerData.AddListener(_ => dirty = true);
 		dirty = true;
 	}
 
-	void OnPresetTeamData(TournamentTeamData b, TournamentTeamData a)
-    {
-		presetTeamData = a;
-		dirty = true;
-    }
-	// Update is called once per frame
 	void Update()
 	{
 		if(dirty)
         {
 			dirty = false;
 			string txt = "";
-			SetPresetTeamDisplayMode(presetTeamData != null);
 			int lineNum = 0;
 			for (int j = 0; j < 5; j++)
 			{
@@ -53,8 +42,7 @@ public class PlayerNameObserver : KQObserver
 				if (GameModel.instance.teams[targetID].players[i].playerName.property == "" && !forceIcons) continue;
 				var id = GameModel.instance.teams[targetID].players[i].hivemindID;
 				txt += FormatName(GameModel.instance.teams[targetID].players[i].playerName.property, i) + " " + FormatPronouns(PlayerStaticData.GetPronouns(id)) + "\n";
-				if(!presetMode)
-					icons[lineNum].sprite = SpriteDB.GetIcon(targetID, i);
+				icons[lineNum].sprite = SpriteDB.GetIcon(targetID, i);
 				lineNum++;
 			}
 
@@ -65,13 +53,6 @@ public class PlayerNameObserver : KQObserver
         }
 	}
 
-	void SetPresetTeamDisplayMode(bool preset)
-    {
-		presetMode = preset;
-		textContainer.transform.localPosition = new Vector3(preset ? 0.05f : 0.33f, -1.3f, 0f);
-		foreach (var icon in icons)
-			icon.sprite = null;
-    }
 	string FormatPronouns(string input)
     {
 		if (input == "") return "";

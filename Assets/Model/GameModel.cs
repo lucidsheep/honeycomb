@@ -160,7 +160,6 @@ public class GameModel : MonoBehaviour
             GameModel.instance.teams[1].setWins.property = 0;
             GameModel.instance.isWarmup.property = false;
             onDelayedTournamentData.Invoke(tempMatchData);
-            TournamentPresetData.ClearPresetData();
             inTournamentMode = false;
         }
     }
