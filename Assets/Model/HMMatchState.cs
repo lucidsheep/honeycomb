@@ -414,6 +414,30 @@ public class HMTournament
     public bool deleted, is_active;
 }
 
+[System.Serializable]
+public class HMTournamentQueue
+{
+    public string type;
+    public HMTournamentQueueData data;
+
+}
+
+[System.Serializable]
+public class HMTournamentQueueList
+{
+    public int count;
+    public HMTournamentQueueData[] results;
+
+}
+
+[System.Serializable]
+public class HMTournamentQueueData
+{
+    public int id, tournament, cabinet;
+    public bool enabled;
+    public HMTournamentMatch[] match_list;
+}
+
 //{ "id":171,"name":"Let's Talk Comp","linked_team_ids":["172021224"],"tournament":28}
 
 [System.Serializable]

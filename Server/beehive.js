@@ -60,7 +60,7 @@ export default async (expressServer) => {
           logWebsocket(ws, "invalid message received");
           return;
         } 
-        message.ws = ws;
+        logWebsocket(ws, "Game data received");
         queuedMessages.push(message);
         
       });
@@ -105,61 +105,59 @@ function processQueue() {
   const messageBatch = queuedMessages.splice(0, Math.min(queuedMessages.length, 100));
 
   for (const message of messageBatch) {
-    const scene = message.scene;
-    const type = message.type;
-    const table = 'leaderboard';
-
-    switch(type)
+    const table = message.tournamentName;
+    log(JSON.stringify(message));
+    for(const player of message.players)
     {
-      case "gameEnd":
-      for(const player of message.players)
-      {
-        log(JSON.stringify(player));
-        const hivemindID = player.id;
+      log(JSON.stringify(player));
+      const hivemindID = player.id;
 
-        db.query('SELECT * FROM ' + table + ' WHERE id = ' + hivemindID, function (error, results, fields) {
-          if (error) throw error;
-          if(results.length > 0)
-          {
-            //merge
-            var curData = results[0];
-            player.berries += curData.berries;
-            player.berries_kicked += curData.berries_kicked;
-            player.deaths += curData.deaths;
-            player.kills_all += curData.kills_all;
-            player.kills_military += curData.kills_military;
-            player.kills_queen += curData.kills_queen;
-            player.kills_queen_aswarrior += curData.kills_queen_aswarrior;
-            player.warrior_deaths += curData.warrior_deaths;
-            player.warrior_uptime += curData.warrior_uptime;
-            player.snail += curData.snail;
-            player.jason_points += curData.jason_points;
-            player.snail_deaths += curData.snail_deaths;
-          }
+      db.query('SELECT * FROM ' + table + ' WHERE id = ' + hivemindID, function (error, results, fields) {
+        if (error) throw error;
+        if(results.length > 0)
+        {
+          //merge
+          var curData = results[0];
+          player.berries += curData.berries;
+          player.berries_kicked += curData.berries_kicked;
+          player.deaths += curData.deaths;
+          player.kills_all += curData.kills_all;
+          player.kills_military += curData.kills_military;
+          player.kills_queen += curData.kills_queen;
+          player.kills_queen_aswarrior += curData.kills_queen_aswarrior;
+          player.warrior_deaths += curData.warrior_deaths;
+          player.warrior_uptime += curData.warrior_uptime;
+          player.snail += curData.snail;
+          player.jason_points += curData.jason_points;
+          player.snail_deaths += curData.snail_deaths;
+        }
 
-          player.warrior_ratio = player.kills_all == 0 || player.warrior_uptime == 0 ? 100.0 : (player.kills_all / player.warrior_uptime) * 60.0;     
-          db.query(`REPLACE INTO ${table} VALUES (${player.id}, "${player.name}", ${player.kills_military}, ${player.kills_queen}, ${player.kills_queen_aswarrior}, ${player.berries}, ${player.snail}, ${player.berries_kicked}, ${player.deaths}, ${player.warrior_uptime}, ${player.kills_all}, ${player.warrior_ratio}, ${player.warrior_deaths}, ${player.snail_deaths}, ${player.jason_points}, "${scene}");`, function (err2, res2, fields2) {
-            if (err2) throw err2;
-          });   
-        });
+        player.warrior_ratio = player.kills_all == 0 || player.warrior_uptime == 0 ? 100.0 : (player.kills_all / player.warrior_uptime) * 60.0;     
 
-      }
-      break;
-      case "getLeaderboard":
-        const leaderboardName = message.leaderboard;
-        broadcastLeaderboard(leaderboardName, scene, message.ws);
-        break;
+        db.query(`REPLACE INTO ${table} VALUES (${player.id}, "${player.name}", ${player.kills_military}, ${player.kills_queen}, ${player.kills_queen_aswarrior}, ${player.berries}, ${player.snail}, ${player.berries_kicked}, ${player.deaths}, ${player.warrior_uptime}, ${player.kills_all}, ${player.warrior_ratio}, ${player.warrior_deaths}, ${player.snail_deaths}, ${player.jason_points});`, function (err2, res2, fields2) {
+          if (err2) throw err2;
+        });   
+      });
+
     }
   }
 }
+const leaderboardList = ["deaths", "kills_queen_aswarrior", "berries_kicked", "warrior_ratio", "berries", "warrior_deaths", "snail", "snail_deaths", "jason_points"];
+var curLeaderboard = 0;
 
-function broadcastLeaderboard(leaderboardName, scene, ws)
+function broadcastLeaderboard()
 {
+  const leaderboardName = leaderboardList[curLeaderboard];
   const order = leaderboardName == "warrior_ratio" ? "ASC" : "DESC";
-  db.query(`SELECT id, scene, name, ${leaderboardName} FROM leaderboard WHERE scene = "${scene}" ORDER BY ${leaderboardName} ${order} LIMIT 15;`, function (error, results, fields) {
+  curLeaderboard = curLeaderboard + 1 >= leaderboardList.length ? 0 : curLeaderboard + 1;
+  db.query(`SELECT id, name, ${leaderboardName} FROM campkq ORDER BY ${leaderboardName} ${order} LIMIT 15;`, function (error, results, fields) {
     if (error) throw error;
     const msg = JSON.stringify({leaderboardName: leaderboardName, players : results});
-    ws.send(msg);
+    for(const overlay of connectedOverlays)
+    {
+      overlay.ws.send(msg);
+    }
   });
 }
 setInterval(processQueue, 100);
+setInterval(broadcastLeaderboard, 10000);

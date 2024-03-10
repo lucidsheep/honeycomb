@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/AppView.unity
     guid: 3a15de26fd4144e70bce95cc860299a2
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BigOverlay.unity
     guid: 2a1d92144a64040ef817507f106584e9
   - enabled: 0

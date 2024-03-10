@@ -146,7 +146,7 @@ public class GameModel : MonoBehaviour
             onDelayedTournamentData.Invoke(newSetTeamData);
             newSetTeamData = null;
             inTournamentMode = true;
-            NetworkManager.GetSignedInPlayers();
+            //NetworkManager.GetSignedInPlayers();
         }
         else
         {
@@ -189,7 +189,7 @@ public class GameModel : MonoBehaviour
                     {
                         ResetGame();
                     }
-                    NetworkManager.GetSignedInPlayers();
+                    //NetworkManager.GetSignedInPlayers();
                     NetworkManager.GetTournamentState();
                     gameTime.property = 0f;
                     onGameStart.Invoke();
@@ -357,7 +357,7 @@ public class GameModel : MonoBehaviour
                     team.EndGame();
                 
                 gameIsRunning.property = false;
-                new LSTimer(10f, () => NetworkManager.GetSignedInPlayers());
+                //new LSTimer(10f, () => NetworkManager.GetSignedInPlayers());
                 break;
             case GameEventType.GATE_TAG:
                 var gate = allGates.Find(x => x.position == data.coordinates);

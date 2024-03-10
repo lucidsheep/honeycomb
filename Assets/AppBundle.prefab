@@ -3600,9 +3600,13 @@ MonoBehaviour:
   serverPort: 8080
   hivemindAddress: kqhivemind.com/ws/gamestate
   hivemindPort: 8080
+  hivemindTournamentAddress: kqhivemind.com/ws/tournament-relay
+  hivemindTournamentPort: 8080
+  hivemindSignInAddress: kqhivemind.com/ws/signin/
   sceneName: kqpdx
   cabinetName: groundkontrol
   overlayURLs: []
+  tournamentID: -1
   tournamentEventDispatcher:
     m_PersistentCalls:
       m_Calls: []
@@ -3622,6 +3626,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onTeamGameData:
+    m_PersistentCalls:
+      m_Calls: []
+  onTournamentQueueData:
+    m_PersistentCalls:
+      m_Calls: []
+  onTournamentTeamName:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1468528150411243541
@@ -3719,6 +3729,7 @@ MonoBehaviour:
   backgroundGraphicContainers:
   - {fileID: 1001474565358818122}
   - {fileID: 4538637431201132806}
+  localThemes: []
   bgFilter: {r: 1, g: 1, b: 1, a: 1}
   theme:
     name: 
@@ -3731,6 +3742,8 @@ MonoBehaviour:
     mainBarStyle: 
     matchPreviewStyle: 
     videoSet: 
+    videoURLBlue: 
+    videoURLGold: 
     playerCamRatio: 
     showTicker: 0
     showPlayerCams: 0
@@ -3881,6 +3894,7 @@ MonoBehaviour:
   - {fileID: 1621947411791464451, guid: 9d71684fc7e1a42eaa6f34e7fb0edfe1, type: 3}
   - {fileID: 1621947411791464451, guid: c3851cf4d54fc4e3299e6cfe27b4e6a8, type: 3}
   - {fileID: 3282864357928725885, guid: 080c0eb7ea720417ca12df83b21d44c6, type: 3}
+  - {fileID: 3022604383968729705, guid: 2e69decfac76e4977a25a1e0fb657420, type: 3}
   curModules: []
   leftSidebar: {fileID: 7971284978406135557}
   rightSidebar: {fileID: 4681536881800815490}
@@ -3917,6 +3931,7 @@ MonoBehaviour:
   isSecureConnection: 1
   activeTournament: 0
   leaderboardScene: 
+  leaderboardTimer: 7
 --- !u!114 &247699985227940698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6360,7 +6375,7 @@ Transform:
   m_GameObject: {fileID: 5069527657665443749}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 1.79, y: 1, z: 1.004}
+  m_LocalScale: {x: 1.777778, y: 1, z: 1.004}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1468528148451302048}

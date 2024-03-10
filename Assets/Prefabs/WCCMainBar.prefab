@@ -1733,9 +1733,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '--
+  m_text: '-
 
-    0'
+    -'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bf5f0f4d70d16435ba42619f3eea8b00, type: 2}
   m_sharedMaterial: {fileID: 3503669942494949224, guid: bf5f0f4d70d16435ba42619f3eea8b00, type: 2}
@@ -1828,7 +1828,7 @@ MonoBehaviour:
   absolutePos: 0
   bgCustomPivot: {x: 0.5, y: 0.5}
   txt: {fileID: 398393001896337831}
-  usePercent: 0
+  usePercent: 1
 --- !u!114 &398393001896337828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2260,7 +2260,8 @@ MonoBehaviour:
   empty_gold: {fileID: 21300000, guid: 591cca00112264e4d9219dd1adcaabbd, type: 3}
   full_blue: {fileID: 21300000, guid: d2b0b2268e4c5420ab2d0c158d71fba2, type: 3}
   full_gold: {fileID: 21300000, guid: d2b0b2268e4c5420ab2d0c158d71fba2, type: 3}
-  useColor: 0
+  emptyColor: {r: 1, g: 1, b: 1, a: 1}
+  useColor: 1
 --- !u!1 &398393002012058837
 GameObject:
   m_ObjectHideFlags: 0
@@ -2855,6 +2856,7 @@ MonoBehaviour:
   empty_gold: {fileID: 21300000, guid: 591cca00112264e4d9219dd1adcaabbd, type: 3}
   full_blue: {fileID: 21300000, guid: d2b0b2268e4c5420ab2d0c158d71fba2, type: 3}
   full_gold: {fileID: 21300000, guid: d2b0b2268e4c5420ab2d0c158d71fba2, type: 3}
+  emptyColor: {r: 1, g: 1, b: 1, a: 1}
   useColor: 0
 --- !u!114 &3365451515906755524
 MonoBehaviour:
@@ -3679,6 +3681,7 @@ MonoBehaviour:
   empty_gold: {fileID: 21300000, guid: 591cca00112264e4d9219dd1adcaabbd, type: 3}
   full_blue: {fileID: 21300000, guid: d2b0b2268e4c5420ab2d0c158d71fba2, type: 3}
   full_gold: {fileID: 21300000, guid: d2b0b2268e4c5420ab2d0c158d71fba2, type: 3}
+  emptyColor: {r: 1, g: 1, b: 1, a: 1}
   useColor: 0
 --- !u!114 &2232159710363733700
 MonoBehaviour:
@@ -4508,6 +4511,7 @@ MonoBehaviour:
   empty_gold: {fileID: 21300000, guid: 591cca00112264e4d9219dd1adcaabbd, type: 3}
   full_blue: {fileID: 21300000, guid: d2b0b2268e4c5420ab2d0c158d71fba2, type: 3}
   full_gold: {fileID: 21300000, guid: d2b0b2268e4c5420ab2d0c158d71fba2, type: 3}
+  emptyColor: {r: 1, g: 1, b: 1, a: 1}
   useColor: 0
 --- !u!114 &152594727324008200
 MonoBehaviour:
@@ -5698,8 +5702,8 @@ MonoBehaviour:
   blueFaded: {r: 0.17254902, g: 0.29411766, b: 0.3647059, a: 1}
   goldFaded: {r: 0.6509804, g: 0.29803923, b: 0.07450981, a: 1}
   centerFaded: {r: 0, g: 0, b: 0, a: 0.5019608}
-  blueFilled: {r: 1, g: 1, b: 1, a: 1}
-  goldFilled: {r: 1, g: 1, b: 1, a: 1}
+  blueFilled: {r: 0.29411766, g: 0.53333336, b: 0.77254903, a: 1}
+  goldFilled: {r: 0.5686275, g: 0.41568628, b: 0.003921569, a: 1}
   staticCrowns:
   - {fileID: 2434704518602293231}
   - {fileID: 398393002341108455}
@@ -7657,9 +7661,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '56
+  m_text: '-
 
-    8'
+    -'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bf5f0f4d70d16435ba42619f3eea8b00, type: 2}
   m_sharedMaterial: {fileID: 3503669942494949224, guid: bf5f0f4d70d16435ba42619f3eea8b00, type: 2}
@@ -7752,7 +7756,7 @@ MonoBehaviour:
   absolutePos: 0
   bgCustomPivot: {x: 0.5, y: 0.5}
   txt: {fileID: 398393003227166206}
-  usePercent: 0
+  usePercent: 1
 --- !u!114 &398393003227166203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10908,6 +10912,18 @@ PrefabInstance:
       propertyPath: empty_gold
       value: 
       objectReference: {fileID: 21300000, guid: 591cca00112264e4d9219dd1adcaabbd, type: 3}
+    - target: {fileID: 3655493544508320014, guid: 74d1a416f4a8e4a1c83758b9daa5599f, type: 3}
+      propertyPath: emptyColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3655493544508320014, guid: 74d1a416f4a8e4a1c83758b9daa5599f, type: 3}
+      propertyPath: emptyColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3655493544508320014, guid: 74d1a416f4a8e4a1c83758b9daa5599f, type: 3}
+      propertyPath: emptyColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7100002798154309015, guid: 74d1a416f4a8e4a1c83758b9daa5599f, type: 3}
       propertyPath: m_Sprite
       value: 

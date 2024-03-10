@@ -75,7 +75,7 @@ public class TournamentLeaderboard
 [System.Serializable]
 public class TournamentLeaderboardSubmission
 {
-	public string tournamentName;
+	public string scene, type, leaderboard;
 	public TournamentLeaderboardPlayer[] players;
 }
 

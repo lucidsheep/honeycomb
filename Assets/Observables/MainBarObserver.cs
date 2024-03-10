@@ -54,6 +54,11 @@ public class MainBarObserver : KQObserver
 			camScale = ViewModel.currentTheme.barStyle.cameraScale;
 			blueCam.iconsVisible = goldCam.iconsVisible = !ViewModel.currentTheme.barStyle.hideCameraIcons;
 		}
+		if(ViewModel.currentTheme.barStyle.customScale > 0f)
+        {
+			newPos = new Vector3(ViewModel.currentTheme.barStyle.customPositionX, ViewModel.currentTheme.barStyle.customPositionY, 0f);
+			scale = ViewModel.currentTheme.barStyle.customScale;
+        }
 		transform.localPosition = newPos;
 		blueCam.transform.localPosition = new Vector3(-camX, camY, -3.3f);
 		goldCam.transform.localPosition = new Vector3(camX, camY, -3.3f);

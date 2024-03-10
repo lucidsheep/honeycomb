@@ -14,6 +14,11 @@ public class TournamentLeaderboardManager : MonoBehaviour
 	public bool isSecureConnection;
 	public int activeTournament = -1;
 	public string leaderboardScene = "";
+	public float leaderboardTimer = 10f;
+
+	float nextRefresh = 10f;
+	string[] leaderboardList = new string[] { "deaths", "kills_queen_aswarrior", "berries_kicked", "warrior_ratio", "berries", "warrior_deaths", "snail", "snail_deaths", "jason_points" };
+	int curLeaderboard = 0;
 
 	public static UnityEvent<TournamentLeaderboard> OnLeaderboardReceived = new UnityEvent<TournamentLeaderboard>();
     private void Awake()
@@ -37,6 +42,8 @@ public class TournamentLeaderboardManager : MonoBehaviour
 	void OnLeaderboardConnectionState(bool state)
     {
 		Debug.Log("leaderboard DB " + (!state ? "dis" : "") + "connected");
+		if (connection.isConnected)
+			nextRefresh = 0.01f;
     }
 	void OnLeaderboardData(string jsonData)
     {
@@ -50,12 +57,15 @@ public class TournamentLeaderboardManager : MonoBehaviour
 
 		if (!connection.isConnected) return;
 		if (GameModel.instance.isWarmup) return; //warmups don't count
+		if (NetworkManager.instance.sceneName == "") return;
+
 		if (leaderboardScene != "" && leaderboardScene != NetworkManager.instance.sceneName) return;
 
 		bool sendAllStats = GameModel.currentTournamentID == activeTournament || activeTournament == 0;
 
 		var data = new TournamentLeaderboardSubmission();
-		data.tournamentName = "campkq";
+		data.scene = NetworkManager.instance.sceneName;
+		data.type = "gameEnd";
 		var loggedInPlayers = new List<TournamentLeaderboardPlayer>();
 		foreach(var t in GameModel.instance.teams) { foreach(var p in t.players)
         {
@@ -73,7 +83,25 @@ public class TournamentLeaderboardManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-			
+		if (!connection.isConnected) return;
+
+		nextRefresh -= Time.deltaTime;
+		if(nextRefresh <= 0f)
+        {
+			nextRefresh = leaderboardTimer;
+			if (NetworkManager.instance.sceneName == "") return;
+			var message = new TournamentLeaderboardSubmission();
+			message.scene = NetworkManager.instance.sceneName;
+			message.type = "getLeaderboard";
+			message.leaderboard = leaderboardList[curLeaderboard];
+			curLeaderboard++;
+			if (curLeaderboard >= leaderboardList.Length)
+				curLeaderboard = 0;
+			//special case to exclude jason points from non-pdx scenes
+			if (message.scene != "kqpdx" && curLeaderboard + 1 >= leaderboardList.Length)
+				curLeaderboard = 0;
+			connection.SendMessageToServer(JsonUtility.ToJson(message));
+        }
 	}
 }
 
