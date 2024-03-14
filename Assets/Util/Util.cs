@@ -59,5 +59,22 @@ public class Util
         return ret;
     }
 
+    public static Color HexToColor(string hex)
+    {
+        var output = Color.white;
+        if (hex.Length == 0) return output;
+        if (hex[0] == '#') hex = hex.Substring(1);
+        if (hex.Length < 6) return output;
+
+        output.r = (float)int.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber) / 255f;
+        output.g = (float)int.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber) / 255f;
+        output.b = (float)int.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber) / 255f;
+
+        if(hex.Length > 6)
+            output.a = (float)int.Parse(hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber) / 255f;
+
+        return output;
+    }
+
 }
 

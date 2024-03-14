@@ -66,7 +66,9 @@ public class TournamentLeaderboardObserver : KQObserver
 			var lbName = "???";
 			var lbPlayers = "";
 			var lbValues = "";
-			if (leaderboardList.ContainsKey(leaderboard.leaderboardName))
+			if(leaderboard.leaderboardName == "jason_points" && ViewModel.currentTheme.leaderboardTargetName != "")
+				lbName = ViewModel.currentTheme.leaderboardTargetName + " Points™";
+			else if (leaderboardList.ContainsKey(leaderboard.leaderboardName))
 				lbName = leaderboardList[leaderboard.leaderboardName];
 			leaderboardNameTxt.text = "<b>" + lbName + "</b>";
 			int limit = Mathf.Min(numRows, leaderboard.players.Length);

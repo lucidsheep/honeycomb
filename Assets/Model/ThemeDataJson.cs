@@ -100,6 +100,8 @@ public class ThemeDataJson
     public float customCanvasX;
     public float customCanvasY;
     public float customCanvasScale;
+    public string leaderboardTargetName;
+    public int leaderboardTargetID;
     public ThemeTeamColors blueTheme;
     public ThemeTeamColors goldTheme;
     public string[] sideBarPrimary;

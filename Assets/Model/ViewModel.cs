@@ -51,12 +51,9 @@ public class ViewModel : MonoBehaviour
 	Sequence setPointTimeout;
 	Sequence pipSeq;
 	bool pipActive = false;
-	bool vdActive = false;
-	int vdIndex = -1;
+
 	bool isFullscreen = false;
 	int curBackground = 0;
-	VirtualDesktop.IVirtualDesktop mainDisplay;
-	VirtualDesktop.IVirtualDesktop virtualDisplay;
 
 	private void Awake()
 	{
@@ -89,12 +86,6 @@ public class ViewModel : MonoBehaviour
 		LSConsole.AddCommandHook("setTheme", "refreshes current theme, or sets the theme to [themeTag]", SetThemeCommand);
 		LSConsole.AddCommandHook("skipSetup", "set to [true/false], true will skip the setup dialog on launch", SkipSetupCommand);
 
-#if UNITY_STANDALONE_WIN && !UNITY_EDITOR
-		instance.mainDisplay = VirtualDesktop.DesktopManager.VirtualDesktopManagerInternal.GetCurrentDesktop();
-		var info = Screen.mainWindowDisplayInfo;
-		Screen.MoveMainWindowTo(in info, Vector2Int.zero);
-		//LSConsole.AddCommandHook("display", "display commands. [list] displays, or [create] or [destroy] a virtual desktop. [switch <index> <fullscreen/windowed>] active display to a given index and set fullscreened or windowed.", DisplayCommand);
-#endif
 		FixResolution();
 		backgroundGraphicContainers[0].color = bgFilter;
 	}
@@ -141,12 +132,6 @@ public class ViewModel : MonoBehaviour
 			}
 		}
 	}
-	// Update is called once per frame
-	void Update()
-	{
-		//var res = Screen.currentResolution;
-		
-	}
 
 	public static void FixResolution() { instance._FixResolution(); }
 	public void _FixResolution()
@@ -158,18 +143,6 @@ public class ViewModel : MonoBehaviour
 
 		screenWidth = Camera.main.orthographicSize * Camera.main.aspect * 2f;
 		screenHeight = Camera.main.orthographicSize * 2f;
-	}
-	public static void CreateVirtualDesktop()
-    {
-		if (instance.vdActive) return;
-
-		var d = VirtualDesktop.DesktopManager.VirtualDesktopManagerInternal.CreateDesktop();
-		instance.vdIndex = VirtualDesktop.DesktopManager.GetDesktopIndex(d);
-		Debug.Log("created virtual desktop at index " + instance.vdIndex);
-		instance.vdActive = true;
-		instance.virtualDisplay = d;
-
-		Debug.Log(instance.DisplayCommand(new string[] { }));
 	}
 
 	public static void SwitchToDesktop(int index, bool fullscreen)
@@ -241,67 +214,6 @@ public class ViewModel : MonoBehaviour
 		}
 	}
 
-	public string DisplayCommand(string[] args)
-	{
-		var ret = "";
-		if (args.Length == 0 || args[0] == "list")
-		{
-			var id = VirtualDesktop.DesktopManager.GetDesktopIndex(mainDisplay);
-			var layouts = new List<DisplayInfo>();
-			Screen.GetDisplayLayout(layouts);
-			ret = "Display List\nCurrent desktop: " + id;
-			for(int i = 0; i < layouts.Count; i++)
-            {
-				var d = layouts[i];
-				ret += "\n" + i + ": " + d.name + " (" + d.width + "x" + d.height + ")";
-			}
-			ret += "\n\nAlt Display List";
-			for(int i = 0; i < Display.displays.Length; i++)
-            {
-				var d = Display.displays[i];
-				ret += "\n" + d.ToString() + " (" + d.systemWidth + "x" + d.systemHeight + ")";
-            }
-		} else
-        {
-			switch(args[0])
-            {
-				case "create":
-					CreateVirtualDesktop(); break;
-				case "destroy":
-					DestroyVirtualDesktop(); break;
-				case "switch":
-					var index = -1;
-					if(args.Length < 2)
-                    {
-						ret = "Command requires index of display to switch to";
-						break;
-                    }
-					var id = VirtualDesktop.DesktopManager.GetDesktopIndex(mainDisplay);
-					var layouts = new List<DisplayInfo>();
-					Screen.GetDisplayLayout(layouts);
-
-					int.TryParse(args[1], out index);
-					if(index < 0 || index >= layouts.Count)
-                    {
-						ret = "Invalid index";
-						break;
-                    }
-
-					bool fullScreen = true;
-					if (args.Length > 2 && args[2] == "windowed")
-						fullScreen = false;
-
-					SwitchToDesktop(index, fullScreen);
-					break;
-				default:
-					ret = "Invalid display command";
-					break;
-            }
-        }
-
-		return ret;
-	}
-
 	public string SetThemeCommand(string[] args)
 	{
 		if (args.Length == 0)
@@ -360,23 +272,6 @@ public class ViewModel : MonoBehaviour
 
 		instance.matchPreview = Instantiate(MainLayoutModuleManager.GetMatchPreview(styleName), instance.transform.parent);
     }
-	public static void DestroyVirtualDesktop()
-    {
-		if (!instance.vdActive) return;
 
-		VirtualDesktop.DesktopManager.VirtualDesktopManagerInternal.RemoveDesktop(instance.virtualDisplay, instance.mainDisplay);
-		instance.virtualDisplay = null;
-		instance.vdIndex = -1;
-		instance.vdActive = false;
-
-		Debug.Log("Removed virtual desktop");
-	}
-    private void OnDestroy()
-    {
-        if(vdActive)
-        {
-			DestroyVirtualDesktop();
-        }
-    }
 }
 

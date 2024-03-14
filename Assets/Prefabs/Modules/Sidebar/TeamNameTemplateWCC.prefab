@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8212973492488149702}
   - component: {fileID: 3880031137678142362}
   m_Layer: 0
-  m_Name: TeamNameTemplate
+  m_Name: TeamNameTemplateWCC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4707826911623668454, guid: b94b7b1aff2e247c09fbdece9e5e5dea, type: 2}
+  - {fileID: 5395799385413690667, guid: 24a852e2784524b94be172fe9cc26a43, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -103,8 +103,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Team Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b94b7b1aff2e247c09fbdece9e5e5dea, type: 2}
-  m_sharedMaterial: {fileID: -4707826911623668454, guid: b94b7b1aff2e247c09fbdece9e5e5dea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 24a852e2784524b94be172fe9cc26a43, type: 2}
+  m_sharedMaterial: {fileID: 5395799385413690667, guid: 24a852e2784524b94be172fe9cc26a43, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 2.4
+  m_fontSize: 2.8
   m_fontSizeBase: 2.8
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -187,4 +187,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 8212973492488149702}
   teamID: -1
-  isBlue: 0

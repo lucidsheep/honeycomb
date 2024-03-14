@@ -272,6 +272,8 @@ public class SetupScreen : MonoBehaviour
 		TickerNetworkManager.Init(cabsToWatch);
 		ViewModel.SetTheme(GetThemeName());
 
+		GoogleSheetsDB.instance.ImportData(sceneID.text);
+
 		if (lowResCamera.isOn)
 		{
 			PlayerCameraObserver.cameraHeight = 1080;

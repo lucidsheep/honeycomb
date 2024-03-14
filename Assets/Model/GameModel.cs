@@ -313,7 +313,10 @@ public class GameModel : MonoBehaviour
                 if (data.targetType == EventTargetType.QUEEN)
                     teams[data.teamID].players[data.playerID].curLifeStats.queenKills.property++;
 
-                if(teams[1 - data.teamID].players[data.targetID].hivemindID == 166) //jason
+                int jason = 166; //jason
+                if (ViewModel.currentTheme.leaderboardTargetID > 0) //custom target that isn't jason
+                    jason = ViewModel.currentTheme.leaderboardTargetID; //maybe not jason
+                if(teams[1 - data.teamID].players[data.targetID].hivemindID == jason) //jason
                 {
                     teams[data.teamID].players[data.playerID].jasonPoints += 1;
                 }

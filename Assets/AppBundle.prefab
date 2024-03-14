@@ -3558,6 +3558,7 @@ GameObject:
   - component: {fileID: 6648581378096043803}
   - component: {fileID: 247699985227940698}
   - component: {fileID: 3953148250283245154}
+  - component: {fileID: 9215371543772327094}
   m_Layer: 0
   m_Name: Singletons
   m_TagString: Untagged
@@ -3757,6 +3758,8 @@ MonoBehaviour:
     customCanvasX: 0
     customCanvasY: 0
     customCanvasScale: 0
+    leaderboardTargetName: 
+    leaderboardTargetID: 0
     blueTheme:
       primaryColor: 
       secondaryColor: 
@@ -3895,6 +3898,7 @@ MonoBehaviour:
   - {fileID: 1621947411791464451, guid: c3851cf4d54fc4e3299e6cfe27b4e6a8, type: 3}
   - {fileID: 3282864357928725885, guid: 080c0eb7ea720417ca12df83b21d44c6, type: 3}
   - {fileID: 3022604383968729705, guid: 2e69decfac76e4977a25a1e0fb657420, type: 3}
+  - {fileID: 3022604383968729705, guid: d5aa0da262f0e4c59b8e66d3869c6b7d, type: 3}
   curModules: []
   leftSidebar: {fileID: 7971284978406135557}
   rightSidebar: {fileID: 4681536881800815490}
@@ -3990,6 +3994,25 @@ MonoBehaviour:
   previewScreens:
   - {fileID: 300211002665921891, guid: 7a9a3f930bbbd4727b4c569d51784145, type: 3}
   - {fileID: 300211002665921891, guid: 8dae89de2cd2348c7b7b14abab872038, type: 3}
+--- !u!114 &9215371543772327094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468528150411243536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 271fc14ea1eebc348a2c19dbc8aff60b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOnlineMode: 1
+  googleSheetAddress: 
+  saveRemoteData: 1
+  FolderName: GameData
+  DBPath: 
+  sheetTabNames:
+  - ticker
 --- !u!1 &1524430948554908521
 GameObject:
   m_ObjectHideFlags: 0
@@ -10897,6 +10920,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuzzBar Nano
       objectReference: {fileID: 0}
+    - target: {fileID: 7708889406795174964, guid: 33ec384614950491486b124cb2c0dd2b, type: 3}
+      propertyPath: googleSheetsDB
+      value: 
+      objectReference: {fileID: 9215371543772327094}
     - target: {fileID: 7708889406795174964, guid: 33ec384614950491486b124cb2c0dd2b, type: 3}
       propertyPath: cabinetSwapTime
       value: 20

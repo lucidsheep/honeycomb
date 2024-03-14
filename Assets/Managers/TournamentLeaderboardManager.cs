@@ -97,9 +97,6 @@ public class TournamentLeaderboardManager : MonoBehaviour
 			curLeaderboard++;
 			if (curLeaderboard >= leaderboardList.Length)
 				curLeaderboard = 0;
-			//special case to exclude jason points from non-pdx scenes
-			if (message.scene != "kqpdx" && curLeaderboard + 1 >= leaderboardList.Length)
-				curLeaderboard = 0;
 			connection.SendMessageToServer(JsonUtility.ToJson(message));
         }
 	}

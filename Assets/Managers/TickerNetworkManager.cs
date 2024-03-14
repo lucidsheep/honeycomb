@@ -21,11 +21,23 @@ public class TickerNetworkManager : MonoBehaviour
     public TickerLineItem lineItemTemplate;
     public TickerLineItem nextUpTemplate;
 
+    public GoogleSheetsDB googleSheetsDB;
+    GoogleSheet txtSheet;
+
     TickerLineItem curLineItem;
 
     float nextSwapTime = -1f;
-    int curCabIndex = 0;
+    int curItemIndex = 0;
 
+    public class TickerItem
+    {
+        public enum Type { CABINET, NEXT_UP, MESSAGE };
+        public Type type;
+        public string title, message;
+        public float duration;
+        public Color color;
+        public TickerCabinetState cabState;
+    }
 
     public class TickerCabinetTeamState
     {
@@ -168,12 +180,13 @@ public class TickerNetworkManager : MonoBehaviour
         }
     }
 
-    static List<TickerCabinetState> subscribedCabinets = new List<TickerCabinetState>();
-
+    static List<TickerItem> tickerItems = new List<TickerItem>();
     private void Awake()
     {
         instance = this;
         ViewModel.onThemeChange.AddListener(OnThemeChange);
+        if(googleSheetsDB != null)
+            googleSheetsDB.OnDownloadComplete += OnReceivedNewsEntries;
     }
 
     void OnThemeChange()
@@ -190,13 +203,27 @@ public class TickerNetworkManager : MonoBehaviour
 
         foreach(var cab in cabsToWatch)
         {
+            if (cab == "") continue;
+
             Debug.Log("adding cab '" + cab + "'");
             var cabState = new TickerCabinetState(cab);
-            subscribedCabinets.Add(cabState);
+            var item = new TickerItem();
+            item.cabState = cabState;
+            item.title = cab;
+            item.duration = instance.cabinetSwapTime;
+            item.type = TickerItem.Type.CABINET;
+            item.color = instance.defaultColor;
+            tickerItems.Add(item);
         }
         //add our own cab for Next Up
         var thisCab = new TickerCabinetState(NetworkManager.instance.cabinetName);
-        subscribedCabinets.Add(thisCab);
+        var thisItem = new TickerItem();
+        thisItem.cabState = thisCab;
+        thisItem.title = "Next Up";
+        thisItem.duration = instance.cabinetSwapTime;
+        thisItem.type = TickerItem.Type.NEXT_UP;
+        thisItem.color = instance.defaultColor;
+        tickerItems.Add(thisItem);
         instance.nextSwapTime = instance.cabinetSwapTime;
     }
     // Use this for initialization
@@ -219,32 +246,21 @@ public class TickerNetworkManager : MonoBehaviour
         }
     }
 
-    (string, Color) GetCabNameAndColor(string cabName)
-    {
-        //beautifully hardcoded ©2023
-        switch(cabName)
-        {
-            case "groundkontrol": return ("Ground Kontrol", blueCabColor);
-            case "pdxprivate": return ("Private Cab", purpleCabColor);
-            case "goingaming": return ("Goin Gaming", redCabColor);
-            default: return (cabName, defaultColor);
-        }
-    }
+
     void UpdateDisplay()
     {
-        var curCab = subscribedCabinets[curCabIndex];
-        var nameAndColor = GetCabNameAndColor(curCab.cabName);
-        bool nextUp = (curCab.cabName == NetworkManager.instance.cabinetName);
-        curCabIndex = curCabIndex + 1 >= subscribedCabinets.Count ? 0 : curCabIndex + 1;
+        var curItem = tickerItems[curItemIndex];
+        curItemIndex = curItemIndex + 1 >= tickerItems.Count ? 0 : curItemIndex + 1;
 
         //next up isn't available, skip this line
-        if(nextUp && !curCab.isNextUpAvailable)
+        if(curItem.type == TickerItem.Type.NEXT_UP && !curItem.cabState.isNextUpAvailable)
         {
             nextSwapTime = .1f;
             return;
         }
-        if (nextUp)
-            nameAndColor.Item1 = "Next Up";
+        if (curItem.duration > 0f)
+            nextSwapTime = curItem.duration;
+
         DOTween.Sequence()
             .AppendCallback(() =>
             {
@@ -252,35 +268,51 @@ public class TickerNetworkManager : MonoBehaviour
                     curLineItem.EndLine();
                 foreach (var sr in cabNameBG)
                 {
-                    sr.DOColor(nameAndColor.Item2, .5f);
+                    sr.DOColor(curItem.color, .5f);
                 }
             })
             .AppendInterval(.5f)
             .AppendCallback(() =>
             {
-                cabNameTxt.text = nameAndColor.Item1;
+                cabNameTxt.text = curItem.title;
             }).AppendInterval(.25f)
             .AppendCallback(() =>
             {
-                var templateToUse = nextUp ? nextUpTemplate : lineItemTemplate;
+                var templateToUse = TypeToLineItem(curItem.type);
                 curLineItem = Instantiate(templateToUse, transform);
-                if(!nextUp)
-                    (curLineItem as TickerLineGameStatus).Init(curCab);
-                else
-                    (curLineItem as TickerLineNextUp).Init(curCab);
+                if(curItem.type == TickerItem.Type.CABINET)
+                    (curLineItem as TickerLineGameStatus).Init(curItem.cabState);
+                else if(curItem.type == TickerItem.Type.NEXT_UP)
+                    (curLineItem as TickerLineNextUp).Init(curItem.cabState);
+                else //message
+                    (curLineItem as TickerLineNextUp).Init(curItem.message);
                 curLineItem.StartLine();
             });
         
 
         
     }
+
+    TickerLineItem TypeToLineItem(TickerItem.Type type)
+    {
+        switch(type)
+        {
+            case TickerItem.Type.CABINET: return lineItemTemplate;
+            case TickerItem.Type.NEXT_UP: return nextUpTemplate;
+            case TickerItem.Type.MESSAGE: default: return nextUpTemplate;
+        }
+    }
     static void OnHivemindMessage(string message)
     {
         var jsonStepOne = JsonUtility.FromJson<HMTypeCheck>(message);
         int id = jsonStepOne.cabinet_id;
         TickerCabinetState targetCab = null;
-        foreach(var cab in subscribedCabinets)
+        foreach(var item in tickerItems)
         {
+            if (item.cabState == null)
+                continue;
+
+            var cab = item.cabState;
             if(cab.cabID == id)
             {
                 targetCab = cab;
@@ -382,6 +414,32 @@ public class TickerNetworkManager : MonoBehaviour
             }
         }
 
+    }
+
+
+    public void OnReceivedNewsEntries()
+    {
+        int txtSheetIndex = googleSheetsDB.sheetTabNames.IndexOf("ticker");
+
+        txtSheet = googleSheetsDB.dataSheets[txtSheetIndex];
+        for(int i = 0; i < txtSheet.AvailableRows.Count; i++)
+        {
+            txtSheet.CurrentRow = txtSheet.GetRowID(i);
+            var title = txtSheet.GetString("Title");
+
+            if (title == "") continue;
+
+            var duration = txtSheet.GetFloat("Duration");
+            var message = txtSheet.GetString("Message");
+            var color = txtSheet.GetString("Title Color");
+            var item = new TickerItem();
+            item.title = title;
+            item.message = message;
+            item.duration = duration;
+            item.color = color == "" ? defaultColor : Util.HexToColor(color);
+            item.type = TickerItem.Type.MESSAGE;
+            tickerItems.Add(item);
+        }
     }
 }
 
