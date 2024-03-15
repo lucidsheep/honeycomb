@@ -36,6 +36,7 @@ public class GoogleSheetsDB : MonoBehaviour
 
         //hardcoded dictionary
         scenesToAPIKeys.Add("kqpdx", "AKfycbz8pURpJmFAY6WDan5b4A4NyoxXP4r5eoYfpaQReR7LMTyMaMce05rrtPWY4mjuKQBp");
+        scenesToAPIKeys.Add("fpkql", "AKfycbxfJFDZLKCu8MgcpqLCljO5Rz5ZGWdjH21t7W1FlS4ByLYgQmzo1DS9e9BT29Rt1_fC_g");
     }
 
     public void Start()

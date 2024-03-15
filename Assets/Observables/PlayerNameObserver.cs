@@ -22,6 +22,7 @@ public class PlayerNameObserver : KQObserver
 			GameModel.instance.teams[targetID].players[p].playerName.onChange.AddListener((b, a) => dirty = true);
 		}
 		PlayerStaticData.onPlayerData.AddListener(_ => dirty = true);
+		textContainer.transform.localPosition = new Vector3(0.33f, -1.3f, 0f);
 		dirty = true;
 	}
 
