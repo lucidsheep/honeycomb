@@ -491,8 +491,8 @@ public class NetworkManager : MonoBehaviour
                 gd.teamID = gd.playerID % 2 == 0 ? 0 : 1;
                 break;
             case GameEventType.BOUNCE:
-                gd.playerID = int.Parse(jsonData.values[0]);
-                gd.targetID = int.Parse(jsonData.values[1]);
+                gd.playerID = int.Parse(jsonData.values[2]);
+                gd.targetID = int.Parse(jsonData.values[3]);
                 gd.teamID = gd.playerID % 2 == 0 ? 0 : 1;
                 break;
             case GameEventType.GATE_TAG:

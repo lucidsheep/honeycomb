@@ -247,6 +247,10 @@ public class PlayerModel : IComparable
     public void AddBump(int bumperID)
     {
         bumpLog.Add(new BumpData { bumperID = bumperID, bumpTime = DateTime.Now });
+
+        //Debug.Log("ALL BUMPS: my id " + positionID);
+        //foreach (var d in bumpLog)
+        //    Debug.Log("  [" + (int)(DateTime.Now - d.bumpTime).TotalMilliseconds + "]" + d.bumperID);
     }
     public List<BumpData> GetRecentBumps(int msThreshold)
     {

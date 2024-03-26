@@ -3702,9 +3702,9 @@ MonoBehaviour:
   fullGame: 1
   reversedSides: 0
   eventTypes:
-  - queenKill
-  - berryDeposit
-  - getOnSnail
+  - glance
+  - glance
+  - playerKill
   nextEventTimeMin: 0.5
   nextEventTimeMax: 1
   fullGameLength: 20

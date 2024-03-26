@@ -185,8 +185,11 @@ public class FakeEventEmitter : MonoBehaviour
                 ret += quote(randTeam == 0 ? "Blue" : "Red") + "," + quote(endString);
                 break;
             case GameEventType.BOUNCE:
-                randTarget = 11 - randPlayer;
-                ret += quote(randPlayer) + "," + quote(randTarget);
+                do
+                {
+                    randTarget = Random.Range(1, 11);
+                } while (randTarget == randPlayer);
+                ret += quote(randCoord.x) + "," + quote(randCoord.y) + "," + quote(randPlayer) + "," + quote(randTarget);
                 break;
             case GameEventType.GATE_TAG:
                 ret += quote(100 * Random.Range(1, 3)) + "," + quote(100 * Random.Range(1,3)) + "," + quote(randTeamName);

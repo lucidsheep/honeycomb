@@ -242,8 +242,16 @@ public class GameModel : MonoBehaviour
                     teams[1 - data.teamID].players[data.targetID].AddDerivedStat(PlayerModel.StatValueType.KD, 0, 0, 1);
                     //award bump assist if one exists
                     var bumperList = teams[1 - data.teamID].players[data.targetID].GetRecentBumps(2000);
+                    int[] bumpsFound = new int[] { 0, 0, 0, 0, 0 };
                     foreach(var bumper in bumperList)
                     {
+                        //prevent getting credit for a bump assist multiple times
+                        if (bumpsFound[bumper.bumperID] > 0) continue;
+                        bumpsFound[bumper.bumperID]++;
+
+                        //can't get credit for bumping into your own kill
+                        if (bumper.bumperID == data.playerID) continue;
+
                         teams[data.teamID].players[bumper.bumperID].curLifeStats.bumpAssists.property++;
                         teams[data.teamID].players[bumper.bumperID].AddDerivedStat(
                             teams[data.teamID].players[bumper.bumperID].curLifeStats.swordObtained.property > 0

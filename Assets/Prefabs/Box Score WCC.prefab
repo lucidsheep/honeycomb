@@ -786,7 +786,7 @@ MonoBehaviour:
   highlightBerry: 0.475
   highlightSnail: 0.488
   highlightGold: -0.64
-  usePercent: 1
+  usePercent: 0
   blueWinsBG: {fileID: 4874409516053354397}
   goldWinsBG: {fileID: 9076862135830915693}
 --- !u!1 &4577985997678289446
