@@ -16,10 +16,10 @@ public class PlayerModel : IComparable
     }
     public static StatValueType[] GetStatList()
     {
-        return new StatValueType[] { StatValueType.KD, StatValueType.Berries, StatValueType.Snail, StatValueType.Gates, StatValueType.LongestLife, StatValueType.QueenKills, StatValueType.Pinces, StatValueType.ObjGuards, StatValueType.FormGuards, StatValueType.UpTime, StatValueType.BerryKicks, StatValueType.BumpAssists, StatValueType.SnailKills, StatValueType.SnailFeeds, StatValueType.Value, StatValueType.BerriesCombined, StatValueType.DroneKills };
+        return new StatValueType[] { StatValueType.KD, StatValueType.Berries, StatValueType.Snail, StatValueType.Gates, StatValueType.LongestLife, StatValueType.QueenKills, StatValueType.Pinces, StatValueType.ObjGuards, StatValueType.FormGuards, StatValueType.UpTime, StatValueType.BerryKicks, StatValueType.BumpAssists, StatValueType.SnailKills, StatValueType.SnailFeeds, StatValueType.Value, StatValueType.BerriesCombined, StatValueType.DroneKills, StatValueType.KDA, StatValueType.DroneKD };
     }
 
-    public enum StatValueType { KD, Berries, Snail, Gates, LongestLife, QueenKills, Pinces, ObjGuards, FormGuards, UpTime, BerryKicks, BumpAssists, SnailKills, SnailFeeds, Value, BerriesCombined, DroneKills }
+    public enum StatValueType { KD, Berries, Snail, Gates, LongestLife, QueenKills, Pinces, ObjGuards, FormGuards, UpTime, BerryKicks, BumpAssists, SnailKills, SnailFeeds, Value, BerriesCombined, DroneKills, KDA, DroneKD }
     public struct StatValue : System.IComparable
     {
         public int stylePoints;
@@ -53,7 +53,7 @@ public class PlayerModel : IComparable
                 bool plural = num1 != 1;
                 switch (type)
                 {
-                    case StatValueType.KD: return "Military Kill" + (plural ? "s" : "");
+                    case StatValueType.KD: case StatValueType.KDA:  return "Military Kill" + (plural ? "s" : "");
                     case StatValueType.Berries: return "Berr" + (plural ? "ies" : "y") + " Run";
                     case StatValueType.BerryKicks: return "Kick-in" + (plural ? "s" : "");
                     case StatValueType.BumpAssists: return "Bump Assist" + (plural ? "s" : "");
@@ -68,7 +68,7 @@ public class PlayerModel : IComparable
                     case StatValueType.UpTime: return "Mil. Uptime";
                     case StatValueType.SnailFeeds: return "Snail Feed" + (plural ? "s" : "");
                     case StatValueType.Value: return "Value Score™";
-                    case StatValueType.DroneKills: return "Drone Kill" + (plural ? "s" : "");
+                    case StatValueType.DroneKills: case StatValueType.DroneKD: return "Drone Kill" + (plural ? "s" : "");
                     default: return "???";
                 }
             }
@@ -102,6 +102,7 @@ public class PlayerModel : IComparable
                     case StatValueType.UpTime: return num1 + "%";
                     case StatValueType.BerryKicks: return num1 + (num2 > 0 ? "(" + num2 + ")" : "");
                     case StatValueType.BerriesCombined: return num1 + (num2 > 0 ? "(" + num2 + ")" : "");
+                    case StatValueType.DroneKD: return num1 + "|" + num2;
                     default: return num1.ToString();
                 }
             }
@@ -112,6 +113,15 @@ public class PlayerModel : IComparable
         }
     }
 
+    public string GetKDA()
+    {
+        //need special function since it combines two different statValues
+        var assists = (curGameDerivedStats[StatValueType.BumpAssists].num1 + curGameDerivedStats[StatValueType.Pinces].num1);
+
+        if (assists <= 0) return curGameDerivedStats[StatValueType.KD].fullNumber;
+
+        return curGameDerivedStats[StatValueType.KD].fullNumber + "-" + assists;
+    }
     static string dashIfZero(int num) { return num == 0 ? "-" : num.ToString(); }
     public struct CombinedStylePoints : System.IComparable
     {
@@ -237,6 +247,10 @@ public class PlayerModel : IComparable
     public void AddBump(int bumperID)
     {
         bumpLog.Add(new BumpData { bumperID = bumperID, bumpTime = DateTime.Now });
+
+        //Debug.Log("ALL BUMPS: my id " + positionID);
+        //foreach (var d in bumpLog)
+        //    Debug.Log("  [" + (int)(DateTime.Now - d.bumpTime).TotalMilliseconds + "]" + d.bumperID);
     }
     public List<BumpData> GetRecentBumps(int msThreshold)
     {
@@ -303,7 +317,7 @@ public class PlayerModel : IComparable
             curCareerStats.snailMoved.onChange.AddListener((b, a) => { CheckMilestone(StatValueType.Snail, StatTimescale.Career, b, a); });
             curCareerStats.militaryKills.onChange.AddListener((b, a) => { CheckMilestone(StatValueType.KD, StatTimescale.Career, b, a); });
             curCareerStats.queenKills.onChange.AddListener((b, a) => { CheckMilestone(StatValueType.QueenKills, StatTimescale.Career, b, a); });
-            Debug.Log(data.data.id + " career stats: qkills/kills: " + curCareerStats.queenKills + "/" + curCareerStats.militaryKills + " berries " + curCareerStats.berriesDeposited + " snail " + curCareerStats.snailMoved);
+            Debug.Log(data.hivemindID + " career stats: qkills/kills: " + curCareerStats.queenKills + "/" + curCareerStats.militaryKills + " berries " + curCareerStats.berriesDeposited + " snail " + curCareerStats.snailMoved);
         }
         bestUnusedMilestone = default(Milestone);
 

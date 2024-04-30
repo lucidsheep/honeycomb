@@ -15,6 +15,7 @@ public class JumboAnimQueenKill : JumboAnim
 
     virtual public void SetupAnim(int bgID, PlayerModel playerData)
 	{
+		//transform.localScale = Vector3.one * .1f;
 		var playerName = playerData.displayName;
 		var playerSprite = SpriteDB.allSprites[playerData.teamID].playerSprites[playerData.positionID].soldier_idle;
 		var playerAttackSprite = SpriteDB.allSprites[playerData.teamID].playerSprites[playerData.positionID].soldier_attack;
@@ -37,7 +38,7 @@ public class JumboAnimQueenKill : JumboAnim
 
 		foreach(var thisBG in bgs)
         {
-			thisBG.color = sideID == UIState.blue ? ViewModel.currentTheme.blueTheme.primaryColor : ViewModel.currentTheme.goldTheme.primaryColor;
+			thisBG.color = sideID == UIState.blue ? ViewModel.currentTheme.blueTheme.pColor : ViewModel.currentTheme.goldTheme.pColor;
         }
 		//player
 		DOTween.Sequence()

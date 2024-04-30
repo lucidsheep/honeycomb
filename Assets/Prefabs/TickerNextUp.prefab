@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -7.07, y: 0}
-  m_SizeDelta: {x: 9.4, y: 0.28}
+  m_AnchoredPosition: {x: -7.07, y: -0.02}
+  m_SizeDelta: {x: 11.88, y: 0.28}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!23 &614687497078114238
 MeshRenderer:
@@ -218,6 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17e2ff6dc37f04e63a8e76c3a4a4397b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugFade: 100
 --- !u!114 &840025247379542275
 MonoBehaviour:
   m_ObjectHideFlags: 0

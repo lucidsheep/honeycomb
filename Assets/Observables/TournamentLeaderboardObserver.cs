@@ -10,6 +10,7 @@ public class TournamentLeaderboardObserver : KQObserver
 	public int numRows = 10;
 	public TextMeshPro leaderboardNameTxt, leaderboardPlayersTxt, leaderboardValuesTxt;
 	public SpriteRenderer frame;
+	public int maxNameLength = 13;
 	bool dirty = false;
 	TournamentLeaderboard cachedLeaderboard;
 
@@ -55,7 +56,7 @@ public class TournamentLeaderboardObserver : KQObserver
 			default: return "0";
         }
     }
-	// Update is called once per frame
+
 	void Update()
 	{
 		if(dirty)
@@ -65,14 +66,16 @@ public class TournamentLeaderboardObserver : KQObserver
 			var lbName = "???";
 			var lbPlayers = "";
 			var lbValues = "";
-			if (leaderboardList.ContainsKey(leaderboard.leaderboardName))
+			if(leaderboard.leaderboardName == "jason_points" && ViewModel.currentTheme.leaderboardTargetName != "")
+				lbName = ViewModel.currentTheme.leaderboardTargetName + " Points™";
+			else if (leaderboardList.ContainsKey(leaderboard.leaderboardName))
 				lbName = leaderboardList[leaderboard.leaderboardName];
 			leaderboardNameTxt.text = "<b>" + lbName + "</b>";
 			int limit = Mathf.Min(numRows, leaderboard.players.Length);
 			for(int i = 0; i < limit; i++)
 			{
 				var player = leaderboard.players[i];
-				lbPlayers += Util.SmartTruncate(player.name, 13) + "\n";
+				lbPlayers += Util.SmartTruncate(player.name, maxNameLength) + "\n";
 				lbValues += GetLBValue(leaderboard.leaderboardName, player) + "\n";
 			}
 			leaderboardPlayersTxt.text = lbPlayers;
@@ -83,7 +86,8 @@ public class TournamentLeaderboardObserver : KQObserver
     protected override void OnThemeChange()
     {
         base.OnThemeChange();
-		frame.gameObject.SetActive(bgContainer.sprite == null);
+		if(frame != null)
+			frame.gameObject.SetActive(bgContainer.sprite == null);
     }
 }
 

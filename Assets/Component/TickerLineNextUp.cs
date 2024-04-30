@@ -12,5 +12,10 @@ public class TickerLineNextUp : TickerLineItem
     {
         text.text = "<color=#6295CA>" + state.nextUpBlueTeam + "</color> vs <color=#DBAD56>" + state.nextUpGoldTeam + "</color>"; 
     }
+
+    public void Init(string message)
+    {
+        text.text = message;
+    }
 }
 

@@ -21,10 +21,10 @@ public class GraphEventMarker : MonoBehaviour
             SpriteRenderer thisSprite = eventSprites[i];
             thisSprite.enabled = i == typeToInt;
             thisSprite.transform.localRotation = Quaternion.Euler(0f, 0f, rotation);
-            thisSprite.color = theme.iconColor;
+            thisSprite.color = theme.iColor;
         }
-        arrow.color = theme.primaryColor;
-        bg.color = theme.secondaryColor;
+        arrow.color = theme.pColor;
+        bg.color = theme.sColor;
     }
 }
 

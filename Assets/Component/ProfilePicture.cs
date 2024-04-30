@@ -4,10 +4,13 @@ using System.Collections;
 public class ProfilePicture : MonoBehaviour
 {
 	public SpriteRenderer sr;
+	public SpriteMask mask;
+	public bool isSquare = false;
 	// Use this for initialization
-	void Start()
+	void Awake()
 	{
-
+		if (mask == null)
+			mask = GetComponentInChildren<SpriteMask>();
 	}
 
 	public void SetPicture(Sprite pic, int rotationCode = 0, float scale = 1f)
@@ -29,8 +32,21 @@ public class ProfilePicture : MonoBehaviour
 		}
 
 		sr.sprite = pic;
-		sr.transform.localScale = new Vector3(1f * (hFlip ? -1f : 1f), 1f, 1f) * scale;
+		sr.transform.localScale = new Vector3(1f * (hFlip ? -1f : 1f), 1f, 1f) * scale * (isSquare ? 1.5f : 1f);
 		sr.transform.localRotation = Quaternion.Euler(0f, 0f, -90f * rotationLevel);
 	}
+
+	public void SetLayer(int layer)
+    {
+		sr.sortingOrder = layer;
+		mask.frontSortingOrder = layer;
+		mask.backSortingOrder = layer - 1;
+    }
+
+	public void SetColor(Color color)
+    {
+		if (mask == null) return;
+		mask.GetComponent<SpriteRenderer>().color = color;
+    }
 }
 

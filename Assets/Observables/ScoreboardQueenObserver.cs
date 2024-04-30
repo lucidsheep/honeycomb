@@ -31,7 +31,7 @@ public class ScoreboardQueenObserver : MonoBehaviour
 		Color gold = UIState.inverted ? blueFaded : goldFaded;
 		queenPoints = new int[] { 0, 0 };
 		for (int i = 0; i < 5; i++)
-			staticCrowns[i].main.color = i < 2 ? blue : i == 2 ? centerFaded : gold;
+			staticCrowns[i].SetCrown(i < 2 ? UIState.blue : i > 2 ? UIState.gold : -1, false, i < 2 ? blue : i == 2 ? centerFaded : gold);
     }
 	void OnQueenKill(int teamID, int score)
 	{
@@ -39,13 +39,16 @@ public class ScoreboardQueenObserver : MonoBehaviour
 		if (score <= 0 || queenPoints[teamID] > 3) return;
 
 		var staticCrown = teamID == UIState.blue ? staticCrowns[queenPoints[teamID] - 1] : staticCrowns[5 - queenPoints[teamID]];
+		if (staticCrown == null || staticCrown.main == null)
+			return; //todo - why
 		var isBlue = teamID == UIState.blue;
 		var isCenter = queenPoints[teamID] == 3;
 		Color blue = UIState.inverted ? goldFaded : blueFaded;
 		Color gold = UIState.inverted ? blueFaded : goldFaded;
-		if (ViewModel.currentTheme.hideCrownAnimation)
+		if (!ViewModel.currentTheme.showCrownAnimation)
 		{
-			staticCrown.main.color = isCenter ? (isBlue ? blue : gold) : (isBlue ? blueFilled : goldFilled);
+			staticCrown.SetCrown(teamID, true, isBlue ? blueFilled : goldFilled);
+			//staticCrown.main.color = isCenter ? (isBlue ? blue : gold) : (isBlue ? blueFilled : goldFilled);
 			return;
 		}
 		var anim = Instantiate(crownTemplate, ViewModel.stage);

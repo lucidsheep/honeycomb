@@ -8,6 +8,7 @@ public class PostgamePlayerLine : MonoBehaviour
 	public SpriteRenderer[] crowns;
 	public SpriteRenderer bg, profileBG;
 	public ProfilePicture profile;
+	public bool isQueen = false;
 
 	void SetColorPreserveAlpha(SpriteRenderer target, Color color)
 	{
@@ -16,6 +17,8 @@ public class PostgamePlayerLine : MonoBehaviour
 
 	public void OnPostgame(PlayerModel player)
     {
+		profile.SetColor(isQueen ? ViewModel.currentTheme.GetTeamTheme(player.teamID).sColor : ViewModel.currentTheme.GetTeamTheme(player.teamID).pColor);
+
 		playerName.text = player.displayNameWithoutTeam;
 		var (pic, rotation) = PlayerStaticData.GetProfilePic(player.hivemindID);
 		if(pic != null)
@@ -23,11 +26,12 @@ public class PostgamePlayerLine : MonoBehaviour
 			profile.SetPicture(pic, rotation, .55f);
         } else
         {
-			profile.SetPicture(SpriteDB.allSprites[player.teamID].playerSprites[player.positionID].icon, 0, .25f);
+			profile.SetPicture(SpriteDB.GetIcon(player.teamID, player.positionID), 0, .25f);
 
 		}
-		if(bg != null)
-			SetColorPreserveAlpha(bg, ViewModel.currentTheme.GetTeamTheme(player.teamID).primaryColor);
+
+		if (bg != null)
+			SetColorPreserveAlpha(bg, ViewModel.currentTheme.GetTeamTheme(player.teamID).pColor);
 		//if(profileBG != null)
 		//	SetColorPreserveAlpha(profileBG, ViewModel.currentTheme.GetTeamTheme(player.teamID).primaryColor);
 		for (int i = 0; i < 3; i++)

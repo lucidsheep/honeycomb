@@ -60,6 +60,7 @@ public class GameModel : MonoBehaviour
     public TeamModel[] teams = new TeamModel[2];
     public static bool setScoresEnabled { get { return instance.setPoints.property > 0; } }
     public LSProperty<int> setPoints = new LSProperty<int>(0);
+    public static bool inTournamentMode = false;
 
     //current game state
     public LSProperty<int> berriesLeft = new LSProperty<int>(0);
@@ -70,7 +71,7 @@ public class GameModel : MonoBehaviour
 
     //tournament game state
     public LSProperty<bool> isWarmup = new LSProperty<bool>(false);
-    public static bool newSetOnNextGameStart = false;
+    public static float newSetTimeout = -1f;
 
     public static GameEvent onGameEvent = new GameEvent();
     public static UnityEvent onGameStart = new UnityEvent();
@@ -128,7 +129,40 @@ public class GameModel : MonoBehaviour
         gameTime.property = 0f;
     }
 
-
+    void NewSetAfterDelay()
+    {
+        ResetSet();
+        newSetTimeout = -1f;
+        if (newSetTeamData != null)
+        {
+            //set team data
+            Debug.Log("resetting set with stored team data");
+            GameModel.instance.setPoints.property = newSetTeamData.current_match.rounds_per_match != 0 ? newSetTeamData.current_match.rounds_per_match : newSetTeamData.current_match.wins_per_match;
+            GameModel.instance.teams[0].teamName.property = newSetTeamData.current_match.blue_team;
+            GameModel.instance.teams[0].setWins.property = newSetTeamData.current_match.blue_score;
+            GameModel.instance.teams[1].teamName.property = newSetTeamData.current_match.gold_team;
+            GameModel.instance.teams[1].setWins.property = newSetTeamData.current_match.gold_score;
+            GameModel.instance.isWarmup.property = newSetTeamData.current_match.is_warmup;
+            onDelayedTournamentData.Invoke(newSetTeamData);
+            newSetTeamData = null;
+            inTournamentMode = true;
+            //NetworkManager.GetSignedInPlayers();
+        }
+        else
+        {
+            //tournament mode over
+            Debug.Log("Tournament ended");
+            var tempMatchData = new HMMatchState { blue_score = 0, gold_score = 0, current_match = new HMCurrentMatch { blue_score = 0, gold_score = 0, gold_team = "Gold Team", blue_team = "Blue Team", is_warmup = false, rounds_per_match = 0, wins_per_match = 0, id = 0} };
+            GameModel.instance.setPoints.property = 0;
+            GameModel.instance.teams[0].teamName.property = "Blue Team";
+            GameModel.instance.teams[0].setWins.property = 0;
+            GameModel.instance.teams[1].teamName.property = "Gold Team";
+            GameModel.instance.teams[1].setWins.property = 0;
+            GameModel.instance.isWarmup.property = false;
+            onDelayedTournamentData.Invoke(tempMatchData);
+            inTournamentMode = false;
+        }
+    }
     void OnGameEvent(string eType ,GameEventData data)
     {
 
@@ -146,49 +180,15 @@ public class GameModel : MonoBehaviour
             case GameEventType.SPAWN:
                 if(data.playerID == 2 && data.teamID == 1) //gold queen spawn is the first trigger at game start
                 {
-                    if (newSetOnNextGameStart)
+                    if (newSetTimeout > 0f)
                     {
-                        ResetSet();
-                        newSetOnNextGameStart = false;
-                        if(newSetTeamData != null)
-                        {
-                            //set team data
-                            Debug.Log("resetting set with stored team data");
-                            GameModel.instance.setPoints.property = newSetTeamData.current_match.rounds_per_match != 0 ? newSetTeamData.current_match.rounds_per_match : newSetTeamData.current_match.wins_per_match;
-                            GameModel.instance.teams[0].teamName.property = newSetTeamData.current_match.blue_team;
-                            GameModel.instance.teams[0].setWins.property = newSetTeamData.current_match.blue_score;
-                            GameModel.instance.teams[1].teamName.property = newSetTeamData.current_match.gold_team;
-                            GameModel.instance.teams[1].setWins.property = newSetTeamData.current_match.gold_score;
-                            GameModel.instance.isWarmup.property = newSetTeamData.current_match.is_warmup;
-                            onDelayedTournamentData.Invoke(newSetTeamData);
-                            if (GameModel.instance.isWarmup.property) //weird double warmup case, keep the team data and get ready to reset again
-                            {
-                                GameModel.newSetOnNextGameStart = true; //reset stats after warmup ends
-                                newSetTeamData.current_match.is_warmup = false;
-                            }
-                            else
-                                newSetTeamData = null;
-                        } else
-                        {
-                            //tournament mode over
-                            Debug.Log("Tournament ended");
-                            var tempMatchData = new HMMatchState { blue_score = 0, gold_score = 0, current_match = new HMCurrentMatch { blue_score = 0, gold_score = 0, gold_team = "Gold Team", blue_team = "Blue Team", is_warmup = false, rounds_per_match = 0, wins_per_match = 0 } };
-                            GameModel.instance.setPoints.property = 0;
-                            GameModel.instance.teams[0].teamName.property = "Blue Team";
-                            GameModel.instance.teams[0].setWins.property = 0;
-                            GameModel.instance.teams[1].teamName.property = "Gold Team";
-                            GameModel.instance.teams[1].setWins.property = 0;
-                            GameModel.instance.isWarmup.property = false;
-                            onDelayedTournamentData.Invoke(tempMatchData);
-                            TournamentPresetData.ClearPresetData();
-                        }
-                        
+                        NewSetAfterDelay();   
                     }
                     else
                     {
                         ResetGame();
                     }
-                    NetworkManager.GetSignedInPlayers();
+                    //NetworkManager.GetSignedInPlayers();
                     NetworkManager.GetTournamentState();
                     gameTime.property = 0f;
                     onGameStart.Invoke();
@@ -242,8 +242,16 @@ public class GameModel : MonoBehaviour
                     teams[1 - data.teamID].players[data.targetID].AddDerivedStat(PlayerModel.StatValueType.KD, 0, 0, 1);
                     //award bump assist if one exists
                     var bumperList = teams[1 - data.teamID].players[data.targetID].GetRecentBumps(2000);
+                    int[] bumpsFound = new int[] { 0, 0, 0, 0, 0 };
                     foreach(var bumper in bumperList)
                     {
+                        //prevent getting credit for a bump assist multiple times
+                        if (bumpsFound[bumper.bumperID] > 0) continue;
+                        bumpsFound[bumper.bumperID]++;
+
+                        //can't get credit for bumping into your own kill
+                        if (bumper.bumperID == data.playerID) continue;
+
                         teams[data.teamID].players[bumper.bumperID].curLifeStats.bumpAssists.property++;
                         teams[data.teamID].players[bumper.bumperID].AddDerivedStat(
                             teams[data.teamID].players[bumper.bumperID].curLifeStats.swordObtained.property > 0
@@ -254,9 +262,11 @@ public class GameModel : MonoBehaviour
                 }
                 else
                 {
-                    //always award drone kill
+                    //always award drone kill and death
                     teams[data.teamID].players[data.playerID].curLifeStats.droneKills.property++;
                     teams[data.teamID].players[data.playerID].AddDerivedStat(PlayerModel.StatValueType.DroneKills, 10, 1);
+                    teams[data.teamID].players[data.playerID].AddDerivedStat(PlayerModel.StatValueType.DroneKD, 0, 1, 0);
+                    teams[1 - data.teamID].players[data.targetID].AddDerivedStat(PlayerModel.StatValueType.DroneKD, 0, 0, 1);
 
                     //try to determine if the drone kill was noteworthy (stopped a form or objective)
                     //todo - need to consider wraps - make duplicate gates and snail for ones close to the edge
@@ -311,7 +321,10 @@ public class GameModel : MonoBehaviour
                 if (data.targetType == EventTargetType.QUEEN)
                     teams[data.teamID].players[data.playerID].curLifeStats.queenKills.property++;
 
-                if(teams[1 - data.teamID].players[data.targetID].hivemindID == 166) //jason
+                int jason = 166; //jason
+                if (ViewModel.currentTheme.leaderboardTargetID > 0) //custom target that isn't jason
+                    jason = ViewModel.currentTheme.leaderboardTargetID; //maybe not jason
+                if(teams[1 - data.teamID].players[data.targetID].hivemindID == jason) //jason
                 {
                     teams[data.teamID].players[data.playerID].jasonPoints += 1;
                 }
@@ -339,7 +352,8 @@ public class GameModel : MonoBehaviour
                 break;
             case GameEventType.GAME_END_DETAIL:
 
-                if (!isWarmup.property)
+                //if in tournament mode, let HM do the score keeping
+                if (!isWarmup.property && !inTournamentMode)
                     teams[data.teamID].setWins.property++;
 
                 SnailModel.instance.OnGameEnd(data.targetType == "snail");
@@ -353,6 +367,7 @@ public class GameModel : MonoBehaviour
                     team.EndGame();
                 
                 gameIsRunning.property = false;
+                //new LSTimer(10f, () => NetworkManager.GetSignedInPlayers());
                 break;
             case GameEventType.GATE_TAG:
                 var gate = allGates.Find(x => x.position == data.coordinates);
@@ -403,6 +418,11 @@ public class GameModel : MonoBehaviour
                     p.fireGauge -= Time.deltaTime * 10f;
                 }
             }
+        } else if(newSetTimeout > 0f)
+        {
+            newSetTimeout -= Time.deltaTime;
+            if (newSetTimeout <= 0f)
+                NewSetAfterDelay();
         }
         if(famineTimer.property > 0f)
         {

@@ -5,10 +5,15 @@ using DG.Tweening;
 
 public class WinForecastObserver : KQObserver
 {
+
 	public TextMeshPro text;
 	public SpriteRenderer[] blueArrows;
 	public SpriteRenderer[] goldArrows;
 	public SpriteRenderer logo;
+
+	public enum AnimType { COLOR, ALPHA }
+	public AnimType animStyle = AnimType.COLOR;
+	public bool colorText = false;
 
 	bool dirty = true;
 	float pct = .5f;
@@ -75,7 +80,7 @@ public class WinForecastObserver : KQObserver
 				.AppendInterval(1f)
 				.AppendCallback(() => { forceLit = -1; dirty = true; })
 				.AppendInterval(1f)
-				.Append(AnimateSR(logo, Color.black))
+				.Append(AnimateSR(logo, Color.black, null))
 				.AppendCallback(() => isActive = dirty = true);
 
 		}
@@ -87,7 +92,7 @@ public class WinForecastObserver : KQObserver
 		{
 			//blueWinning = data.teamID == 0;
 			isActive = false;
-			AnimateSR(logo, Color.white);
+			AnimateSR(logo, Color.white, null);
 			dirty = true;
 		}
 	}
@@ -112,24 +117,24 @@ public class WinForecastObserver : KQObserver
 				for (int i = 0; i < blueArrows.Length; i++)
 				{
 					if (forceLit >= i)
-						AnimateSR(arrows[i], forceLitBright ? theme.iconColor : theme.primaryColor);
+						AnimateSR(arrows[i], forceLitBright ? theme.iColor : theme.pColor, theme);
 					else if (!isWinning)
-						AnimateSR(arrows[i], theme.secondaryColor);
+						AnimateSR(arrows[i], theme.sColor, theme);
 					else
 					{
 						bool startedWinning = !wasWinning && isWinning;
 						if (i == 0 && startedWinning)
-							AnimateSR(arrows[i], theme.iconColor);
+							AnimateSR(arrows[i], theme.iColor, theme);
 						else if(i != 0)
 						{
 							float threshold = i == 1 ? .65f : .8f;
 							if ((prevPct < threshold && pct >= threshold) || (startedWinning && pct >= threshold))
 							{
-								AnimateSR(arrows[i], theme.iconColor);
+								AnimateSR(arrows[i], theme.iColor, theme);
 							}
 							else if (prevPct >= threshold && pct < threshold)
 							{
-								AnimateSR(arrows[i], theme.secondaryColor);
+								AnimateSR(arrows[i], theme.sColor, theme);
 							}
 
 						}
@@ -142,15 +147,26 @@ public class WinForecastObserver : KQObserver
 			{
 				text.text = "";
 			}
+			if(colorText)
+            {
+				text.color = curWinner == -1 ? Color.white : curWinner == 0 ? blueTheme.pColor : goldTheme.pColor;
+            }
 			prevPct = pct;
 			prevWinner = curWinner;
 			dirty = false;
         }
 	}
 
-	Tweener AnimateSR(SpriteRenderer sr, Color destColor)
+	Tweener AnimateSR(SpriteRenderer sr, Color destColor, ThemeTeamColors theme)
     {
 		sr.DOComplete();
+		if(animStyle == AnimType.ALPHA && theme != null) //convert color to alpha
+        {
+			if (destColor == theme.pColor || destColor == theme.iColor) //lit
+				destColor = Color.white;
+			else
+				destColor = new Color(1f, 1f, 1f, 0f); //unlit
+        }
 		return sr.DOColor(destColor, .5f).SetEase(Ease.OutBack);
     }
 }

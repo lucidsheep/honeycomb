@@ -23,7 +23,7 @@ public class NetworkConnection
     public string serverAddress;
     public int serverPort;
 
-    bool useSecureSockets = true;
+    public bool useSecureSockets = true;
 
     public GameEvent gameEventDispatcher = new GameEvent();
     public UnityEvent<HMMatchState> tournamentEventDispatcher = new UnityEvent<HMMatchState>();

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using Unity.IO;
 using UnityEngine.Networking;
 using TMPro;
 using System;
@@ -10,7 +9,7 @@ using System;
 //todo - app update absolutely does not work on macos, not sure if there's an easy way to do it
 public class AppLoader : MonoBehaviour
 {
-    public static int APP_VERSION = 89;
+    public static int APP_VERSION = 121;
 
     public GameObject[] localBundles;
     public ProgressBar loadingBar;
@@ -357,17 +356,44 @@ public class AppLoader : MonoBehaviour
 
     public static Sprite GetStreamingSprite(string assetName)
     {
-        string path = Application.streamingAssetsPath + slash + "themes" + slash + ViewModel.currentTheme.themeName + slash + assetName + ".png";
+        return GetStreamingSprite(assetName, new Vector2(.5f, .5f));
+    }
+
+    public static Sprite GetStreamingSprite(string assetName, Vector2 pivot)
+    {
+        string path = Application.streamingAssetsPath + slash + "themes" + slash + ViewModel.currentTheme.name + slash + assetName + ".png";
         if (File.Exists(path))
         {
-            Debug.Log("loading " + path);
             Texture2D ret = new Texture2D(8, 8);
             ret.LoadImage(File.ReadAllBytes(path), true);
-            return Sprite.Create(ret, new Rect(0f, 0f, ret.width, ret.height), new Vector2(.5f, .5f));
-        } else
-        {
-            Debug.Log("file not found at " + path);
+            return Sprite.Create(ret, new Rect(0f, 0f, ret.width, ret.height), pivot);
         }
         return null;
+    }
+
+    public static string GetAssetPath(string assetName)
+    {
+       var path = Application.streamingAssetsPath + slash + "themes" + slash + ViewModel.currentTheme.name + slash + assetName;
+        if (File.Exists(path))
+            return path;
+        return "";
+    }
+
+    public static List<ThemeDataJson> GetThemeList()
+    {
+        List<ThemeDataJson> ret = new List<ThemeDataJson>();
+        string path = Application.streamingAssetsPath + slash + "themes" + slash;
+        foreach(var jsonFile in Directory.GetFiles(path, "*.json"))
+        {
+            try
+            {
+                var json = File.ReadAllText(jsonFile);
+                ret.Add(JsonUtility.FromJson<ThemeDataJson>(json));
+            } catch(Exception e)
+            {
+                Debug.Log("Error processing theme: " + jsonFile);
+            }
+        }
+        return ret;
     }
 }

@@ -48,11 +48,25 @@ public class WebcamController : MonoBehaviour
             rImage.material.mainTexture = rImage.texture = forcedTexture;
     }
 
+    private string SetGameplayCam(string[] args)
+    {
+        string cam = "";
+        for( int i = 0; i < args.Length; i++)
+        {
+            cam += args[i];
+            if (i + 1 < args.Length)
+                cam += " ";
+        }
+        gameCamera.ChangeCamera(cam);
+        return "setting gameplay cam to " + cam;
+    }
     private void Start()
     {
         GameModel.onGameModelComplete.AddListener(OnGameComplete);
         SetupScreen.onSetupComplete.AddListener(OnSetupComplete);
         ViewModel.onThemeChange.AddListener(OnThemeChange);
+
+        LSConsole.AddCommandHook("setGameplayCam", "set gameplay camera", SetGameplayCam);
     }
 
     public static (Vector3, float) GetPositionAndScale(bool minimized)
@@ -61,33 +75,44 @@ public class WebcamController : MonoBehaviour
         float scale = 0.007499999f;
 
         //hack for extra space with camp frame. need to include parameter to let theme to adjust this
-        float campBump = (ViewModel.currentTheme.themeName == "campkq" || ViewModel.currentTheme.themeName == "postcamp") ? .12f : 0f;
+        float campBump = (ViewModel.currentTheme.name == "campkq" || ViewModel.currentTheme.name == "postcamp") ? .12f : 0f;
 
         if (minimized)
         {
             position = new Vector3(2.63f, 3.53f, 0f);
             scale = 0.0025f;
-            if (ViewModel.currentTheme.layout == ThemeData.LayoutStyle.OneCol_Left)
+            if(ViewModel.currentTheme.useCustomCanvas)
+            {
+                position = new Vector3(4.19f, 2f + ViewModel.currentTheme.customCanvasY, 0f);
+                scale = 0.0022f;
+            }
+            else if (ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.OneCol_Left)
                 position.x += 1f;
-            else if (ViewModel.currentTheme.layout == ThemeData.LayoutStyle.TwoCol)
+            else if (ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.TwoCol)
             {
                 position = new Vector3(3.65f, 2.61f + campBump, 0f);
                 scale = 0.0022f;
-            } else if(ViewModel.currentTheme.layout == ThemeData.LayoutStyle.Game_Only)
+            } else if(ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.Game_Only)
             {
                 position = new Vector3(5.1f, 3.41f, 0f);
                 scale = 0.0027f;
             }
         } else
         {
-            if (ViewModel.currentTheme.layout == ThemeData.LayoutStyle.OneCol_Left)
+            if(ViewModel.currentTheme.useCustomCanvas)
+            {
+                position.x = ViewModel.currentTheme.customCanvasX;
+                position.y = ViewModel.currentTheme.customCanvasY - ViewModel.bottomBarPadding.property;
+                scale = ViewModel.currentTheme.customCanvasScale;
+            }
+            else if (ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.OneCol_Left)
                 position.x *= -1f;
-            else if(ViewModel.currentTheme.layout == ThemeData.LayoutStyle.TwoCol)
+            else if(ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.TwoCol)
             {
                 
                 position = new Vector3(0f, .36f + campBump, 90f); //y .48
                 scale = 0.0066f;
-            } else if(ViewModel.currentTheme.layout == ThemeData.LayoutStyle.Game_Only)
+            } else if(ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.Game_Only)
             {
                 position = new Vector3(0f, 0f, 90f);
                 scale = 0.00927f;
@@ -174,6 +199,7 @@ public class WebcamController : MonoBehaviour
         webcam.requestedWidth = 1080;
 
         webcam.deviceName = newDeviceName;
+        Debug.Log("webcam is " + webcam.deviceName);
         webcam.Play();
     }
 }

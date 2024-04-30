@@ -15,6 +15,7 @@ public class SetupScreen : MonoBehaviour
 		public PlayerCameraObserver.AspectRatio aspectRatio;
 		public TMP_Text sourceText;
 		public TMP_Text ratioText;
+		public PlayerCameraObserver previewCamera;
     }
 	public static bool setupInProgress = false;
 
@@ -25,6 +26,7 @@ public class SetupScreen : MonoBehaviour
 	public TMP_Dropdown themeSelector;
 	public GameObject controlPanelTemplate;
 	public TMP_InputField[] tabList;
+	public TMP_Text connectionModeToggleText, sceneText, cabText, ipText;
 
 	public static UnityEvent onSetupComplete = new UnityEvent();
 
@@ -37,6 +39,7 @@ public class SetupScreen : MonoBehaviour
 
 	string storedCustomThemeName;
 	int curTab = -1;
+	bool localMode = false;
 
 	CameraState[] cameraStates;
     private void Awake()
@@ -66,14 +69,15 @@ public class SetupScreen : MonoBehaviour
 		themeSelector.value = themeOption == THEME_UNDEFINED ? THEME_CUSTOM : themeOption;
 		var gameplayCamID = PlayerPrefs.GetInt("gameplayCameraID", 0);
 		webcamController.ChangeCamera(gameplayCamID);
-		PlayerCameraObserver.camerasUpdatedEvent.AddListener(OnCamerasUpdated);
+		//PlayerCameraObserver.camerasUpdatedEvent.AddListener(OnCamerasUpdated);
 		for(int i = 0; i < cameraStates.Length; i++)
         {
 			if (cameraStates[i].name == "gameplayCamera")
 			{
 				cameraStates[i].aspectRatio = PlayerCameraObserver.AspectRatio.Wide;
-				cameraStates[i].id = PlayerPrefs.GetInt("gameplayCameraID", 0);
-				cameraStates[i].deviceName = PlayerCameraObserver.GetSourceName(cameraStates[i].id);
+				cameraStates[i].deviceName =
+					PlayerPrefs.GetString("gameplayCameraName");
+				cameraStates[i].id = PlayerCameraObserver.GetCameraID(cameraStates[i].deviceName);
 			}
 			else
 			{
@@ -84,7 +88,8 @@ public class SetupScreen : MonoBehaviour
 				cameraStates[i].deviceName = cam.deviceName;
 				cameraStates[i].id = cam.deviceIndex;
 			}
-
+			if(cameraStates[i].previewCamera != null)
+				cameraStates[i].previewCamera.StartCamera();
 		}
 		OnCamerasUpdated();
 
@@ -100,6 +105,29 @@ public class SetupScreen : MonoBehaviour
 			OnDoneClicked();
 	}
 
+	public void ToggleMode()
+    {
+		localMode = !localMode;
+
+		if(localMode)
+        {
+			connectionModeToggleText.text = "Local";
+			sceneText.gameObject.SetActive(false);
+			cabText.gameObject.SetActive(false);
+			cabID.gameObject.SetActive(false);
+			ipText.gameObject.SetActive(true);
+
+			sceneID.text = "kq.local";
+        } else
+        {
+			connectionModeToggleText.text = "HiveMind";
+			sceneText.gameObject.SetActive(true);
+			cabText.gameObject.SetActive(true);
+			cabID.gameObject.SetActive(true);
+			ipText.gameObject.SetActive(false);
+			sceneID.text = PlayerPrefs.GetString("sceneID");
+		}
+    }
 	void OnTabSelected(int tab)
     {
 		curTab = tab;
@@ -130,6 +158,7 @@ public class SetupScreen : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+
 		if (setupInProgress && AppLoader.SKIP_SETUP)
 			OnDoneClicked();
 		if(Input.GetKeyDown(KeyCode.Tab))
@@ -150,6 +179,11 @@ public class SetupScreen : MonoBehaviour
         {
 			camera.ratioText.text = camera.aspectRatio.ToString();
 			camera.sourceText.text = camera.deviceName;
+			if (camera.previewCamera != null)
+            {
+				camera.previewCamera.deviceName = ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.Game_Only ? "Off" : camera.deviceName;
+				camera.previewCamera.StartCamera();
+            }
 		}
 	}
 
@@ -212,7 +246,8 @@ public class SetupScreen : MonoBehaviour
 	public void OnDoneClicked()
     {
 		PlayerPrefs.SetString("cabID", cabID.text);
-		PlayerPrefs.SetString("sceneID", sceneID.text);
+		if(!localMode)
+			PlayerPrefs.SetString("sceneID", sceneID.text);
 		PlayerPrefs.SetString("theme", GetThemeName());
 		PlayerPrefs.SetInt("themePreset", themeSelector.value);
 		PlayerPrefs.SetString("ticker", tickerCabs.text);
@@ -229,13 +264,15 @@ public class SetupScreen : MonoBehaviour
 		setupInProgress = false;
 		NetworkManager.instance.sceneName = sceneID.text;
 		NetworkManager.instance.cabinetName = cabID.text;
-		NetworkManager.BeginNetworking();
+		NetworkManager.BeginNetworking(localMode ? sceneID.text : "");
 
 		string[] cabsToWatch = tickerCabs.text.Split(',');
 		for (int i = 0; i < cabsToWatch.Length; i++)
 			cabsToWatch[i] = cabsToWatch[i].Replace(" ", "");
 		TickerNetworkManager.Init(cabsToWatch);
 		ViewModel.SetTheme(GetThemeName());
+
+		GoogleSheetsDB.instance.ImportData(sceneID.text);
 
 		if (lowResCamera.isOn)
 		{
@@ -255,15 +292,16 @@ public class SetupScreen : MonoBehaviour
 		{
 			if (camera.name == "gameplayCamera")
 			{
-				webcamController.ChangeCamera(camera.id);
-				PlayerPrefs.SetInt("gameplayCameraID", camera.id);
+				Debug.Log("gameplay camera is " + camera.deviceName);
+				webcamController.ChangeCamera(camera.deviceName);
+				PlayerPrefs.SetString("gameplayCameraName", camera.deviceName);
 			}
 			else
 			{
 				var cam = PlayerCameraObserver.GetCamera(camera.name);
 				if (cam != null)
 				{
-					cam.deviceName = ViewModel.currentTheme.layout == ThemeData.LayoutStyle.Game_Only ? "Off" : camera.deviceName;
+					cam.deviceName = ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.Game_Only ? "Off" : camera.deviceName;
 					cam.aspectRatio = camera.aspectRatio;
 					if (cam.state == PlayerCameraObserver.WebcamState.On)
 						cam.StartCamera();

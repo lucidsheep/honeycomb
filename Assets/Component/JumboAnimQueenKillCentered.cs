@@ -7,7 +7,10 @@ public class JumboAnimQueenKillCentered : JumboAnimQueenKill
 {
     public override void StartAnim()
     {
-		transform.localPosition = new Vector3(5.6f, -6.37f, 0f);
+		//transform.localPosition = new Vector3(5.6f, -6.37f, 0f);
+		//hack
+		transform.localPosition = new Vector3(.79f, -.36f, 0f);
+		transform.localScale = Vector3.one * .14f;
 	}
 
     public override void SetupAnim(int bgID, PlayerModel playerData)

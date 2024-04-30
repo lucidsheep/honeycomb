@@ -45,5 +45,24 @@ public class SpriteDB : MonoBehaviour
 	{
 			
 	}
+
+	public static Sprite GetIcon(int team, int position)
+    {
+		string name = team == 0 ? "blue" : "gold";
+		switch(position)
+        {
+			case 0: name += "Stripes"; break;
+			case 1: name += "Abs"; break;
+			case 2: name += "Queen"; break;
+			case 3: name += "Skulls"; break;
+			case 4: name += "Chex"; break;
+			default: break;
+        }
+		var ret = AppLoader.GetStreamingSprite(name);
+		if (ret != null) return ret;
+
+		return allSprites[team].playerSprites[position].icon;
+
+    }
 }
 

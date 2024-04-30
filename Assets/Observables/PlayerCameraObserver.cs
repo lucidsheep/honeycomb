@@ -31,6 +31,8 @@ public class PlayerCameraObserver : KQObserver
     public string webcamName;
     public SpriteRenderer frame;
     public Image[] icons;
+    public bool iconsVisible = true;
+    public bool freezeSize = false;
 
     AspectRatio _ratio;
     public AspectRatio aspectRatio { get { return _ratio; } set
@@ -60,6 +62,7 @@ public class PlayerCameraObserver : KQObserver
                         _deviceIndex = i;
                         _deviceName = value;
                         PlayerPrefs.SetString(webcamName + "Device", value);
+                        Debug.Log("camera " + webcamName + " device set to " + value);
                         return;
                     }
                 }
@@ -93,15 +96,16 @@ public class PlayerCameraObserver : KQObserver
         }
         allCameras.Add(this);
 
-        deviceName = PlayerPrefs.GetString(webcamName + "Device", "Empty Frame");
-        aspectRatio = (AspectRatio)PlayerPrefs.GetInt(webcamName + "Ratio", 0);
-        if (state == WebcamState.On)
-            StartCamera();
+        ViewModel.onThemeChange.AddListener(OnTheme);
     }
     override public void Start()
     {
         base.Start();
-        ViewModel.onThemeChange.AddListener(OnTheme);
+
+        deviceName = PlayerPrefs.GetString(webcamName + "Device", "Empty Frame");
+        aspectRatio = (AspectRatio)PlayerPrefs.GetInt(webcamName + "Ratio", 0);
+        if (state == WebcamState.On)
+            StartCamera();
 
         if (!commandHooks)
         {
@@ -259,6 +263,10 @@ public class PlayerCameraObserver : KQObserver
     }
     void OnTheme()
     {
+        if(webcamName != "commentaryCamera")
+        {
+            aspectRatio = ViewModel.currentTheme.GetAspectRatio();
+        }
         SetState();
         //if(webcamName == "commentaryCamera")
         //    frame.gameObject.SetActive(bgContainer.sprite == null);
@@ -299,9 +307,10 @@ public class PlayerCameraObserver : KQObserver
 
     void SetIcons()
     {
-        if (targetID < 0) return;
+        if (targetID < 0 || icons.Length < 5) return;
         for (int i = 0; i < 5; i++)
         {
+            icons[i].gameObject.SetActive(iconsVisible);
             icons[i].sprite = SpriteDB.allSprites[team].playerSprites[4 - i].icon;
             icons[i].GetComponent<RectTransform>().sizeDelta = Vector2.one * (aspectRatio == AspectRatio.Wide ? 100 : 75);
             icons[i].GetComponent<RectTransform>().anchorMax = icons[i].GetComponent<RectTransform>().anchorMin = new Vector2(icons[i].GetComponent<RectTransform>().anchorMin.x, aspectRatio == AspectRatio.Wide ? .875f : .125f);
@@ -322,6 +331,7 @@ public class PlayerCameraObserver : KQObserver
 
         return WebCamTexture.devices[id].name;
     }
+
     public static AspectRatio GetAspectRatio(string camName)
     {
 
@@ -359,9 +369,9 @@ public class PlayerCameraObserver : KQObserver
 
     public int GetCameraID()
     {
-        return GetCameraID(webcamName, _deviceName);
+        return GetCameraID(_deviceName);
     }
-    public static int GetCameraID(string camName, string deviceName)
+    public static int GetCameraID(string deviceName)
     {
         for (int i = 0; i < WebCamTexture.devices.Length; i++)
         {
@@ -432,6 +442,8 @@ public class PlayerCameraObserver : KQObserver
 
     void SetCameraView()
     {
+        if (freezeSize) return;
+
         float width = aspectRatio == AspectRatio.Ultrawide ? 3120f : 1920f;
         float height = 1080f;
         /*

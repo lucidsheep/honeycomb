@@ -2,6 +2,7 @@
 using UnityEngine.Events;
 using DG.Tweening;
 using System.Collections.Generic;
+using System.IO;
 
 public class ViewModel : MonoBehaviour
 {
@@ -30,35 +31,50 @@ public class ViewModel : MonoBehaviour
 
 	public bool appView = false;
 
-	public GameObject mainTransform;
+	public MainBarObserver mainBar;
+	public MatchPreviewScreen matchPreview;
 	public Canvas webcamCanvas;
 	public SpriteRenderer topLevelGraphicContainer;
 	public SpriteRenderer[] backgroundGraphicContainers;
+	public TextAsset[] localThemes;
 
 	public Color bgFilter;
 
-	public ThemeData theme;
+	public ThemeDataJson theme;
 	public List<ThemeData> themeList;
-	public static ThemeData currentTheme { get { return instance.theme; } }
+	public List<ThemeDataJson> themeListJson;
+	public static ThemeDataJson currentTheme { get { return instance.theme; } }
 	public static UnityEvent onThemeChange = new UnityEvent();
 
-	public static Transform stage { get { return instance.mainTransform.transform; } }
+	public static Transform stage { get { return instance.mainBar.transform; } }
 
 	Sequence setPointTimeout;
 	Sequence pipSeq;
 	bool pipActive = false;
-	bool vdActive = false;
-	int vdIndex = -1;
+
 	bool isFullscreen = false;
 	int curBackground = 0;
-	VirtualDesktop.IVirtualDesktop mainDisplay;
-	VirtualDesktop.IVirtualDesktop virtualDisplay;
 
 	private void Awake()
 	{
 		hideSetPoints[0] = new LSProperty<int>(0);
 		hideSetPoints[1] = new LSProperty<int>(0);
 		instance = this;
+
+		if(appView)
+			themeListJson = AppLoader.GetThemeList();
+		else
+        {
+			themeListJson = new List<ThemeDataJson>();
+			foreach (var text in localThemes)
+            {
+				
+				themeListJson.Add(JsonUtility.FromJson<ThemeDataJson>(text.text));
+			}
+        }
+		Debug.Log("found " + themeListJson.Count + " json themes");
+		foreach (var theme in themeListJson)
+			Debug.Log(theme.name);
 	}
 	void Start()
 	{
@@ -66,15 +82,10 @@ public class ViewModel : MonoBehaviour
 		MapDB.currentMap.onChange.AddListener(OnMapChange);
 		if (defaultTheme != "")
 			SetTheme(defaultTheme);
+		else SetTheme(PlayerPrefs.GetString("theme", "oneCol"));
 		LSConsole.AddCommandHook("setTheme", "refreshes current theme, or sets the theme to [themeTag]", SetThemeCommand);
 		LSConsole.AddCommandHook("skipSetup", "set to [true/false], true will skip the setup dialog on launch", SkipSetupCommand);
 
-#if UNITY_STANDALONE_WIN && !UNITY_EDITOR
-		instance.mainDisplay = VirtualDesktop.DesktopManager.VirtualDesktopManagerInternal.GetCurrentDesktop();
-		var info = Screen.mainWindowDisplayInfo;
-		Screen.MoveMainWindowTo(in info, Vector2Int.zero);
-		//LSConsole.AddCommandHook("display", "display commands. [list] displays, or [create] or [destroy] a virtual desktop. [switch <index> <fullscreen/windowed>] active display to a given index and set fullscreened or windowed.", DisplayCommand);
-#endif
 		FixResolution();
 		backgroundGraphicContainers[0].color = bgFilter;
 	}
@@ -121,12 +132,6 @@ public class ViewModel : MonoBehaviour
 			}
 		}
 	}
-	// Update is called once per frame
-	void Update()
-	{
-		//var res = Screen.currentResolution;
-		
-	}
 
 	public static void FixResolution() { instance._FixResolution(); }
 	public void _FixResolution()
@@ -138,18 +143,6 @@ public class ViewModel : MonoBehaviour
 
 		screenWidth = Camera.main.orthographicSize * Camera.main.aspect * 2f;
 		screenHeight = Camera.main.orthographicSize * 2f;
-	}
-	public static void CreateVirtualDesktop()
-    {
-		if (instance.vdActive) return;
-
-		var d = VirtualDesktop.DesktopManager.VirtualDesktopManagerInternal.CreateDesktop();
-		instance.vdIndex = VirtualDesktop.DesktopManager.GetDesktopIndex(d);
-		Debug.Log("created virtual desktop at index " + instance.vdIndex);
-		instance.vdActive = true;
-		instance.virtualDisplay = d;
-
-		Debug.Log(instance.DisplayCommand(new string[] { }));
 	}
 
 	public static void SwitchToDesktop(int index, bool fullscreen)
@@ -221,71 +214,10 @@ public class ViewModel : MonoBehaviour
 		}
 	}
 
-	public string DisplayCommand(string[] args)
-	{
-		var ret = "";
-		if (args.Length == 0 || args[0] == "list")
-		{
-			var id = VirtualDesktop.DesktopManager.GetDesktopIndex(mainDisplay);
-			var layouts = new List<DisplayInfo>();
-			Screen.GetDisplayLayout(layouts);
-			ret = "Display List\nCurrent desktop: " + id;
-			for(int i = 0; i < layouts.Count; i++)
-            {
-				var d = layouts[i];
-				ret += "\n" + i + ": " + d.name + " (" + d.width + "x" + d.height + ")";
-			}
-			ret += "\n\nAlt Display List";
-			for(int i = 0; i < Display.displays.Length; i++)
-            {
-				var d = Display.displays[i];
-				ret += "\n" + d.ToString() + " (" + d.systemWidth + "x" + d.systemHeight + ")";
-            }
-		} else
-        {
-			switch(args[0])
-            {
-				case "create":
-					CreateVirtualDesktop(); break;
-				case "destroy":
-					DestroyVirtualDesktop(); break;
-				case "switch":
-					var index = -1;
-					if(args.Length < 2)
-                    {
-						ret = "Command requires index of display to switch to";
-						break;
-                    }
-					var id = VirtualDesktop.DesktopManager.GetDesktopIndex(mainDisplay);
-					var layouts = new List<DisplayInfo>();
-					Screen.GetDisplayLayout(layouts);
-
-					int.TryParse(args[1], out index);
-					if(index < 0 || index >= layouts.Count)
-                    {
-						ret = "Invalid index";
-						break;
-                    }
-
-					bool fullScreen = true;
-					if (args.Length > 2 && args[2] == "windowed")
-						fullScreen = false;
-
-					SwitchToDesktop(index, fullScreen);
-					break;
-				default:
-					ret = "Invalid display command";
-					break;
-            }
-        }
-
-		return ret;
-	}
-
 	public string SetThemeCommand(string[] args)
 	{
 		if (args.Length == 0)
-			SetTheme(ViewModel.currentTheme.themeName);
+			SetTheme(ViewModel.currentTheme.name);
 		else
 			SetTheme(args[0]);
 		return "";
@@ -308,46 +240,38 @@ public class ViewModel : MonoBehaviour
 	public static void SetTheme(string themeTag)
     {
 		Debug.Log("setTheme " + themeTag);
-		ThemeData newTheme = instance.themeList.Find(x => x.themeName.Equals(themeTag));
+		ThemeDataJson newTheme = instance.themeListJson.Find(x => x.name == themeTag);
 		if (newTheme != null)
 		{
 			instance.theme = newTheme;
-			switch (newTheme.layout)
+			switch (newTheme.GetLayout())
 			{
-				case ThemeData.LayoutStyle.OneCol_Left:
-				case ThemeData.LayoutStyle.OneCol_Right:
+				case ThemeDataJson.LayoutStyle.OneCol_Left:
+				case ThemeDataJson.LayoutStyle.OneCol_Right:
 					totalBarWidth = 10.045f * 2f;
 					totalTextWidth = 88f;
 					break;
-				case ThemeData.LayoutStyle.TwoCol:
+				case ThemeDataJson.LayoutStyle.TwoCol:
 					totalBarWidth = 9.31f * 2f;
 					totalTextWidth = 78f;
 					break;
 			}
-			bottomBarPadding.property = newTheme.showBuzzBar ? .30f : 0f;
+			UIState.inverted = newTheme.startReversed;
+			bottomBarPadding.property = newTheme.showTicker ? .30f : 0f;
 			instance.topLevelGraphicContainer.sprite = AppLoader.GetStreamingSprite("mainFrame");
 			instance.backgroundGraphicContainers[0].sprite = AppLoader.GetStreamingSprite("background");
+			SetMatchPreviewScreen(newTheme.matchPreview == null ? "" : newTheme.matchPreview.name);
 			onThemeChange.Invoke();
 		}
     }
 
-	public static void DestroyVirtualDesktop()
+	static void SetMatchPreviewScreen(string styleName)
     {
-		if (!instance.vdActive) return;
+		if (instance.matchPreview != null)
+			Destroy(instance.matchPreview.gameObject);
 
-		VirtualDesktop.DesktopManager.VirtualDesktopManagerInternal.RemoveDesktop(instance.virtualDisplay, instance.mainDisplay);
-		instance.virtualDisplay = null;
-		instance.vdIndex = -1;
-		instance.vdActive = false;
-
-		Debug.Log("Removed virtual desktop");
-	}
-    private void OnDestroy()
-    {
-        if(vdActive)
-        {
-			DestroyVirtualDesktop();
-        }
+		instance.matchPreview = Instantiate(MainLayoutModuleManager.GetMatchPreview(styleName), instance.transform.parent);
     }
+
 }
 

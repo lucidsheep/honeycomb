@@ -123,7 +123,9 @@ public class FakeEventEmitter : MonoBehaviour
         var randTarget = 0;
         var randTargetType = "";
         var randCoord = new Vector2Int(Random.Range(0, 1920), Random.Range(0, 1080));
-        var ret = "{\"event_type\":\"" + (type.IndexOf("queenKill") > -1 ? "playerKill" : type) + "\",\"values\":[";
+        string rawType = type.IndexOf("queenKill") > -1 ? "playerKill" : type;
+        var ret = NetworkManager.localMode ? "![k[" + rawType + "],v["
+            : "{\"event_type\":\"" + rawType + "\",\"values\":[";
         switch (type)
         {
             case "queenKill":
@@ -134,7 +136,7 @@ public class FakeEventEmitter : MonoBehaviour
                 {
                     randTarget = UnityEngine.Random.Range(1, 10);
                 } while ((randPlayer % 2) + (randTarget % 2) != 1);
-                randTargetType = randTarget < 3 ? "Queen" : "Soldier";
+                randTargetType = randTarget < 3 ? "Queen" : "Worker";
                 if (type == "queenKill")
                 {
                     randPlayer = randPlayer % 2 == 0 ? 1 : 2;
@@ -151,7 +153,7 @@ public class FakeEventEmitter : MonoBehaviour
                     randTarget = 2;
                     randTargetType = "Queen";
                 }
-                    ret += quote(randCoord.x) + "," + quote(randCoord.y) + "," + quote(randPlayer) + "," + quote(randTarget) + "," + quote(randTargetType);
+                ret += quote(randCoord.x) + "," + quote(randCoord.y) + "," + quote(randPlayer) + "," + quote(randTarget) + "," + quote(randTargetType);
                 //ret += "\"1461\",\"496\",\"" + randTarget + "\",\"" + randPlayer + "\",\"" + randTargetType + "\"";
                 break;
             default:
@@ -183,8 +185,11 @@ public class FakeEventEmitter : MonoBehaviour
                 ret += quote(randTeam == 0 ? "Blue" : "Red") + "," + quote(endString);
                 break;
             case GameEventType.BOUNCE:
-                randTarget = 11 - randPlayer;
-                ret += quote(randPlayer) + "," + quote(randTarget);
+                do
+                {
+                    randTarget = Random.Range(1, 11);
+                } while (randTarget == randPlayer);
+                ret += quote(randCoord.x) + "," + quote(randCoord.y) + "," + quote(randPlayer) + "," + quote(randTarget);
                 break;
             case GameEventType.GATE_TAG:
                 ret += quote(100 * Random.Range(1, 3)) + "," + quote(100 * Random.Range(1,3)) + "," + quote(randTeamName);
@@ -197,17 +202,22 @@ public class FakeEventEmitter : MonoBehaviour
 
 
         }
-        ret += "]}";
+        ret += NetworkManager.localMode ? "]]!"
+            : "]}";
         return ret;
     }
 
     static string quote(int val)
     {
+        if (NetworkManager.localMode) return val.ToString();
+
         return "\"" + val + "\"";
     }
 
     static string quote(string val)
     {
+        if (NetworkManager.localMode) return val;
+
         return "\"" + val + "\"";
     }
 }

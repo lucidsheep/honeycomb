@@ -31,7 +31,7 @@ public class PlayerMilestoneObserver : KQObserver
 
 	void OnMilestone(PlayerModel.Milestone milestone, PlayerModel player)
     {
-		if (ViewModel.currentTheme.hideMilestones) return;
+		if (!ViewModel.currentTheme.showMilestones) return;
 
 		if(milestone.timescale == PlayerModel.StatTimescale.Career)
         {
@@ -57,7 +57,7 @@ public class PlayerMilestoneObserver : KQObserver
 
 	private void Update()
 	{
-		if (ViewModel.currentTheme.hideMilestones) return;
+		if (!ViewModel.currentTheme.showMilestones) return;
 
 		if(!checkedPassive && (float)(DateTime.Now - lastMilestoneAnnouncement).TotalSeconds >= passiveMilestoneInterval)
         {

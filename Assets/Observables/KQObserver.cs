@@ -8,7 +8,10 @@ public class KQObserver : MonoBehaviour
 	public string moduleName;
 	public float size;
 	public SpriteRenderer bgContainer;
+	public SpriteRenderer normalBG;
 	public Vector2 offset;
+	public bool absolutePos = false;
+	public Vector2 bgCustomPivot = new Vector2(.5f, .5f);
 	public Dictionary<string,string> moduleParameters = new Dictionary<string, string>();
 	public int team { get { return targetID == 0 ? UIState.blue : UIState.gold; } }
 	virtual public void Start()
@@ -25,9 +28,25 @@ public class KQObserver : MonoBehaviour
 
 	virtual protected void OnThemeChange()
     {
-		if (!ViewModel.instance.appView || bgContainer == null) return;
-
-		bgContainer.sprite = AppLoader.GetStreamingSprite(moduleName);
+		bool useDefaultBG = false;
+		if (!ViewModel.instance.appView || bgContainer == null)
+			useDefaultBG = true;
+		else
+		{
+			var sprite = AppLoader.GetStreamingSprite(moduleName, bgCustomPivot);
+			if (sprite != null)
+			{
+				bgContainer.sprite = sprite;
+			}
+			else
+			{
+				useDefaultBG = true;
+			}
+		}
+		if(bgContainer != null)
+			bgContainer.gameObject.SetActive(!useDefaultBG);
+		if (normalBG != null)
+			normalBG.gameObject.SetActive(useDefaultBG);
     }
 	public void SetParameters(string[] args)
     {
@@ -35,8 +54,11 @@ public class KQObserver : MonoBehaviour
 		for(int i = 1; i < args.Length; i++)
         {
 			var argParsed = args[i].Split('=');
-			moduleParameters.Add(argParsed[0], (argParsed.Length == 1 ? "" : argParsed[1]));
-        }
+			if (!moduleParameters.ContainsKey(argParsed[0]))
+				moduleParameters.Add(argParsed[0], (argParsed.Length == 1 ? "" : argParsed[1]));
+			else
+				moduleParameters[argParsed[0]] = (argParsed.Length == 1 ? "" : argParsed[1]);
+		}
 		OnParameters();
     }
 
@@ -47,6 +69,11 @@ public class KQObserver : MonoBehaviour
 			//Debug.Log("spacing = " + moduleParameters["spacing"]);
 			size = float.Parse(moduleParameters["spacing"]);
         }
+		if(moduleParameters.ContainsKey("position"))
+        {
+			offset.y = float.Parse(moduleParameters["position"]);
+			absolutePos = true;
+		}
 		if(moduleParameters.ContainsKey("scale"))
         {
 			var scale = float.Parse(moduleParameters["scale"]);

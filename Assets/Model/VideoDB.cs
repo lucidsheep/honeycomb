@@ -46,7 +46,7 @@ public class VideoDB : MonoBehaviour
 
 	public static VideoSet GetVideoSet()
     {
-		return GetVideoSet(ViewModel.currentTheme.videoSetName);
+		return GetVideoSet(ViewModel.currentTheme.videoSet);
     }
 
 	public static TeamVideos blueVideos { get { return GetVideoSet().blueVideos; } }

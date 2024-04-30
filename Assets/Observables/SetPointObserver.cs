@@ -43,7 +43,7 @@ public class SetPointObserver : KQObserver
 
     void OnRealTournamentData(HMMatchState data)
     {
-        if (GameModel.newSetOnNextGameStart)
+        if (GameModel.newSetTimeout > 0f)
             return; //don't process if we're pending a reset
         OnTournamentData(data);
     }

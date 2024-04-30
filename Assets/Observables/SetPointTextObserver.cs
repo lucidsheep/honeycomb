@@ -32,7 +32,7 @@ public class SetPointTextObserver : KQObserver
     }
     void OnGameComplete(int winningTeam, string winType)
     {
-        if (winningTeam == team && !GameModel.instance.isWarmup)
+        if (winningTeam == team && !GameModel.instance.isWarmup && !GameModel.inTournamentMode)
         {
                 OnVictory();
         }
@@ -41,7 +41,7 @@ public class SetPointTextObserver : KQObserver
 
     void OnRealTournamentData(HMMatchState data)
     {
-        if (GameModel.newSetOnNextGameStart)
+        if (GameModel.newSetTimeout > 0f)
             return; //don't process if we're pending a reset
         OnTournamentData(data);
     }

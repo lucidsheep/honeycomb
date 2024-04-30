@@ -17,19 +17,23 @@ public class PostgameStatTable : MonoBehaviour
 
     public void OnPostgame()
 	{
-		themeBG.sprite = AppLoader.GetStreamingSprite("postgameStatTable");
+		if(themeBG != null)
+			themeBG.sprite = AppLoader.GetStreamingSprite("postgameStatTable");
 		if (miniTable)
 		{
 			for (int i = 0; i < cols.Length; i++)
 			{
 				string txt = "";
+				var t = UIState.inverted ? 1 - (i / 5) : i / 5;
 				for (int j = 0; j < stats.Length; j++)
 				{
 					//force queen uptime to be gate control
-					if(i % 5 == 2 && stats[j] == PlayerModel.StatValueType.UpTime)
-						txt += GameModel.GetPlayer(i / 5, i % 5).curGameDerivedStats[PlayerModel.StatValueType.Gates].fullNumber + "\n";
+					if (i % 5 == 2 && stats[j] == PlayerModel.StatValueType.UpTime)
+						txt += GameModel.GetPlayer(t, i % 5).curGameDerivedStats[PlayerModel.StatValueType.Gates].fullNumber + "\n";
+					else if (stats[j] == PlayerModel.StatValueType.KDA)
+						txt += GameModel.GetPlayer(t, i % 5).GetKDA() + "\n";
 					else
-						txt += GameModel.GetPlayer(i / 5, i % 5).curGameDerivedStats[stats[j]].fullNumber + "\n";
+						txt += GameModel.GetPlayer(t, i % 5).curGameDerivedStats[stats[j]].fullNumber + "\n";
 				}
 				cols[i].text = txt;
 			}
@@ -40,13 +44,17 @@ public class PostgameStatTable : MonoBehaviour
 			{
 				string txt = "";
 				for (int j = 0; j < 10; j++)
-					txt += GameModel.GetPlayer(j / 5, j % 5).curGameDerivedStats[stats[i]].fullNumber + "\n";
+				{
+					var t = UIState.inverted ? 1 - (j / 5) : j / 5;
+					txt += GameModel.GetPlayer(t, j % 5).curGameDerivedStats[stats[i]].fullNumber + "\n";
+				}
 				cols[i].text = txt;
 			}
 		}
 		for(int i =0; i < 10; i++)
         {
-			playerLines[i].OnPostgame(GameModel.GetPlayer(i / 5, i % 5));
+			var t = UIState.inverted ? 1 - (i / 5) : i / 5;
+			playerLines[i].OnPostgame(GameModel.GetPlayer(t, i % 5));
 
 		}
 	}

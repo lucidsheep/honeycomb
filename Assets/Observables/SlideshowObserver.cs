@@ -41,7 +41,7 @@ public class SlideshowObserver : KQObserver
             numImages = int.Parse(moduleParameters["numImages"]);
         if (moduleParameters.ContainsKey("interval"))
             switchInterval = int.Parse(moduleParameters["interval"]);
-        baseURL += "/" + ViewModel.currentTheme.themeName;
+        baseURL += "/" + ViewModel.currentTheme.name;
 
         for(int i = 1; i <= numImages; i++)
         {

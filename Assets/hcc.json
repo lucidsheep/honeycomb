@@ -1,0 +1,35 @@
+{
+    "name": "hcc",
+    "layout": "oneColumn",
+    "showTicker": false,
+    "showPlayerCams": true,
+    "showMilestones": false,
+    "showCrownAnimation": false,
+    "headerFont": "defaultHeader",
+    "postgameHeaderFont": "defaultFont",
+    "postgameCardFont": "defaultFont",
+    "postgameDetailFont": "defaultFont",
+    "postgameScreen": "statsNoGraph",
+    "startReversed": true,
+    "mainBarStyle": "defaultMainBar",
+    "videoSet": "hcc",
+    "videoURLBlue": "https://kq.style/etc/hcc.mp4",
+    "videoURLGold": "https://kq.style/etc/hcc.mp4",
+    "leaderboardID": 0,
+    "blueTheme" : {
+        "primaryColor" : "894BA4",
+        "secondaryColor" : "6819C3",
+        "iconColor" : "D848E5"
+    }, 
+    "goldTheme" : {
+        "primaryColor" : "D43C2D",
+        "secondaryColor" : "9B2425",
+        "iconColor" : "EC7382"
+    }, 
+    "sideBarPrimary": [
+        "blueRoster|position=0.0625|autoHide=true",
+        "goldRoster|position=-1.8125|autoHide=true"
+    ],
+    "sideBarSecondary": []
+
+}

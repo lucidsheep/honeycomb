@@ -1,0 +1,37 @@
+{
+    "name": "oneCol",
+    "layout": "oneColumn",
+    "showTicker": false,
+    "showPlayerCams": true,
+    "showMilestones": false,
+    "showCrownAnimation": false,
+    "headerFont": "defaultHeader",
+    "postgameHeaderFont": "defaultFont",
+    "postgameCardFont": "defaultFont",
+    "postgameDetailFont": "defaultFont",
+    "postgameScreen": "statsWithGraph",
+    "startReversed": false,
+    "mainBarStyle": "defaultMainBar",
+    "videoSet": "modern",
+    "leaderboardID": 0,
+    "blueTheme" : {
+        "primaryColor" : "4D6B8D",
+        "secondaryColor" : "334A5B",
+        "iconColor" : "92C2D6"
+    }, 
+    "goldTheme" : {
+        "primaryColor" : "C38739",
+        "secondaryColor" : "9B5124",
+        "iconColor" : "FFE1AE"
+    }, 
+    "sideBarPrimary": [
+        "logoSpace",
+        "commentaryCamera|position=2.275",
+        "rosterText|text=Team Rosters|position=1.175",
+        "blueRoster|position=0.0625",
+        "goldRoster|position=-1.8125",
+        "chatText|text=Chat|-2.925"
+    ],
+    "sideBarSecondary": []
+
+}

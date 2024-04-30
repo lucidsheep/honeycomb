@@ -37,11 +37,15 @@ public class TopBarObserver : KQObserver
             default:
                 topBarWidth = 7.5f; titleWidth = 32.175f; break;
         }
-        topBar.transform.localScale = new Vector3(topBarWidth,
-           topBar.transform.localScale.y, 1f);
+        if (topBar != null)
+        {
+            topBar.transform.localScale = new Vector3(topBarWidth,
+               topBar.transform.localScale.y, 1f);
+            titleText.rectTransform.sizeDelta = new Vector2(titleWidth, titleText.rectTransform.sizeDelta.y);
+        }
         //bottomBar.transform.localScale = new Vector3(botBarWidth,
         //  bottomBar.transform.localScale.y, 1f);
-        titleText.rectTransform.sizeDelta = new Vector2(titleWidth, titleText.rectTransform.sizeDelta.y);
+        
     }
 }
 

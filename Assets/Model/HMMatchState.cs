@@ -29,7 +29,6 @@ using System.Collections;
 [System.Serializable]
 public class HMMatchState
 {
-    //type = *
     public string type;
     public string cabinet_id;
     //type = match
@@ -38,7 +37,7 @@ public class HMMatchState
     public HMCurrentMatch current_match;
     public HMCurrentMatch on_deck;
     //type = matchend
-    public string match_id;
+    public int match_id;
     public string blue_team;
     public int blue_score;
     public string gold_team;
@@ -57,7 +56,7 @@ public class HMMatchState
 [System.Serializable]
 public class HMCurrentMatch
 {
-    public string id;
+    public int id;
     public string blue_team;
     public int blue_score;
     public string gold_team;
@@ -116,6 +115,20 @@ public class HMPlayerStat
             }
         }
     }
+
+    public static HMPlayerStat CreateHMStatArray(string message, string arrayName)
+    {
+        var ret = new HMPlayerStat();
+        int startIndex = message.IndexOf(arrayName) + arrayName.Length + 2;
+        int endIndex = message.IndexOf('}', startIndex + 1);
+        if (startIndex > -1 && endIndex - startIndex > 5) //watch for empty array case
+        {
+            var substring = message.Substring(startIndex, endIndex - startIndex);
+            //do conversion thingy and pray
+            ret.ConvertJson(substring);
+        }
+        return ret;
+    }
 }
 [System.Serializable]
 public class HMInGameStats
@@ -133,26 +146,9 @@ public class HMInGameStats
     public HMPlayerStat queen_kills;
     public HMPlayerStat snail_distance;
     public HMPlayerStat total_berries;
+
 }
 
-/*
- *             "type": "overlaysettings",
-            "overlay_id": self.id,
-            "ingame_theme": self.ingame_theme,
-            "postgame_theme": self.postgame_theme,
-            "match_theme": self.match_theme,
-            "match_preview_theme": self.match_preview_theme,
-            "player_cams_theme": self.player_cams_theme,
-            "cabinet_name": self.cabinet.name,
-            "show_players": self.show_players,
-            "blue_team": self.blue_team,
-            "blue_score": self.blue_score,
-            "gold_team": self.gold_team,
-            "gold_score": self.gold_score,
-            "show_score": self.show_score,
-            "match_win_max": self.match_win_max,
-        }))
-*/
 [System.Serializable]
 public class HMOverlaySettings
 {
@@ -226,6 +222,137 @@ public class HMCabinetResponse
     public string previous;
     public HMCabinet[] results;
 }
+
+[System.Serializable]
+public class HMGameResponse
+{
+    public int count;
+    public string next;
+    public string previous;
+    public HMGame[] results;
+}
+
+[System.Serializable]
+public class HMGame
+{
+    public int id, match, qp_match, tournament_match;
+    public string map_name, start_time, end_time, status, win_condition, winning_team, player_count, cabinet_version;
+    //cabinet{}
+    //scene{}
+    //users[{}]
+}
+
+//most stats need to be converted to HMPlayerStats
+//https://kqhivemind.com/api/game/game/911259/stats/
+
+[System.Serializable]
+public class HMGameStats
+{
+    public HMTeamIntData berries;
+    public string map, win_condition, winning_team;
+    public float length_sec;
+}
+
+//Honeycomb converted aggregation of team stats for a game
+public class TeamGameStats
+{
+    public int teamID, gameID, militaryKills, militaryDeaths, snailLengths, berries, totalSeconds;
+    public bool didWin;
+    public string mapName, winCondition;
+
+}
+
+public class TeamTournamentStats : TeamGameStats
+{
+    public int[] mapWins, mapLosses;
+    public int totalGames;
+
+    public TeamTournamentStats(int id)
+    {
+        teamID = id;
+        mapWins = new int[] { 0, 0, 0, 0 };
+        mapLosses = new int[] { 0, 0, 0, 0 };
+
+        militaryKills = militaryDeaths = snailLengths = berries = totalGames = totalSeconds = 0;
+    }
+
+    public void AddGame(TeamGameStats game)
+    {
+        militaryKills += game.militaryKills;
+        militaryDeaths += game.militaryDeaths;
+        berries += game.berries;
+        snailLengths += game.snailLengths;
+        totalGames++;
+        totalSeconds += game.totalSeconds;
+
+        var ind = -1;
+        if (game.mapName == "Day") ind = 0;
+        else if (game.mapName == "Night") ind = 1;
+        else if (game.mapName == "Dusk") ind = 2;
+        else if (game.mapName == "Twilight") ind = 3;
+
+        if(ind > -1)
+        {
+            if (game.didWin)
+                mapWins[ind]++;
+            else
+                mapLosses[ind]++;
+        }
+    }
+    public string GetMap(bool best)
+    {
+        if (totalGames == 0)
+            return "???";
+        int bestScore = 99999 * (best ? -1 : 1);
+        int bestInd = -1;
+        int numTies = 0;
+        int tiedInd = -1;
+        for(int i = 0; i < 4; i++)
+        {
+            int thisScore = mapWins[i] - mapLosses[i];
+            if((best && thisScore > bestScore)
+            || (!best && thisScore < bestScore))
+            {
+                bestScore = thisScore;
+                bestInd = i;
+                numTies = 0;
+            } else if(thisScore == bestScore)
+            {
+                numTies++;
+                tiedInd = i;
+            }
+        }
+        if(numTies == 1) //pick randomly between two candidates
+        {
+            bestInd = Random.Range(0, 2) == 1 ? tiedInd : bestInd;
+        } else if(numTies > 1) //too many candidates, answer is unknown
+        {
+            return "???";
+        }
+        switch(bestInd)
+        {
+            case 0: return "Day";
+            case 1: return "Night";
+            case 2: return "Dusk";
+            case 3: return "Twilight";
+            default: return "???";
+        }
+    }
+}
+
+[System.Serializable]
+public class HMTeamIntData
+{
+    public int blue;
+    public int gold;
+}
+
+[System.Serializable]
+public class HMTeamStringData
+{
+    public string blue;
+    public string gold;
+}
 /*
  *             "scene_name": "kqpdx",
             "cabinet_id": 26,
@@ -275,7 +402,7 @@ public class HMTournamentMatch
 {
     public HMTournament tournament;
     public string linked_match_id, stage_name, round_name, video_link;
-    public int blue_score, gold_score, bracket, blue_team, gold_team, active_cabinet;
+    public int blue_score, gold_score, bracket, blue_team, gold_team, active_cabinet, id;
     public bool is_flipped, is_complete, is_warmup;
 }
 
@@ -285,6 +412,30 @@ public class HMTournament
     public int id, scene, deleted_by;
     public string description, deleted_at, name, date, location, link_type;
     public bool deleted, is_active;
+}
+
+[System.Serializable]
+public class HMTournamentQueue
+{
+    public string type;
+    public HMTournamentQueueData data;
+
+}
+
+[System.Serializable]
+public class HMTournamentQueueList
+{
+    public int count;
+    public HMTournamentQueueData[] results;
+
+}
+
+[System.Serializable]
+public class HMTournamentQueueData
+{
+    public int id, tournament, cabinet;
+    public bool enabled;
+    public HMTournamentMatch[] match_list;
 }
 
 //{ "id":171,"name":"Let's Talk Comp","linked_team_ids":["172021224"],"tournament":28}
@@ -319,6 +470,23 @@ public class HMTournamentBracket
     public bool is_valid, report_as_sets;
 }
 
+[System.Serializable]
+public class HMTournamentPlayer
+{
+    public string name, scene, pronouns, tidbit, image;
+    public int team, user, tournament;
+    public bool do_not_display;
+    public HMUserStat[] stats;
+}
+
+[System.Serializable]
+public class HMTournamentPlayerList
+{
+    public int count;
+    public string next;
+    public string previous;
+    public HMTournamentPlayer[] results;
+}
 [System.Serializable]
 public class HMUserList
 {

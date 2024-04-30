@@ -21,7 +21,7 @@ public class FontDB : MonoBehaviour
         {
 			if (f.fontName == fontName) return f.font;
         }
-		return null;
+		return instance.allFonts[0].font;
     }
     private void Awake()
     {
