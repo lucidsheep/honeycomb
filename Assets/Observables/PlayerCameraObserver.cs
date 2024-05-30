@@ -2,6 +2,7 @@
 using UnityEngine.Events;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class PlayerCameraObserver : KQObserver
 {
@@ -467,6 +468,19 @@ public class PlayerCameraObserver : KQObserver
         camerasUpdatedEvent.Invoke();
     }
 
+    public static (Vector2, float) SetCustomCameraView(string cameraName, Vector2 position, float scale)
+    {
+        var cam = GetCamera(cameraName);
+        if(cam == null)
+            return (Vector2.zero, 0f);
+        Vector2 origPos = cam.transform.position;
+        float origScale = cam.transform.localScale.x;
+
+        cam.transform.DOMove(position, .5f).SetEase(Ease.OutQuad);
+        cam.transform.DOScale(scale, .5f).SetEase(Ease.OutQuad);
+
+        return (origPos, origScale);
+    }
     RenderTexture clippedCamTexture;
     Rect crop;
 
@@ -478,7 +492,7 @@ public class PlayerCameraObserver : KQObserver
             Destroy(clippedCamTexture);
 
         cameraImage.enabled = true;
-
+        cameraImage.GetComponent<RectTransform>().position = new Vector3(cameraImage.transform.position.x, cameraImage.transform.position.y, .25f);
         if (aspectRatio == AspectRatio.Wide)
         {
             cameraImage.texture = webcam;
@@ -507,6 +521,11 @@ public class PlayerCameraObserver : KQObserver
 
     private void Update()
     {
+        if(cameraImage != null)
+        {
+            cameraImage.GetComponent<RectTransform>().position = new Vector3(cameraImage.transform.position.x, cameraImage.transform.position.y, -.26f);
+            Debug.Log(cameraImage.transform.position.z.ToString());
+        }
         if(cameraStartCooldown > 0f)
         {
             cameraStartCooldown -= Time.deltaTime;

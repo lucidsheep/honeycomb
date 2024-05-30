@@ -347,6 +347,7 @@ MonoBehaviour:
   - {fileID: 4314040715612687868}
   - {fileID: 4868053715905445457}
   iconsVisible: 1
+  freezeSize: 0
   cameraIsPlaying: 0
 --- !u!1 &2816368231432607016
 GameObject:
@@ -610,7 +611,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4093458838504604319}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -683,7 +684,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4513979556042305523}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -923,6 +924,7 @@ MonoBehaviour:
   - {fileID: 8546133862185056999}
   - {fileID: 7119685829954459585}
   iconsVisible: 1
+  freezeSize: 0
   cameraIsPlaying: 0
 --- !u!1 &6278983952226549638
 GameObject:

@@ -3,6 +3,7 @@ using UnityEngine.Events;
 using DG.Tweening;
 using System.Collections.Generic;
 using System.IO;
+using StreamDeckSharp;
 
 public class ViewModel : MonoBehaviour
 {
@@ -43,6 +44,8 @@ public class ViewModel : MonoBehaviour
 	public ThemeDataJson theme;
 	public List<ThemeData> themeList;
 	public List<ThemeDataJson> themeListJson;
+
+	public SubViewData[] subViews;
 	public static ThemeDataJson currentTheme { get { return instance.theme; } }
 	public static UnityEvent onThemeChange = new UnityEvent();
 
@@ -54,6 +57,9 @@ public class ViewModel : MonoBehaviour
 
 	bool isFullscreen = false;
 	int curBackground = 0;
+
+	SubView currentActiveSubview;
+	int currentActiveSubviewIndex = 0;
 
 	private void Awake()
 	{
@@ -88,8 +94,46 @@ public class ViewModel : MonoBehaviour
 
 		FixResolution();
 		backgroundGraphicContainers[0].color = bgFilter;
+
+		if(StreamDeckManager.streamDeckActive)
+		{
+			//cancel function
+			StreamDeckManager.RegisterDeckButton(new Vector2Int(0, 0), () => EndCurrentSubView());
+			StreamDeckManager.SetKeyImage(0, "streamDeckCancelIcon");
+
+			foreach(var view in subViews)
+			{
+				var order = view.streamDeckOrder;
+				StreamDeckManager.RegisterDeckButton(new Vector2Int(order % StreamDeckManager.dimensions.x, order / StreamDeckManager.dimensions.x), () => StartSubView(view.viewObject));
+				StreamDeckManager.SetKeyImage(order, view.streamDeckIcon);
+			}
+		}
+
+		LSConsole.AddCommandHook("startSubview", "Opens a subview specified with [subviewName]", SetSubviewCommand);
+		LSConsole.AddCommandHook("closeSubview", "Closes any open subview", CloseSubviewCommand);
 	}
 
+	string SetSubviewCommand(params string[] args)
+	{
+		if(args.Length == 0) return "Specify name of subview to show";
+		var svName = args[0];
+
+		foreach(var sv in subViews)
+		{
+			if(sv.viewName == svName)
+			{
+				StartSubView(sv.viewObject);
+				return "";
+			}
+		}
+		return "No subview with name '" + svName + "' found";
+	} 
+
+	string CloseSubviewCommand(params string[] args)
+	{
+		EndCurrentSubView();
+		return "";
+	}
 	void OnMapChange(MapData before, MapData after)
 	{
 		Debug.Log("onmapchange " + after.name);
@@ -272,6 +316,20 @@ public class ViewModel : MonoBehaviour
 
 		instance.matchPreview = Instantiate(MainLayoutModuleManager.GetMatchPreview(styleName), instance.transform.parent);
     }
+
+	void StartSubView(SubView view)
+	{
+		if(currentActiveSubview != null) EndCurrentSubView();
+		currentActiveSubview = Instantiate(view, Vector3.zero, Quaternion.identity);
+		currentActiveSubview.OnSubViewStarted();	
+	}
+
+	void EndCurrentSubView()
+	{
+		if(currentActiveSubview == null) return;
+		currentActiveSubview.OnSubViewClosed();
+		currentActiveSubview = null;
+	}
 
 }
 

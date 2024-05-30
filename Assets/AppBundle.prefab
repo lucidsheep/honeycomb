@@ -3559,6 +3559,7 @@ GameObject:
   - component: {fileID: 247699985227940698}
   - component: {fileID: 3953148250283245154}
   - component: {fileID: 9215371543772327094}
+  - component: {fileID: 3287412660688668128}
   m_Layer: 0
   m_Name: Singletons
   m_TagString: Untagged
@@ -3814,6 +3815,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 14f8ace28e4a348cca95905550c3f888, type: 2}
   - {fileID: 11400000, guid: f37e6283c00eb456f9d8a139bf06ff61, type: 2}
   themeListJson: []
+  subViews:
+  - {fileID: 11400000, guid: f8a63abbdf65f4b8e80165a70d77b179, type: 2}
 --- !u!114 &1468528150411243551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4013,6 +4016,18 @@ MonoBehaviour:
   DBPath: 
   sheetTabNames:
   - ticker
+--- !u!114 &3287412660688668128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468528150411243536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c48009cbf0dce43eabb3c753111f8bd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1524430948554908521
 GameObject:
   m_ObjectHideFlags: 0

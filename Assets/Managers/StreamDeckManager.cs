@@ -8,6 +8,7 @@ public class StreamDeckManager : MonoBehaviour
 {
 	public enum StreamDeckSize { Unknown, Small, Medium, Large }
 
+	public static bool streamDeckActive = false;
 	public static StreamDeckSize size = StreamDeckSize.Unknown;
 	public static Vector2Int dimensions = new Vector2Int();
 
@@ -28,6 +29,7 @@ public class StreamDeckManager : MonoBehaviour
 				else size = StreamDeckSize.Large;
 				dimensions = new Vector2Int(deck.Keys.CountX, deck.Keys.CountY);
 				deck.KeyStateChanged += OnKeyStateChanged;
+				streamDeckActive = true;
 			}
 		} catch (StreamDeckSharp.Exceptions.StreamDeckNotFoundException ex)
         {
@@ -35,6 +37,17 @@ public class StreamDeckManager : MonoBehaviour
         }
 	}
 
+	public static void SetKeyImage(int keyID, string imageName)
+	{
+		var kbm = KeyBitmap.Create.FromFile(AppLoader.GetAssetPath(imageName));
+		try
+		{
+			using (var deck = StreamDeck.OpenDevice())
+			{
+				deck.SetKeyBitmap(keyID, kbm);
+			}
+		} catch (StreamDeckSharp.Exceptions.StreamDeckNotFoundException ex) {}
+	}
 	public delegate void StreamDeckCallback();
 	public static void RegisterDeckButton(Vector2Int pos, StreamDeckCallback callback)
     {
@@ -48,6 +61,11 @@ public class StreamDeckManager : MonoBehaviour
 	} 
     private void OnKeyStateChanged(object sender, OpenMacroBoard.SDK.KeyEventArgs e)
     {
+		Debug.Log("Key changed");
+
+		if(e.IsDown)
+			Debug.Log("Key " + e.ToString() + " is down");
+
 		if (!e.IsDown || !buttons.ContainsKey(e.Key)) return;
 
 		buttons[e.Key].Invoke();
