@@ -524,7 +524,6 @@ public class PlayerCameraObserver : KQObserver
         if(cameraImage != null)
         {
             cameraImage.GetComponent<RectTransform>().position = new Vector3(cameraImage.transform.position.x, cameraImage.transform.position.y, -.26f);
-            Debug.Log(cameraImage.transform.position.z.ToString());
         }
         if(cameraStartCooldown > 0f)
         {
