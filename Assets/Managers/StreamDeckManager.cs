@@ -19,6 +19,11 @@ public class StreamDeckManager : MonoBehaviour
 	void Awake()
 	{
 		instance = this;
+		if(Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer)
+		{	
+			Debug.Log("Streamdeck not supported on Mac");
+			return; // not supported for Mac
+		}
 		try
 		{
 			using (var deck = StreamDeck.OpenDevice())
@@ -39,6 +44,7 @@ public class StreamDeckManager : MonoBehaviour
 
 	public static void SetKeyImage(int keyID, string imageName)
 	{
+		return;
 		var kbm = KeyBitmap.Create.FromFile(AppLoader.GetAssetPath(imageName));
 		try
 		{
