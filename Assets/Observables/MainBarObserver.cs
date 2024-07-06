@@ -24,7 +24,7 @@ public class MainBarObserver : KQObserver
     {
 		SetScorebar();
 		Vector3 newPos = new Vector3(0f, -4.24f + ViewModel.bottomBarPadding.property, 0f);
-		float scale = 1f;
+		float scale = 1.0f;
 		float camX = 7.2f;
 		float camY = -.79f;
 		float camScale = 1f;

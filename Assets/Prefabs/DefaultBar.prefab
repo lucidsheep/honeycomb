@@ -2836,6 +2836,7 @@ MonoBehaviour:
   empty_gold: {fileID: 21300000, guid: 34a6f5b07505948e4aa494c13b0797d3, type: 3}
   full_blue: {fileID: 21300000, guid: 34a6f5b07505948e4aa494c13b0797d3, type: 3}
   full_gold: {fileID: 21300000, guid: 34a6f5b07505948e4aa494c13b0797d3, type: 3}
+  emptyColor: {r: 0, g: 0, b: 0, a: 1}
   useColor: 1
 --- !u!114 &4723057119664907905
 MonoBehaviour:
@@ -3449,6 +3450,7 @@ MonoBehaviour:
   empty_gold: {fileID: 21300000, guid: 34a6f5b07505948e4aa494c13b0797d3, type: 3}
   full_blue: {fileID: 21300000, guid: 34a6f5b07505948e4aa494c13b0797d3, type: 3}
   full_gold: {fileID: 21300000, guid: 34a6f5b07505948e4aa494c13b0797d3, type: 3}
+  emptyColor: {r: 0, g: 0, b: 0, a: 1}
   useColor: 1
 --- !u!1 &7690098040838662420
 GameObject:
@@ -3687,6 +3689,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -4167,6 +4170,7 @@ MonoBehaviour:
   empty_gold: {fileID: 21300000, guid: 34a6f5b07505948e4aa494c13b0797d3, type: 3}
   full_blue: {fileID: 21300000, guid: 34a6f5b07505948e4aa494c13b0797d3, type: 3}
   full_gold: {fileID: 21300000, guid: 34a6f5b07505948e4aa494c13b0797d3, type: 3}
+  emptyColor: {r: 0, g: 0, b: 0, a: 1}
   useColor: 1
 --- !u!114 &8198220730904011649
 MonoBehaviour:
@@ -5997,6 +6001,7 @@ MonoBehaviour:
   empty_gold: {fileID: 21300000, guid: 34a6f5b07505948e4aa494c13b0797d3, type: 3}
   full_blue: {fileID: 21300000, guid: 34a6f5b07505948e4aa494c13b0797d3, type: 3}
   full_gold: {fileID: 21300000, guid: 34a6f5b07505948e4aa494c13b0797d3, type: 3}
+  emptyColor: {r: 0, g: 0, b: 0, a: 1}
   useColor: 1
 --- !u!114 &7863838171666256461
 MonoBehaviour:
@@ -7573,6 +7578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -10465,8 +10471,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -641196909
-  m_SortingLayer: 15
+  m_SortingLayerID: -589037527
+  m_SortingLayer: 11
   m_SortingOrder: 2
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7690098042153987253
@@ -10822,6 +10828,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
