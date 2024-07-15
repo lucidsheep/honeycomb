@@ -26,7 +26,7 @@ public class PlayerCameraObserver : KQObserver
             }
         }
     }
-   
+
     WebCamTexture webcam;
     public RawImage cameraImage;
     public string webcamName;
@@ -117,7 +117,7 @@ public class PlayerCameraObserver : KQObserver
             LSConsole.AddCommandHook("cameraDefaults", "use camera defaults instead of custom settings (starts false)", UseCameraDefault);
             commandHooks = true;
         }
-        
+
     }
 
     public static void ShowPlayerCams(bool val)
@@ -248,7 +248,7 @@ public class PlayerCameraObserver : KQObserver
                 ret += "Texture Disabled";
             else
             {
-                ret += "webcam: [" + cam.webcam.deviceName + "], "; 
+                ret += "webcam: [" + cam.webcam.deviceName + "], ";
                 for(int i = 0; i < WebCamTexture.devices.Length; i++)
                 {
                     if (WebCamTexture.devices[i].name == cam.webcam.deviceName)
@@ -399,7 +399,7 @@ public class PlayerCameraObserver : KQObserver
         if (deviceName == "") return;
         if (showPlayerCams == false && webcamName != "commentaryCamera") return;
         if (state != WebcamState.On) return;
-          
+
         if(cameraIsPlaying)
         {
             Debug.Log("stopping " + deviceName);
@@ -438,7 +438,7 @@ public class PlayerCameraObserver : KQObserver
             //SetAspectRatio();
 
             //cameraImage.SetNativeSize();
-        
+
     }
 
     void SetCameraView()
@@ -463,7 +463,7 @@ public class PlayerCameraObserver : KQObserver
         var frameWidth = (width / height) * frameHeight;
         frame.size = new Vector2(frameWidth, frameHeight + (aspectRatio == AspectRatio.Ultrawide ? .08f : 0f));
 
-        
+
 
         camerasUpdatedEvent.Invoke();
     }
@@ -473,7 +473,7 @@ public class PlayerCameraObserver : KQObserver
         var cam = GetCamera(cameraName);
         if(cam == null)
             return (Vector2.zero, 0f);
-        Vector2 origPos = cam.transform.position;
+        Vector2 origPos = new Vector2(cam.transform.position.x, cam.transform.position.y);
         float origScale = cam.transform.localScale.x;
 
         cam.transform.DOMove(position, .5f).SetEase(Ease.OutQuad);
@@ -563,4 +563,3 @@ public class PlayerCameraObserver : KQObserver
         allCameras.Remove(this);
     }
 }
-

@@ -57,6 +57,7 @@ public class ViewModel : MonoBehaviour
 
 	bool isFullscreen = false;
 	int curBackground = 0;
+	LSTimer subviewTransitionTimer;
 
 	SubView currentActiveSubview;
 	int currentActiveSubviewIndex = 0;
@@ -74,7 +75,7 @@ public class ViewModel : MonoBehaviour
 			themeListJson = new List<ThemeDataJson>();
 			foreach (var text in localThemes)
             {
-				
+
 				themeListJson.Add(JsonUtility.FromJson<ThemeDataJson>(text.text));
 			}
         }
@@ -95,24 +96,27 @@ public class ViewModel : MonoBehaviour
 		FixResolution();
 		backgroundGraphicContainers[0].color = bgFilter;
 
+		LSConsole.AddCommandHook("startSubview", "Opens a subview specified with [subviewName]", SetSubviewCommand);
+		LSConsole.AddCommandHook("closeSubview", "Closes any open subview", CloseSubviewCommand);
+
+		subviewTransitionTimer = new LSTimer(.1f, () => {});
+	}
+	public static void OnStreamDeckConnected()
+	{
 		if(StreamDeckManager.streamDeckActive)
 		{
 			//cancel function
-			StreamDeckManager.RegisterDeckButton(new Vector2Int(0, 0), () => EndCurrentSubView());
+			StreamDeckManager.RegisterDeckButton(new Vector2Int(0, 0), () => instance.EndCurrentSubView());
 			StreamDeckManager.SetKeyImage(0, "streamDeckCancelIcon");
 
-			foreach(var view in subViews)
+			foreach(var view in instance.subViews)
 			{
 				var order = view.streamDeckOrder;
-				StreamDeckManager.RegisterDeckButton(new Vector2Int(order % StreamDeckManager.dimensions.x, order / StreamDeckManager.dimensions.x), () => StartSubView(view.viewObject));
+				StreamDeckManager.RegisterDeckButton(new Vector2Int(order % StreamDeckManager.dimensions.x, order / StreamDeckManager.dimensions.x), () => instance.StartSubView(view.viewObject));
 				StreamDeckManager.SetKeyImage(order, view.streamDeckIcon);
 			}
 		}
-
-		LSConsole.AddCommandHook("startSubview", "Opens a subview specified with [subviewName]", SetSubviewCommand);
-		LSConsole.AddCommandHook("closeSubview", "Closes any open subview", CloseSubviewCommand);
 	}
-
 	string SetSubviewCommand(params string[] args)
 	{
 		if(args.Length == 0) return "Specify name of subview to show";
@@ -127,12 +131,12 @@ public class ViewModel : MonoBehaviour
 			}
 		}
 		return "No subview with name '" + svName + "' found";
-	} 
+	}
 
 	string CloseSubviewCommand(params string[] args)
 	{
 		EndCurrentSubView();
-		return "";
+		return "Current Subview closed";
 	}
 	void OnMapChange(MapData before, MapData after)
 	{
@@ -319,17 +323,24 @@ public class ViewModel : MonoBehaviour
 
 	void StartSubView(SubView view)
 	{
+		if(subviewTransitionTimer != null && subviewTransitionTimer.progress < 1f) return;
+
 		if(currentActiveSubview != null) EndCurrentSubView();
-		currentActiveSubview = Instantiate(view, Vector3.zero, Quaternion.identity);
-		currentActiveSubview.OnSubViewStarted();	
+		else
+		{
+			currentActiveSubview = Instantiate(view, Vector3.zero, Quaternion.identity);
+			currentActiveSubview.OnSubViewStarted();
+			subviewTransitionTimer = new LSTimer(.6f, () => {});
+		}
 	}
 
 	void EndCurrentSubView()
 	{
+		if(subviewTransitionTimer != null && subviewTransitionTimer.progress < 1f) return;
+
 		if(currentActiveSubview == null) return;
 		currentActiveSubview.OnSubViewClosed();
 		currentActiveSubview = null;
+		subviewTransitionTimer = new LSTimer(.6f, () => {});
 	}
-
 }
-

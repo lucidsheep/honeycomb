@@ -11,6 +11,8 @@ public class PlayerCameraSubView : SubView
 
         (blueCam.pos, blueCam.scale) = PlayerCameraObserver.SetCustomCameraView("blueCamera", new Vector2(-6.56f, 0f), 1.75f);
         (goldCam.pos, goldCam.scale) = PlayerCameraObserver.SetCustomCameraView("goldCamera", new Vector2(6.56f, 0f), 1.75f);
+
+        Debug.Log("Player camera subview started");
     }
 
     public override void OnSubViewClosed(params string[] args)
@@ -19,5 +21,7 @@ public class PlayerCameraSubView : SubView
 
         PlayerCameraObserver.SetCustomCameraView("blueCamera", blueCam.pos, blueCam.scale);
         PlayerCameraObserver.SetCustomCameraView("goldCamera", goldCam.pos, goldCam.scale);
+
+        Debug.Log("Closing player camera subview");
     }
 }
