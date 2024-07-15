@@ -44,15 +44,8 @@ public class StreamDeckManager : MonoBehaviour
 
 	public static void SetKeyImage(int keyID, string imageName)
 	{
-		return;
-		var kbm = KeyBitmap.Create.FromFile(AppLoader.GetAssetPath(imageName));
-		try
-		{
-			using (var deck = StreamDeck.OpenDevice())
-			{
-				deck.SetKeyBitmap(keyID, kbm);
-			}
-		} catch (StreamDeckSharp.Exceptions.StreamDeckNotFoundException ex) {}
+		var kbm = KeyBitmap.Create.FromFile(Application.streamingAssetsPath + "/" + imageName + ".png");
+		instance.deck.SetKeyBitmap(keyID, kbm);
 	}
 	public delegate void StreamDeckCallback();
 	public static void RegisterDeckButton(Vector2Int pos, StreamDeckCallback callback)

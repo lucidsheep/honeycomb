@@ -96,10 +96,19 @@ public class KQObserver : MonoBehaviour
 		{
 			offset.y = float.Parse(moduleParameters["offsetY"]);
 		}
-		if (moduleParameters.ContainsKey("hideBackground") && bgContainer != null)
-        {
-			bgContainer.gameObject.SetActive(false);
-        }
+		if(bgContainer != null)
+		{
+			if (moduleParameters.ContainsKey("hideBackground"))
+			{
+				bgContainer.gameObject.SetActive(false);
+			}
+			Vector2 bgPos = Vector2.zero;
+			if(moduleParameters.ContainsKey("backgroundX"))
+				bgPos.x = float.Parse(moduleParameters["backgroundX"]);
+			if(moduleParameters.ContainsKey("backgroundY"))
+				bgPos.y = float.Parse(moduleParameters["backgroundY"]);
+			bgContainer.transform.localPosition = bgPos;
+		}
 	}
 
 }

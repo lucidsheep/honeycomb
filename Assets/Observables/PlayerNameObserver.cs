@@ -12,6 +12,8 @@ public class PlayerNameObserver : KQObserver
 
 	bool dirty = false;
 	bool forceIcons = false;
+	bool hideIcons = false;
+	bool queenFirst = true;
 	bool hideIfEmpty = false;
 
 	public override void Start()
@@ -37,19 +39,23 @@ public class PlayerNameObserver : KQObserver
 			{
 				//force queen to display first if present
 				int i = j;
-				if (j == 0) i = 2;
-				else if (j <= 2) i = j - 1;
-				
+				if(queenFirst)
+				{
+					if (j == 0) i = 2;
+					else if (j <= 2) i = j - 1;
+				}
+				icons[lineNum].sprite = null;
 				if (GameModel.instance.teams[targetID].players[i].playerName.property == "" && !forceIcons) continue;
 				var id = GameModel.instance.teams[targetID].players[i].hivemindID;
 				txt += FormatName(GameModel.instance.teams[targetID].players[i].playerName.property, i) + " " + FormatPronouns(PlayerStaticData.GetPronouns(id)) + "\n";
-				icons[lineNum].sprite = SpriteDB.GetIcon(targetID, i);
+				if(hideIcons == false)
+					icons[lineNum].sprite = SpriteDB.GetIcon(targetID, i);
 				lineNum++;
 			}
 
 			text.text = txt;
 
-			if(mainBG != null)
+			if(mainBG != null && hideIfEmpty)
 				mainBG.SetActive(txt != "");
         }
 	}
@@ -69,6 +75,8 @@ public class PlayerNameObserver : KQObserver
     {
         base.OnParameters();
 		forceIcons = moduleParameters.ContainsKey("forceIcons");
+		queenFirst = !moduleParameters.ContainsKey("cabOrder");
+		hideIcons = moduleParameters.ContainsKey("hideIcons");
 		if (moduleParameters.ContainsKey("pronounSize"))
 			pronounSize = float.Parse(moduleParameters["pronounSize"]);
 		hideIfEmpty = moduleParameters.ContainsKey("autoHide") && bool.Parse(moduleParameters["autoHide"]);

@@ -272,7 +272,7 @@ SpriteRenderer:
   m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &3520936493464377912
@@ -1041,12 +1041,17 @@ MonoBehaviour:
   moduleName: leaderboard
   size: 5.8
   bgContainer: {fileID: 3961941949836545636}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
+  absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   numRows: 10
   leaderboardNameTxt: {fileID: 787334424655263387}
   leaderboardPlayersTxt: {fileID: 7689134745082986029}
   leaderboardValuesTxt: {fileID: 981197731042705011}
+  leaderboardTitleTxt: {fileID: 991716672557867374}
   frame: {fileID: 4414293496555962361}
+  maxNameLength: 13
 --- !u!1 &8419926693951323631
 GameObject:
   m_ObjectHideFlags: 0

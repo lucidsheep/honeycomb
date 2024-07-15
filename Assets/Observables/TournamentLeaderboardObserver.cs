@@ -8,7 +8,7 @@ public class TournamentLeaderboardObserver : KQObserver
 	//"warrior_deaths", "snail", "snail_deaths"];
 
 	public int numRows = 10;
-	public TextMeshPro leaderboardNameTxt, leaderboardPlayersTxt, leaderboardValuesTxt;
+	public TextMeshPro leaderboardNameTxt, leaderboardPlayersTxt, leaderboardValuesTxt, leaderboardTitleTxt;
 	public SpriteRenderer frame;
 	public int maxNameLength = 13;
 	bool dirty = false;
@@ -89,5 +89,14 @@ public class TournamentLeaderboardObserver : KQObserver
 		if(frame != null)
 			frame.gameObject.SetActive(bgContainer.sprite == null);
     }
+
+	override public void OnParameters()
+    {
+		base.OnParameters();
+		if(moduleParameters.ContainsKey("hideTitle"))
+        {
+			leaderboardTitleTxt.text = "";
+        }
+	}
 }
 

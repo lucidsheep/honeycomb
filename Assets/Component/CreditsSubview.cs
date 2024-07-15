@@ -29,8 +29,8 @@ public class CreditsSubview : SubView
         }
         bg.sprite = AppLoader.GetStreamingSprite("background_night");
 
-        (blueCam.pos, blueCam.scale) = PlayerCameraObserver.SetCustomCameraView("blueCamera", new Vector2(-26.56f, 0f), 1f);
-        (goldCam.pos, goldCam.scale) = PlayerCameraObserver.SetCustomCameraView("goldCamera", new Vector2(26.56f, 0f), 1f);
+        (blueCam.pos, blueCam.scale) = PlayerCameraObserver.SetCustomCameraView("blueCamera", new Vector2(-26.56f, -0.79f), 1f);
+        (goldCam.pos, goldCam.scale) = PlayerCameraObserver.SetCustomCameraView("goldCamera", new Vector2(26.56f, -0.79f), 1f);
     }
 
     public override void OnSubViewClosed(params string[] args)

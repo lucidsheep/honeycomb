@@ -131,6 +131,12 @@ public class WebcamController : MonoBehaviour
         transform.parent.GetComponent<RectTransform>().localScale = Vector3.one * scale;
 
         themeBG.sprite = AppLoader.GetStreamingSprite("gameplayCamera");
+
+        var tweak = ViewModel.currentTheme.GetTweak("gameplayCamera");
+        if(tweak != null)
+        {
+            themeBG.transform.localPosition = new Vector3(tweak.x, tweak.y, 0f);
+        }
     }
 
     void OnSetupComplete()
