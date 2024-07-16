@@ -4,6 +4,7 @@ using System.Collections;
 public class ProfilePicture : MonoBehaviour
 {
 	public SpriteRenderer sr;
+	public SpriteRenderer frame;
 	public SpriteMask mask;
 	public bool isSquare = false;
 	// Use this for initialization
@@ -13,7 +14,7 @@ public class ProfilePicture : MonoBehaviour
 			mask = GetComponentInChildren<SpriteMask>();
 	}
 
-	public void SetPicture(Sprite pic, int rotationCode = 0, float scale = 1f)
+	public void SetPicture(Sprite pic, int rotationCode = 0, float scale = 1f, int teamID = 0)
     {
 		int rotationLevel = 0;
 		bool hFlip = false;
@@ -34,6 +35,12 @@ public class ProfilePicture : MonoBehaviour
 		sr.sprite = pic;
 		sr.transform.localScale = new Vector3(1f * (hFlip ? -1f : 1f), 1f, 1f) * scale * (isSquare ? 1.5f : 1f);
 		sr.transform.localRotation = Quaternion.Euler(0f, 0f, -90f * rotationLevel);
+
+		if(frame != null)
+		{
+			var themeFrame = AppLoader.GetStreamingSprite("profileFrame" + (teamID == 0 ? "Blue" : "Gold"));
+			frame.sprite = themeFrame;
+		}
 	}
 
 	public void SetLayer(int layer)
@@ -41,6 +48,8 @@ public class ProfilePicture : MonoBehaviour
 		sr.sortingOrder = layer;
 		mask.frontSortingOrder = layer;
 		mask.backSortingOrder = layer - 1;
+		if(frame != null)
+			frame.sortingOrder = layer + 10;
     }
 
 	public void SetColor(Color color)
@@ -48,5 +57,6 @@ public class ProfilePicture : MonoBehaviour
 		if (mask == null) return;
 		mask.GetComponent<SpriteRenderer>().color = color;
     }
+
 }
 
