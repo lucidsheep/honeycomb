@@ -704,13 +704,17 @@ MonoBehaviour:
   moduleName: wccLeaderboard
   size: 5.8
   bgContainer: {fileID: 3961941949836545636}
+  normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  bgCustomPivot: {x: 0.5, y: 0.5}
   numRows: 10
   leaderboardNameTxt: {fileID: 787334424655263387}
   leaderboardPlayersTxt: {fileID: 7689134745082986029}
   leaderboardValuesTxt: {fileID: 981197731042705011}
+  leaderboardTitleTxt: {fileID: 0}
   frame: {fileID: 0}
+  fontContainer: {fileID: 7791548144167267635}
   maxNameLength: 12
 --- !u!1 &8604605124346830747
 GameObject:

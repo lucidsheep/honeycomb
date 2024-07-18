@@ -50,6 +50,8 @@ public class PlayerNameObserver : KQObserver
 				txt += FormatName(GameModel.instance.teams[targetID].players[i].playerName.property, i) + " " + FormatPronouns(PlayerStaticData.GetPronouns(id)) + "\n";
 				if(hideIcons == false)
 					icons[lineNum].sprite = SpriteDB.GetIcon(targetID, i);
+				else
+					icons[lineNum].sprite = GameModel.instance.teams[targetID].players[i].playerName.property == "" ? SpriteDB.GetOfflineIcon(targetID, i) : SpriteDB.GetIcon(targetID, i);
 				lineNum++;
 			}
 

@@ -64,5 +64,25 @@ public class TournamentQueueObserver : KQObserver
             }
         }
     }
+
+    override public void OnParameters()
+    {
+		base.OnParameters();
+        
+        if(moduleParameters.ContainsKey("listStartX"))
+		{
+            listStartPosition.x = float.Parse(moduleParameters["listStartX"]);
+		}
+
+        if(moduleParameters.ContainsKey("listStartY"))
+		{
+            listStartPosition.y = float.Parse(moduleParameters["listStartY"]);
+		}
+
+        if(moduleParameters.ContainsKey("listIncrement"))
+		{
+            listIncrement = float.Parse(moduleParameters["listIncrement"]);
+		}
+    }
 }
 

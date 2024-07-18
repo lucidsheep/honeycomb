@@ -46,8 +46,8 @@ public class SpriteDB : MonoBehaviour
 			
 	}
 
-	public static Sprite GetIcon(int team, int position)
-    {
+	static string GetPositionName(int team, int position)
+	{
 		string name = team == 0 ? "blue" : "gold";
 		switch(position)
         {
@@ -58,10 +58,25 @@ public class SpriteDB : MonoBehaviour
 			case 4: name += "Chex"; break;
 			default: break;
         }
+		return name;
+	}
+	public static Sprite GetIcon(int team, int position)
+    {
+		var name = GetPositionName(team, position);
 		var ret = AppLoader.GetStreamingSprite(name);
 		if (ret != null) return ret;
 
 		return allSprites[team].playerSprites[position].icon;
+
+    }
+
+		public static Sprite GetOfflineIcon(int team, int position)
+    {
+		var name = GetPositionName(team, position) + "Off";
+		var ret = AppLoader.GetStreamingSprite(name);
+		if (ret != null) return ret;
+
+		return null;
 
     }
 }

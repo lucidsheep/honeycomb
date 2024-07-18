@@ -3971,6 +3971,8 @@ MonoBehaviour:
     fontName: wccBold
   - font: {fileID: 11400000, guid: 24a852e2784524b94be172fe9cc26a43, type: 2}
     fontName: league
+  - font: {fileID: 11400000, guid: dd8db0df657294c06af24bc420cb0dc6, type: 2}
+    fontName: chalk
 --- !u!114 &3953148250283245154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3993,6 +3995,7 @@ MonoBehaviour:
   - {fileID: 3146608573864202273, guid: c9683c446071144d68a9794f561b3f25, type: 3}
   boxScores:
   - {fileID: 4577985997614243457, guid: 74bd0d852fe6449a480b09c4c94b7e36, type: 3}
+  - {fileID: 8030671955221456812, guid: 572a3937b43e54886835d1e83593f103, type: 3}
   - {fileID: 8030671955221456812, guid: f270fdc8596934c9499abf724d99c3d4, type: 3}
   playerCards:
   - {fileID: 1949158740447203311, guid: 3eb77c6b61d5742b9b575af13f5867a4, type: 3}

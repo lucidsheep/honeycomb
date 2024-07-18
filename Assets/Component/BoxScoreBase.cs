@@ -18,8 +18,6 @@ public class BoxScoreBase : MonoBehaviour
 		blueName.text = GameModel.instance.teams[0].teamName.property;
 		goldName.text = GameModel.instance.teams[1].teamName.property;
 
-		highlightBox.sprite = winningTeam == 0 ? blueHighlight : goldHighlight;
-
 		int blueQueens, goldQueens, blueBerries, goldBerries, blueSnail, goldSnail;
 		blueQueens = GameModel.instance.teams[1].players[2].curGameStats.deaths.property;
 		goldQueens = GameModel.instance.teams[0].players[2].curGameStats.deaths.property;
@@ -28,21 +26,24 @@ public class BoxScoreBase : MonoBehaviour
 		blueSnail = SnailModel.bluePercentage;
 		goldSnail = SnailModel.goldPercentage;
 
-		int highlightLoc;
-		if (winType == "military")
-			highlightLoc = 1;
-		else if (winType == "economic")
-			highlightLoc = 3;
-		else
-			highlightLoc = 5;
-		if (winningTeam == 1)
-			highlightLoc++;
+		if(highlightBox != null)
+		{
+			highlightBox.sprite = winningTeam == 0 ? blueHighlight : goldHighlight;
+			int highlightLoc;
+			if (winType == "military")
+				highlightLoc = 1;
+			else if (winType == "economic")
+				highlightLoc = 3;
+			else
+				highlightLoc = 5;
+			if (winningTeam == 1)
+				highlightLoc++;
 
-		highlightBox.transform.localPosition = new Vector3(
-			highlightStart.x + (highlightLoc > 2 ? highlightBerry : 0f) + (highlightLoc > 4 ? highlightSnail : 0f),
-			highlightLoc % 2 == 1 ? highlightStart.y : highlightGold,
-			1f);
-
+			highlightBox.transform.localPosition = new Vector3(
+				highlightStart.x + (highlightLoc > 2 ? highlightBerry : 0f) + (highlightLoc > 4 ? highlightSnail : 0f),
+				highlightLoc % 2 == 1 ? highlightStart.y : highlightGold,
+				1f);
+		}
 		queenCol.text = blueQueens + "\n" + goldQueens;
 		berryCol.text = blueBerries + "\n" + goldBerries;
 		snailCol.text = (blueSnail == 0 ? "--" : (blueSnail.ToString() + (blueSnail >= 100 || !usePercent ? "" : "%"))) + "\n" + (goldSnail == 0 ? "--" : (goldSnail.ToString() + (goldSnail >= 100 || !usePercent ? "" : "%")));

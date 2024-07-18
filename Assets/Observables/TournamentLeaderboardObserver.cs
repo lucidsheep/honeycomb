@@ -10,6 +10,8 @@ public class TournamentLeaderboardObserver : KQObserver
 	public int numRows = 10;
 	public TextMeshPro leaderboardNameTxt, leaderboardPlayersTxt, leaderboardValuesTxt, leaderboardTitleTxt;
 	public SpriteRenderer frame;
+
+	public GameObject fontContainer;
 	public int maxNameLength = 13;
 	bool dirty = false;
 	TournamentLeaderboard cachedLeaderboard;
@@ -97,6 +99,18 @@ public class TournamentLeaderboardObserver : KQObserver
         {
 			leaderboardTitleTxt.text = "";
         }
+		if(moduleParameters.ContainsKey("fontScale"))
+		{
+			fontContainer.transform.localScale = Vector3.one * float.Parse(moduleParameters["fontScale"]);
+		}
+		if(moduleParameters.ContainsKey("fontSize"))
+		{
+			leaderboardPlayersTxt.fontSize = leaderboardValuesTxt.fontSize = float.Parse(moduleParameters["fontSize"]);
+		}
+		if(moduleParameters.ContainsKey("nameLength"))
+		{
+			maxNameLength = int.Parse(moduleParameters["nameLength"]);
+		}
 	}
 }
 

@@ -819,7 +819,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.34, y: 1.65}
-  m_SizeDelta: {x: 3.15, y: 0.56}
+  m_SizeDelta: {x: 3.3, y: 0.56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &8596090829192261682
 MeshRenderer:
@@ -1051,6 +1051,7 @@ MonoBehaviour:
   leaderboardValuesTxt: {fileID: 981197731042705011}
   leaderboardTitleTxt: {fileID: 991716672557867374}
   frame: {fileID: 4414293496555962361}
+  fontContainer: {fileID: 7791548144167267635}
   maxNameLength: 13
 --- !u!1 &8419926693951323631
 GameObject:
