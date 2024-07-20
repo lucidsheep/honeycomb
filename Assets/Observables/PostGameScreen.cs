@@ -277,8 +277,11 @@ public class PostGameScreen : KQObserver
         {
 			playerCards[i].OnPostgame(bestPlayers[i].teamID, bestPlayers[i].positionID);
         }
+
 		state = 0f;
 		actualState = 0;
+
+		
     }
 
 	void StartInstantReplay(int winningTeam, string winType)

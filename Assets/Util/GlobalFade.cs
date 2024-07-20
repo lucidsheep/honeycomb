@@ -57,6 +57,20 @@ public class GlobalFade : MonoBehaviour
     {
 		SetAlpha();
     }
+
+	public void ForceUpdate(GameObject subject)
+	{
+		foreach (var s in subject.GetComponentsInChildren<SpriteRenderer>())
+		{
+			float adjustedAlpha = baseAlphas.ContainsKey(s) ? baseAlphas[s] * _alpha : _alpha;
+			s.color = new Color(s.color.r, s.color.g, s.color.b, adjustedAlpha);
+		}
+		foreach (var t in subject.GetComponentsInChildren<TextMeshPro>())
+		{
+			float adjustedAlpha = baseAlphaText.ContainsKey(t) ? baseAlphaText[t] * _alpha : _alpha;
+			t.color = new Color(t.color.r, t.color.g, t.color.b, adjustedAlpha);
+		}
+	}
 	public void SetBaseAlpha(SpriteRenderer sr, float baseAlpha)
     {
 		baseAlphas.Add(sr, baseAlpha);

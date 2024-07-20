@@ -63,6 +63,18 @@ public class PlayerStaticData : MonoBehaviour
                 
             }
         }
+
+        public string tidbit
+        {
+            get
+            {
+                var ret = "";
+                if (tournamentData != null && tournamentData.tidbit != "") return tournamentData.tidbit;
+
+                return ret;
+                
+            }
+        }
     }
 
 	Dictionary<int, PlayerData> _playerDB = new Dictionary<int, PlayerData>();

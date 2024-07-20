@@ -17,7 +17,7 @@ public class PostgamePlayerLine : MonoBehaviour
 
 	public void OnPostgame(PlayerModel player)
     {
-		profile.SetColor(isQueen ? ViewModel.currentTheme.GetTeamTheme(player.teamID).sColor : ViewModel.currentTheme.GetTeamTheme(player.teamID).pColor);
+		profile.SetColor(isQueen ? ViewModel.currentTheme.GetTeamTheme(player.teamID).sColor : ViewModel.currentTheme.GetTeamTheme(player.teamID).pColor, player.teamID);
 
 		playerName.text = player.displayNameWithoutTeam;
 		var (pic, rotation) = PlayerStaticData.GetProfilePic(player.hivemindID);

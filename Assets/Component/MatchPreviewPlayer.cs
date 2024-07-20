@@ -5,7 +5,7 @@ using TMPro;
 public class MatchPreviewPlayer : MonoBehaviour
 {
 	public ProfilePicture avatar;
-	public TextMeshPro nameTxt, sceneTxt, pronounTxt;
+	public TextMeshPro nameTxt, sceneTxt, pronounTxt, tidbitText;
 	public Sprite defaultAvatar;
 
 	public enum TagStyle { COLORIZE, UNBOLD, BOLD, SIZE, NONE}
@@ -63,6 +63,11 @@ public class MatchPreviewPlayer : MonoBehaviour
 			nameTxt.text = player.name;
 		else
 			nameTxt.text = (tagsFirst ? tags + " " : "") + player.name + (!tagsFirst ? " " + tags : "");
+
+		if(tidbitText != null)
+		{
+			tidbitText.text = player.tidbit;
+		}
 	}
 
 	public void Clear()

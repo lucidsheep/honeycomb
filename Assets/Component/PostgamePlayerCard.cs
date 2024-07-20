@@ -48,6 +48,7 @@ public class PostgamePlayerCard : MonoBehaviour
         }
 		leftCol.text = leftTxt;
 		rightCol.text = rightTxt;
+		profileFrame.SetColor(profileFrame.mask.GetComponent<SpriteRenderer>().color, teamID); //for setting profile frame
 		if (pic != null)
 		{
 			profileFrame.SetPicture(pic, rotation, .55f);

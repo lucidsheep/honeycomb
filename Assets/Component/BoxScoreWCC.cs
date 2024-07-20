@@ -8,10 +8,11 @@ public class BoxScoreWCC : BoxScoreBase
     public override void OnPostgame(int winningTeam, string winType)
     {
         base.OnPostgame(winningTeam, winType);
-
-        blueWinsBG.SetActive(winningTeam == 0);
-        goldWinsBG.SetActive(winningTeam == 1);
-
+        if(blueWinsBG != null && goldWinsBG != null)
+        {
+            blueWinsBG.SetActive(winningTeam == 0);
+            goldWinsBG.SetActive(winningTeam == 1);
+        }
         var txtToBold = winningTeam == 0 ? blueName : goldName;
         txtToBold.text = "<b>" + txtToBold.text + "</b>";
     }
