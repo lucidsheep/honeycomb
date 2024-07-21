@@ -157,7 +157,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Kevin J <size=0.5>he/him</size>
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dd8db0df657294c06af24bc420cb0dc6, type: 2}
   m_sharedMaterial: {fileID: 738150896404329580, guid: dd8db0df657294c06af24bc420cb0dc6, type: 2}
@@ -329,7 +329,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: very interesting tidbit text here
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -411,6 +411,18 @@ PrefabInstance:
     - target: {fileID: 2632368064504561233, guid: 94174c0f280bc41dd9214865b891149b, type: 3}
       propertyPath: m_Name
       value: ProfilePic
+      objectReference: {fileID: 0}
+    - target: {fileID: 4063076903167313774, guid: 94174c0f280bc41dd9214865b891149b, type: 3}
+      propertyPath: m_Color.b
+      value: 0.28248486
+      objectReference: {fileID: 0}
+    - target: {fileID: 4063076903167313774, guid: 94174c0f280bc41dd9214865b891149b, type: 3}
+      propertyPath: m_Color.g
+      value: 0.59910774
+      objectReference: {fileID: 0}
+    - target: {fileID: 4063076903167313774, guid: 94174c0f280bc41dd9214865b891149b, type: 3}
+      propertyPath: m_Color.r
+      value: 0.8679245
       objectReference: {fileID: 0}
     - target: {fileID: 7565575028312815604, guid: 94174c0f280bc41dd9214865b891149b, type: 3}
       propertyPath: m_RootOrder

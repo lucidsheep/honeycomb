@@ -3285,7 +3285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetID: 0
-  moduleName: wccMatchPreview
+  moduleName: campMatchPreview
   size: 0
   bgContainer: {fileID: 5349567216271213687}
   normalBG: {fileID: 0}

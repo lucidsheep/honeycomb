@@ -3734,7 +3734,7 @@ MonoBehaviour:
   - {fileID: 1001474565358818122}
   - {fileID: 4538637431201132806}
   localThemes: []
-  bgFilter: {r: 1, g: 1, b: 1, a: 1}
+  bgFilter: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
   theme:
     name: 
     layout: 
@@ -3988,6 +3988,7 @@ MonoBehaviour:
   mainBars:
   - {fileID: 8278666156924049290, guid: 210774969e4af45ce96e29cccd40cc6a, type: 3}
   - {fileID: 5265151286151429123, guid: 2ceeb44c3fb844020897b949446cdfd4, type: 3}
+  - {fileID: 5265151286151429123, guid: c330d782837e04c71bfe4be1f12431bf, type: 3}
   postgameScreens:
   - {fileID: 6037398074245946859, guid: 69af786a65b474a6fbbef21241acc7e5, type: 3}
   - {fileID: -1697214059453694578, guid: 9f21b0331ff5844dc9c923ae7667ec0b, type: 3}
@@ -4003,6 +4004,7 @@ MonoBehaviour:
   previewScreens:
   - {fileID: 300211002665921891, guid: 7a9a3f930bbbd4727b4c569d51784145, type: 3}
   - {fileID: 300211002665921891, guid: 8dae89de2cd2348c7b7b14abab872038, type: 3}
+  - {fileID: 300211002665921891, guid: 2134f820464184ba998625f36e075914, type: 3}
 --- !u!114 &9215371543772327094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4755,7 +4757,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -100
   m_Sprite: {fileID: 0}
-  m_Color: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
+  m_Color: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -10446,7 +10448,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -100
   m_Sprite: {fileID: 0}
-  m_Color: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
+  m_Color: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
