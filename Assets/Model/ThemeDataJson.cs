@@ -70,6 +70,10 @@ public class PostgamePlayerCardStyle
     public string numberFont;
     public string statFont;
     public string nameFont;
+    public float fontSize;
+    public int fontSpacing;
+    public float numberSize;
+    public int numberSpacing;
 }
 
 [System.Serializable]

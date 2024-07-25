@@ -3129,7 +3129,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: -2
@@ -3374,7 +3373,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: -641196909
   m_SortingOrder: 0
@@ -3706,7 +3704,7 @@ MonoBehaviour:
   reversedSides: 0
   eventTypes:
   - glance
-  - glance
+  - queenKill
   - playerKill
   nextEventTimeMin: 0.5
   nextEventTimeMax: 1
@@ -3804,6 +3802,10 @@ MonoBehaviour:
       numberFont: 
       statFont: 
       nameFont: 
+      fontSize: 0
+      fontSpacing: 0
+      numberSize: 0
+      numberSpacing: 0
     positionTweaks: []
   themeList:
   - {fileID: 11400000, guid: 45c15c2b4f0514311a33c9c203fb3f60, type: 2}
@@ -4092,7 +4094,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -7106,7 +7107,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -7925,7 +7925,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -8937,7 +8936,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -10614,6 +10612,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1468528148451302048}
     m_Modifications:
+    - target: {fileID: 986115165787192489, guid: 7a9a3f930bbbd4727b4c569d51784145, type: 3}
+      propertyPath: m_spriteAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 384cb07c48f71fa47bbe969e46697433, type: 2}
     - target: {fileID: 7867185668112960593, guid: 7a9a3f930bbbd4727b4c569d51784145, type: 3}
       propertyPath: m_RootOrder
       value: 14

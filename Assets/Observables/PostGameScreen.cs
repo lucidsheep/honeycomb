@@ -201,18 +201,48 @@ public class PostGameScreen : KQObserver
 		var startPos = new Vector2(-5.31f, -1.47f);
 		var width = 3.49f;
 		var scale = 1f;
-		if (ViewModel.currentTheme.playerCardStyle != null && ViewModel.currentTheme.playerCardStyle.scale > 0f)
+		var spacing = 22;
+		var fontSize = 2.8f;
+		var numberSize = 4f;
+		var numberSpacing = -20;
+		if (ViewModel.currentTheme.playerCardStyle != null)
 		{
-			styleName = ViewModel.currentTheme.playerCardStyle.name;
-			startPos = new Vector2(ViewModel.currentTheme.playerCardStyle.xOffset, ViewModel.currentTheme.playerCardStyle.yOffset);
-			width = ViewModel.currentTheme.playerCardStyle.width;
-			scale = ViewModel.currentTheme.playerCardStyle.scale;
+			if(ViewModel.currentTheme.playerCardStyle.scale > 0f)
+			{
+				startPos = new Vector2(ViewModel.currentTheme.playerCardStyle.xOffset, ViewModel.currentTheme.playerCardStyle.yOffset);
+				width = ViewModel.currentTheme.playerCardStyle.width;
+				scale = ViewModel.currentTheme.playerCardStyle.scale;
+			}
+			if(ViewModel.currentTheme.playerCardStyle.name != "")
+			{
+				styleName = ViewModel.currentTheme.playerCardStyle.name;
+			}
+			if(ViewModel.currentTheme.playerCardStyle.fontSize > 0)
+			{
+				fontSize = ViewModel.currentTheme.playerCardStyle.fontSize;
+			}
+			if(ViewModel.currentTheme.playerCardStyle.fontSpacing != 0)
+			{
+				spacing = ViewModel.currentTheme.playerCardStyle.fontSpacing;
+			}
+			if(ViewModel.currentTheme.playerCardStyle.numberSize > 0)
+			{
+				numberSize = ViewModel.currentTheme.playerCardStyle.numberSize;
+			}
+			if(ViewModel.currentTheme.playerCardStyle.numberSpacing != 0)
+			{
+				numberSpacing = ViewModel.currentTheme.playerCardStyle.numberSpacing;
+			}
 		}
 		for (int i = 0; i < 4; i++)
 		{
 			var card = Instantiate(MainLayoutModuleManager.GetPlayerCard(styleName), combinedPostgame.transform);
 			card.transform.localPosition = new Vector3(startPos.x + (width * i), startPos.y, 0f);
 			card.transform.localScale = Vector3.one * scale;
+			card.rightCol.fontSize = fontSize;
+			card.rightCol.lineSpacing = spacing;
+			card.leftCol.fontSize = numberSize;
+			card.leftCol.lineSpacing = numberSpacing;
 			playerCards[i] = card;
 		}
 	}

@@ -36,7 +36,13 @@ public class TournamentLeaderboardManager : MonoBehaviour
 			connection.StartConnection();
 
 			GameModel.onGameModelComplete.AddListener(OnGameComplete);
+			ViewModel.onThemeChange.AddListener(OnThemeChange);
         }
+	}
+
+	void OnThemeChange()
+	{
+		activeTournament = ViewModel.currentTheme.leaderboardID;
 	}
 
 	void OnLeaderboardConnectionState(bool state)

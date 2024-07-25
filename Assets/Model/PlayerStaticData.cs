@@ -38,9 +38,9 @@ public class PlayerStaticData : MonoBehaviour
             get
             {
                 var ret = "";
-                if (tournamentData != null && tournamentData.name != "") return tournamentData.name;
-                else if (data != null && data.name != "") ret = data.name;
-                else if (presetData != null && presetData.playerName != "") ret = presetData.playerName;
+                if (tournamentData != null && tournamentData.name != "") return tournamentData.name.Replace("\uFE0F", "");
+                else if (data != null && data.name != "") ret = data.name.Replace("\uFE0F", "");
+                else if (presetData != null && presetData.playerName != "") ret = presetData.playerName.Replace("\uFE0F", "");
 
                 /*
                  * uncomment this to remove hat emoji from user names

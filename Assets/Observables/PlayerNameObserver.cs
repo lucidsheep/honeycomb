@@ -4,11 +4,14 @@ using TMPro;
 
 public class PlayerNameObserver : KQObserver
 { 
-	public TextMeshPro text;
+	public TextMeshPro text, pronounText, sceneText;
 	public GameObject textContainer;
 	public GameObject mainBG;
 	public SpriteRenderer[] icons;
 	public float pronounSize = 2f;
+
+	public int maxNameLength = 99;
+	public bool boldQueen = true;
 
 	bool dirty = false;
 	bool forceIcons = false;
@@ -34,6 +37,8 @@ public class PlayerNameObserver : KQObserver
         {
 			dirty = false;
 			string txt = "";
+			string pronounTxt = "";
+			string sceneTxt = "";
 			int lineNum = 0;
 			for (int j = 0; j < 5; j++)
 			{
@@ -47,7 +52,19 @@ public class PlayerNameObserver : KQObserver
 				icons[lineNum].sprite = null;
 				if (GameModel.instance.teams[targetID].players[i].playerName.property == "" && !forceIcons) continue;
 				var id = GameModel.instance.teams[targetID].players[i].hivemindID;
-				txt += FormatName(GameModel.instance.teams[targetID].players[i].playerName.property, i) + " " + FormatPronouns(PlayerStaticData.GetPronouns(id)) + "\n";
+				txt += FormatName(GameModel.instance.teams[targetID].players[i].playerName.property, i);
+				if(pronounText != null) 
+				{
+					pronounTxt += FormatPronouns(PlayerStaticData.GetPronouns(id)) + "\n";
+					txt += "\n";
+				} else
+				{
+					txt += " " + FormatPronouns(PlayerStaticData.GetPronouns(id)) + "\n";
+				}
+				if(sceneText != null)
+				{
+					sceneTxt += FormatScene(PlayerStaticData.GetSceneTag(id)) + "\n";
+				}
 				if(hideIcons == false)
 					icons[lineNum].sprite = SpriteDB.GetIcon(targetID, i);
 				else
@@ -56,7 +73,12 @@ public class PlayerNameObserver : KQObserver
 			}
 
 			text.text = txt;
+			if(pronounText != null)
+				pronounText.text = pronounTxt;
 
+			if(sceneText != null)
+				sceneText.text = sceneTxt;
+				
 			if(mainBG != null && hideIfEmpty)
 				mainBG.SetActive(txt != "");
         }
@@ -67,10 +89,19 @@ public class PlayerNameObserver : KQObserver
 		if (input == "") return "";
 		return "<size=" + pronounSize + "><mark=#E540D277 padding=\"10, 10, 0, 0\"><b>" + input.ToUpper() + "</b></mark></size>";
     }
+	string FormatScene(string input)
+    {
+		if (input == "") return "";
+		return "<size=" + pronounSize + "><mark=#8DDE8677 padding=\"10, 10, 0, 0\"><b>" + input.ToUpper() + "</b></mark></size>";
+    }
 	string FormatName(string input, int id)
     {
-		if (id != 2) return input;
-		return "<b>" + input + "</b>";
+		var ret = input.Replace("\uFE0F", "");
+		ret = Util.SmartTruncate(ret, maxNameLength);
+		if(id == 2 && boldQueen)
+			ret = "<b>" + ret + "</b>";
+		
+		return ret;
     }
 
     public override void OnParameters()

@@ -46,7 +46,18 @@ public class BoxScoreBase : MonoBehaviour
 		}
 		queenCol.text = blueQueens + "\n" + goldQueens;
 		berryCol.text = blueBerries + "\n" + goldBerries;
-		snailCol.text = (blueSnail == 0 ? "--" : (blueSnail.ToString() + (blueSnail >= 100 || !usePercent ? "" : "%"))) + "\n" + (goldSnail == 0 ? "--" : (goldSnail.ToString() + (goldSnail >= 100 || !usePercent ? "" : "%")));
+
+		//snails are complicated
+		
+		string snailTxt = "";
+		if(blueSnail >= 100) snailTxt += "<size=66%>" + blueSnail.ToString() + "</size>\n";
+		else if(blueSnail <= 0) snailTxt += "--\n";
+		else snailTxt += blueSnail.ToString() + (usePercent ? "%" : "") + "\n";
+
+		if(goldSnail >= 100) snailTxt += "<size=66%>" + goldSnail.ToString() + "</size>";
+		else if(goldSnail <= 0) snailTxt += "--";
+		else snailTxt += goldSnail.ToString() + (usePercent ? "%" : "");
+		snailCol.text = snailTxt;
 	}
 }
 
