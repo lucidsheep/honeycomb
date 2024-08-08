@@ -39,6 +39,8 @@ public class CreditsSubview : SubView
 
         PlayerCameraObserver.SetCustomCameraView("blueCamera", blueCam.pos, blueCam.scale);
         PlayerCameraObserver.SetCustomCameraView("goldCamera", goldCam.pos, goldCam.scale);
+
+        Destroy(this.gameObject);
     }
 
     void SetCredits()

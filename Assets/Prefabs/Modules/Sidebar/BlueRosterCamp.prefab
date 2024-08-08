@@ -299,7 +299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.02, y: -0.06}
+  m_AnchoredPosition: {x: -4.02, y: -0.19}
   m_SizeDelta: {x: 9.31, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &3065905996130041841
@@ -364,21 +364,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<size=1.2
+  m_text: '<mark=#E540D277 padding="10, 10, 0, 0"><b>HE/HIM</b></mark>
 
-    ><mark=#E540D277 padding="10, 10, 0, 0"><b>HE/HIM</b></mark></size>
 
-    <size=1.2><mark=#E540D277
-    padding="10, 10, 0, 0"><b>HE/HIM</b></mark></size>
+    <mark=#E540D277
+    padding="10, 10, 0, 0"><b>HE/HIM</b></mark>
 
-    <size=1.2><mark=#E540D277
-    padding="10, 10, 0, 0"><b>SHE/HER</b></mark></size>
+    <mark=#E540D277 padding="10,
+    10, 0, 0"><b>HE/HIM</b></mark>
 
-    <size=1.2><mark=#E540D277
-    padding="10, 10, 0, 0"><b>THEY/HE</b></mark></size>
-
-    <size=1.2><mark=#E540D277
-    padding="10, 10, 0, 0"><b>HE/HIM</b></mark></size>'
+    <mark=#E540D277 padding="10, 10, 0, 0"><b>HE/HIM</b></mark>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b94b7b1aff2e247c09fbdece9e5e5dea, type: 2}
   m_sharedMaterial: {fileID: -4707826911623668454, guid: b94b7b1aff2e247c09fbdece9e5e5dea, type: 2}
@@ -405,8 +400,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 2.2
-  m_fontSizeBase: 2.2
+  m_fontSize: 1.6
+  m_fontSizeBase: 1.6
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -417,7 +412,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 76
+  m_lineSpacing: 144
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -839,7 +834,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5837573640539952643
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1352,7 +1347,7 @@ MonoBehaviour:
   bgCustomPivot: {x: 0.5, y: 0.5}
   text: {fileID: 7689134745082986029}
   pronounText: {fileID: 3370285764561242771}
-  sceneText: {fileID: 628938013896540560}
+  sceneText: {fileID: 0}
   textContainer: {fileID: 7791548144167267635}
   mainBG: {fileID: 8419926693951323631}
   icons:
@@ -1361,7 +1356,7 @@ MonoBehaviour:
   - {fileID: 3101376634004774257}
   - {fileID: 8325023707511720475}
   - {fileID: 353565773375083152}
-  pronounSize: 1.2
+  pronounSize: 1.6
   maxNameLength: 14
   boldQueen: 0
 --- !u!114 &6393767741003113469

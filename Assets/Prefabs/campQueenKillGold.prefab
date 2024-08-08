@@ -414,11 +414,11 @@ MonoBehaviour:
   hexMask: {fileID: 0}
   bgs: []
   clips:
-  - {fileID: 32900000, guid: d9451d6a12b2c4042b900a26924ef4c7, type: 3}
-  - {fileID: 32900000, guid: c1a2c2676b80440c6a507a7aeadb4118, type: 3}
-  - {fileID: 32900000, guid: 1feccaf701bd6419ca6273262b460b07, type: 3}
-  - {fileID: 32900000, guid: de3bf947cc5074c87ba4e68c2190e64c, type: 3}
-  - {fileID: 32900000, guid: 1a18248b140254e6bb876ae381a4fb46, type: 3}
+  - {fileID: 32900000, guid: 59fcb1a80fbc14a9694ed33d6c0b3dc0, type: 3}
+  - {fileID: 32900000, guid: 0915367e3b30b421fa15bcc6c76bcab2, type: 3}
+  - {fileID: 32900000, guid: a7f60ae96d2cb47bc91677fe611f7330, type: 3}
+  - {fileID: 32900000, guid: ef1daa37fcc834cfa9c71557b91f6cbd, type: 3}
+  - {fileID: 32900000, guid: 323dd8c65f0364bc9a1a538b83da48dd, type: 3}
   animPlayer: {fileID: 9047107879378457762}
 --- !u!1 &8709821549544616846
 GameObject:

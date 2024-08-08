@@ -74,6 +74,8 @@ public class MatchPreviewPlayer : MonoBehaviour
     {
 		avatar.SetPicture(defaultAvatar);
 		nameTxt.text = "";
+		if(tidbitText != null)
+			tidbitText.text = "";
 		playerID = -1;
 		if (sceneTxt != null)
 			sceneTxt.text = "";

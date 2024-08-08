@@ -77,7 +77,7 @@ public class TournamentLeaderboardObserver : KQObserver
 			for(int i = 0; i < limit; i++)
 			{
 				var player = leaderboard.players[i];
-				lbPlayers += Util.SmartTruncate(player.name, maxNameLength) + "\n";
+				lbPlayers += Util.SmartTruncate(player.name.Replace("\uFE0F", ""), maxNameLength) + "\n";
 				lbValues += GetLBValue(leaderboard.leaderboardName, player) + "\n";
 			}
 			leaderboardPlayersTxt.text = lbPlayers;

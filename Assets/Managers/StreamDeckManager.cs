@@ -8,6 +8,8 @@ public class StreamDeckManager : MonoBehaviour
 {
 	public enum StreamDeckSize { Unknown, Small, Medium, Large }
 
+	public bool managerActive = true;
+
 	public static bool streamDeckActive = false;
 	public static StreamDeckSize size = StreamDeckSize.Unknown;
 	public static Vector2Int dimensions = new Vector2Int();
@@ -19,6 +21,10 @@ public class StreamDeckManager : MonoBehaviour
 	void Awake()
 	{
 		instance = this;
+
+		if(!managerActive)
+			return;
+			
 		if(Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsEditor)
 		{
 			Debug.Log("Streamdeck not supported in Editor Mode");
