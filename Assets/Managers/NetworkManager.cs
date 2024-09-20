@@ -354,6 +354,7 @@ public class NetworkManager : MonoBehaviour
 #endif
         if (isHiveMindMessage)
         {
+            Debug.Log(json);
             //first turn into generic object to check event type
             var jsonStepOne = JsonUtility.FromJson<HMTypeCheck>(json);
             if (jsonStepOne.cabinet_id != cabinetID) return; //only care about our cabinet

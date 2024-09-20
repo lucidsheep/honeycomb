@@ -831,7 +831,7 @@ MonoBehaviour:
   input: {fileID: 958172020}
   fpsText: {fileID: 1083946111}
   bg: {fileID: 1507941046}
-  useLogger: 1
+  useLogger: 0
 --- !u!4 &828700705
 Transform:
   m_ObjectHideFlags: 0
