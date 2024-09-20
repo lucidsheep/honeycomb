@@ -28,6 +28,10 @@ public class TournamentLeaderboardPlayer
 	public int warrior_deaths;
 	public int snail_deaths;
 	public int jason_points;
+	public int kills_queen_asqueen;
+	public int warrior_life;
+	public int bump_assists;
+	public int drone_kills_withberry;
 
 	public static TournamentLeaderboardPlayer PlayerModelToLeaderboardRow(PlayerModel player, TournamentLeaderboardPlayer curValues = null, bool sendAllStats = true)
 	{
@@ -48,16 +52,20 @@ public class TournamentLeaderboardPlayer
 				ret.kills_queen_aswarrior += 0;
 				ret.warrior_deaths += 0;
 				ret.kills_all += 0; //used for space cadet
+				ret.kills_queen_asqueen += ret.kills_queen;
 			}
 			else
 			{
 				ret.kills_queen_aswarrior += ret.kills_queen;
 				ret.warrior_deaths += player.curGameStats.militaryDeaths.property;
 				ret.kills_all += player.curGameStats.kills.property;
+				ret.warrior_life = player.curGameStats.longestLife.property;
 			}
 			ret.snail += player.curGameStats.snailMoved.property;
 			ret.snail_deaths = player.curGameStats.snailDeaths.property;
-			ret.warrior_uptime = player.warriorSeconds;
+			ret.warrior_uptime += player.warriorSeconds;
+			ret.bump_assists += player.curGameDerivedStats[PlayerModel.StatValueType.BumpAssists].num1;
+			ret.drone_kills_withberry += player.curGameDerivedStats[PlayerModel.StatValueType.FormGuards].num1 + player.curGameDerivedStats[PlayerModel.StatValueType.ObjGuards].num1;
 			//warrior_ratio is determined by server by combining uptime and kills
 		}
 		//jason points are always sent, because jason

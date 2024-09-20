@@ -17,7 +17,7 @@ public class TournamentLeaderboardManager : MonoBehaviour
 	public float leaderboardTimer = 10f;
 
 	float nextRefresh = 10f;
-	string[] leaderboardList = new string[] { "deaths", "kills_queen_aswarrior", "berries_kicked", "warrior_ratio", "berries", "warrior_deaths", "snail", "snail_deaths", "jason_points" };
+	string[] leaderboardList = new string[] { "kills_queen_aswarrior", "kills_queen_asqueen", "berries_kicked", "warrior_life", "drone_kills_withberry", "berries", "snail", "snail_deaths", "bump_assists", "jason_points" };
 	int curLeaderboard = 0;
 
 	public static UnityEvent<TournamentLeaderboard> OnLeaderboardReceived = new UnityEvent<TournamentLeaderboard>();

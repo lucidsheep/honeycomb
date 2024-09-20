@@ -135,10 +135,14 @@ function processQueue() {
             player.snail += curData.snail;
             player.jason_points += curData.jason_points;
             player.snail_deaths += curData.snail_deaths;
+            player.kills_queen_asqueen += curData.kills_queen_asqueen;
+            player.warrior_life = curData.warrior_life > player.warrior_life ? curData.warrior_life : player.warrior_life;
+            player.bump_assists += curData.bump_assists;
+            player.drone_kills_withberry += curData.drone_kills_withberry;
           }
 
           player.warrior_ratio = player.kills_all == 0 || player.warrior_uptime == 0 ? 100.0 : (player.kills_all / player.warrior_uptime) * 60.0;     
-          db.query(`REPLACE INTO ${table} VALUES (${player.id}, "${player.name}", ${player.kills_military}, ${player.kills_queen}, ${player.kills_queen_aswarrior}, ${player.berries}, ${player.snail}, ${player.berries_kicked}, ${player.deaths}, ${player.warrior_uptime}, ${player.kills_all}, ${player.warrior_ratio}, ${player.warrior_deaths}, ${player.snail_deaths}, ${player.jason_points}, "${scene}");`, function (err2, res2, fields2) {
+          db.query(`REPLACE INTO ${table} VALUES (${player.id}, "${player.name}", ${player.kills_military}, ${player.kills_queen}, ${player.kills_queen_aswarrior}, ${player.berries}, ${player.snail}, ${player.berries_kicked}, ${player.deaths}, ${player.warrior_uptime}, ${player.kills_all}, ${player.warrior_ratio}, ${player.warrior_deaths}, ${player.snail_deaths}, ${player.jason_points}, "${scene}", ${player.warrior_life}, ${player.kills_queen_asqueen}, ${player.bump_assists}, ${player.drone_kills_withberry});`, function (err2, res2, fields2) {
             if (err2) throw err2;
           });   
         });

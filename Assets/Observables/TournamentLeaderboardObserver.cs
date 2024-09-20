@@ -25,7 +25,11 @@ public class TournamentLeaderboardObserver : KQObserver
 		{ "snail", "Trailblazer"},
 		{ "snail_deaths", "Tastiest Treat"},
 		{ "deaths", "Most Generous"},
-		{ "jason_points", "Jason Points™"}
+		{ "jason_points", "Jason Points™"},
+		{ "kills_queen_asqueen", "Regicide"},
+		{ "warrior_life", "Immortal"},
+		{ "bump_assists", "Bump Ninja"},
+		{ "drone_kills_withberry", "Impassable"}
 	};
 	// Use this for initialization
 	override public void Start()
@@ -54,6 +58,10 @@ public class TournamentLeaderboardObserver : KQObserver
 			case "snail_deaths": return player.snail_deaths.ToString();
 			case "deaths": return player.deaths.ToString();
 			case "jason_points": return player.jason_points.ToString();
+			case "kills_queen_asqueen": return player.kills_queen_asqueen.ToString();
+			case "bump_assists": return player.bump_assists.ToString();
+			case "warrior_life": return Util.FormatTime(player.warrior_life);
+			case "drone_kills_withberry": return player.drone_kills_withberry.ToString();
 			case "???":
 			default: return "0";
         }
