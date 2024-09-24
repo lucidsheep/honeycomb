@@ -101,6 +101,8 @@ public class KQObserver : MonoBehaviour
 			if (moduleParameters.ContainsKey("hideBackground"))
 			{
 				bgContainer.gameObject.SetActive(false);
+				if (normalBG != null)
+					normalBG.gameObject.SetActive(false);
 			}
 			Vector2 bgPos = Vector2.zero;
 			if(moduleParameters.ContainsKey("backgroundX"))

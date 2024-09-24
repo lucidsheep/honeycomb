@@ -41,6 +41,8 @@ public class SlideshowObserver : KQObserver
             numImages = int.Parse(moduleParameters["numImages"]);
         if (moduleParameters.ContainsKey("interval"))
             switchInterval = int.Parse(moduleParameters["interval"]);
+        if (moduleParameters.ContainsKey("hideBackground") && frame != null)
+			frame.gameObject.SetActive(false);
         baseURL += "/" + ViewModel.currentTheme.name;
 
         for(int i = 1; i <= numImages; i++)

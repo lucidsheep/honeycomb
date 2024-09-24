@@ -387,7 +387,29 @@ public class NetworkManager : MonoBehaviour
                     else
                     {
                         Debug.Log("new match data found");
-                        StartCoroutine(GetTeamIDs());
+                        bool isWhiteboardSet = matchData.match_type == "whiteboard";
+                        if(isWhiteboardSet)
+                        {
+                            int blueTeamID = fakeTeamID;
+                            fakeTeamID++;
+                            foreach(var playerData in matchData.current_match.blue_players)
+                            {
+                                playerData.team = fakeTeamID;
+                                ProcessTournamentPlayer(playerData);
+                            }
+                            int goldTeamID = fakeTeamID;
+                            fakeTeamID++;
+                            foreach(var playerData in matchData.current_match.gold_players)
+                            {
+                                playerData.team = fakeTeamID;
+                                ProcessTournamentPlayer(playerData);
+                            }
+                            onTournamentTeamIDs.Invoke(blueTeamID, goldTeamID);
+                        }
+                        else
+                        {
+                            StartCoroutine(GetTeamIDs());
+                        }
                         if (!setCompleteFlag)
                         {
                             //match data during a set means an adjustment, so fix immediately
@@ -914,6 +936,9 @@ public class NetworkManager : MonoBehaviour
     //we need a fake HM ID for tournament users that lack a normal HM account, since we index on that
     static int fakeID = 1000000;
 
+    //we also use fake HM Team IDs for whiteboard sets
+    static int fakeTeamID = 1000000;
+
     static IEnumerator GetTournamentTeamPlayers(int teamID)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get("https://kqhivemind.com/api/tournament/player/?team_id=" + teamID))
@@ -927,19 +952,7 @@ public class NetworkManager : MonoBehaviour
                 {
                     if (playerData == null) continue;
                     
-                    if(playerData.user <= 0)
-                    {
-                        //tournament user without a HM account, needs a fake ID
-                        playerData.user = fakeID;
-                        fakeID++;
-                    }
-                    else if(!PlayerStaticData.HasHivemindData(playerData.user))
-                    {
-                        //if this player hasn't signed in yet today, get their normal player data as well
-                        Debug.Log("also getting user data for " + playerData.user);
-                        instance.StartCoroutine(GetUserData(playerData.user));
-                    }
-                    PlayerStaticData.AddPlayer(playerData.user, playerData);
+                    ProcessTournamentPlayer(playerData);
                 }
                 instance.onTournamentTeamPlayers.Invoke(teamID);
             }
@@ -950,6 +963,22 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
+    static void ProcessTournamentPlayer(HMTournamentPlayer playerData)
+    {
+        if(playerData.user <= 0)
+        {
+            //tournament user without a HM account, needs a fake ID
+            playerData.user = fakeID;
+            fakeID++;
+        }
+        else if(!PlayerStaticData.HasHivemindData(playerData.user))
+        {
+            //if this player hasn't signed in yet today, get their normal player data as well
+            Debug.Log("also getting user data for " + playerData.user);
+            instance.StartCoroutine(GetUserData(playerData.user));
+        }
+        PlayerStaticData.AddPlayer(playerData.user, playerData);
+    }
     static void GetTournamentTeamData(int blueTeam, int goldTeam)
     {
         //need to clear fake players, since they will get duplicated by new calls to HM team lists

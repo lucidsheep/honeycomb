@@ -31,6 +31,7 @@ public class HMMatchState
 {
     public string type;
     public string cabinet_id;
+    public string match_type;
     //type = match
     public string scene_name;
     public string cabinet_name;
@@ -65,7 +66,10 @@ public class HMCurrentMatch
     public int rounds_per_match;
     public int wins_per_match;
     public string round_name;
+    public HMTournamentPlayer[] blue_players;
+    public HMTournamentPlayer[] gold_players;
 }
+
 [System.Serializable]
 public class HMTypeCheck
 {
