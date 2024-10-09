@@ -171,12 +171,15 @@ public class PlayerStaticData : MonoBehaviour
     static GameDataStructure SetTournamentStats(HMTournamentPlayer data)
     {
         var stats = new GameDataStructure();
-        StatsFromHMArray(stats, data.stats);
+        if(data.stats != null && data.stats.Length > 0)
+            StatsFromHMArray(stats, data.stats);
         return stats;
     }
 
     static void StatsFromHMArray(GameDataStructure hcData, HMUserStat[] hmData)
     {
+        if(hmData == null) return;
+        
         foreach (var stat in hmData)
         {
             if (stat == null) continue;
