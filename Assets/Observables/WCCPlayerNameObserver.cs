@@ -37,8 +37,7 @@ public class WCCPlayerNameObserver : KQObserver
 				if (j == 0) i = 2;
 				else if (j <= 2) i = j - 1;
 
-				var id = GameModel.instance.teams[targetID].players[i].hivemindID;
-				playerSlots[j].SetDisplay(GameModel.instance.teams[targetID].players[i].playerName.property, PlayerStaticData.GetSceneTag(id), PlayerStaticData.GetPronouns(id));
+				playerSlots[j].SetDisplay(GameModel.instance.teams[targetID].players[i]);
 			}
 		}
 	}

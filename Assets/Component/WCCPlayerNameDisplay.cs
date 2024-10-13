@@ -13,6 +13,7 @@ public class WCCPlayerNameDisplay : MonoBehaviour
 	public Sprite[] offIcons;
 	public Sprite[] onIcons;
 	public bool pronounsFirst;
+	public ProfilePicture profilePic;
 
 	bool curState = true;
 	// Use this for initialization
@@ -28,6 +29,15 @@ public class WCCPlayerNameDisplay : MonoBehaviour
 			
 	}
 
+	public void SetDisplay(PlayerModel player)
+	{
+		SetDisplay(player.playerName.property, PlayerStaticData.GetSceneTag(player.hivemindID), PlayerStaticData.GetPronouns(player.hivemindID));
+		if(profilePic != null)
+		{
+			(Sprite pic, int rotation) = PlayerStaticData.GetProfilePic(player.hivemindID);
+			profilePic.SetPicture(pic, rotation);
+		}
+	}
 	public void SetDisplay(string name, string scene, string pronouns, bool instant = false)
     {
 		if(name == "")
@@ -38,16 +48,20 @@ public class WCCPlayerNameDisplay : MonoBehaviour
 			if (instant)
             {
 				bg.color = icon.color = playerName.color = new Color(1f, 1f, 1f, 0f);
-				sceneTag.color = new Color(sceneTagColor.r, sceneTagColor.g, sceneTagColor.b, 0f);
+				if(sceneTag != null)
+					sceneTag.color = new Color(sceneTagColor.r, sceneTagColor.g, sceneTagColor.b, 0f);
 				
             } else
             {
 				playerName.text = name;
-				sceneTag.text = scene;
 				bg.DOColor(new Color(1f,1f,1f,0f), .5f).SetEase(Ease.OutQuad);
 				icon.DOColor(new Color(1f, 1f, 1f, 0f), .5f).SetEase(Ease.OutQuad);
 				playerName.DOColor(new Color(1f, 1f, 1f, 0f), .25f).SetEase(Ease.Linear);
-				sceneTag.DOColor(new Color(1f, 1f, 1f, 0f), .25f).SetEase(Ease.Linear);
+				if(sceneTag != null)
+				{
+					sceneTag.text = scene;
+					sceneTag.DOColor(new Color(1f, 1f, 1f, 0f), .25f).SetEase(Ease.Linear);
+				}
 			}
         } else
         {
@@ -57,20 +71,25 @@ public class WCCPlayerNameDisplay : MonoBehaviour
 			playerName.text = name;
 			playerName.ForceMeshUpdate(); //need this to calculate size for pronouns
 			playerName.text = (pronounsFirst ? FormatPronouns(pronouns) + " " : "") + name + (!pronounsFirst ? " " + FormatPronouns(pronouns) : "");
-			sceneTag.text = scene;
+			if(sceneTag != null)
+				sceneTag.text = scene;
 
 			if (instant)
             {
 				bg.color = icon.color = playerName.color = Color.white;
-				sceneTag.color = sceneTagColor;
+				if(sceneTag != null)
+					sceneTag.color = sceneTagColor;
             } else
             {
 				bg.DOColor(Color.white, .75f).SetEase(Ease.InElastic);
 				icon.DOColor(Color.white, .75f).SetEase(Ease.InElastic);
 				playerName.transform.DOLocalMoveX(-.3f, .25f).From().SetDelay(.75f).SetEase(Ease.Linear);
-				sceneTag.transform.DOLocalMoveX(-.37f, .25f).From().SetDelay(.75f).SetEase(Ease.Linear);
 				playerName.DOColor(Color.white, .25f).SetDelay(.75f).SetEase(Ease.Linear);
-				sceneTag.DOColor(sceneTagColor, .25f).SetDelay(.75f).SetEase(Ease.Linear);
+				if(sceneTag != null)
+				{
+					sceneTag.DOColor(sceneTagColor, .25f).SetDelay(.75f).SetEase(Ease.Linear);
+					sceneTag.transform.DOLocalMoveX(-.37f, .25f).From().SetDelay(.75f).SetEase(Ease.Linear);
+				}
 			}
         }
     }
