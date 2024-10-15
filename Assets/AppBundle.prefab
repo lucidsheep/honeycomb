@@ -3834,7 +3834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3481c61d8f31f4dfe86d3e8738dd9a01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numTotalClips: 2
+  numTotalClips: 3
   numPriorityClips: 1
   numClipFrames: 360
   numBufferedFrames: 0
@@ -3993,6 +3993,7 @@ MonoBehaviour:
   - {fileID: 8278666156924049290, guid: 210774969e4af45ce96e29cccd40cc6a, type: 3}
   - {fileID: 5265151286151429123, guid: 2ceeb44c3fb844020897b949446cdfd4, type: 3}
   - {fileID: 5265151286151429123, guid: c330d782837e04c71bfe4be1f12431bf, type: 3}
+  - {fileID: 5265151286151429123, guid: 7db57a939d75740549c52d93820ab14d, type: 3}
   postgameScreens:
   - {fileID: 6037398074245946859, guid: 69af786a65b474a6fbbef21241acc7e5, type: 3}
   - {fileID: -1697214059453694578, guid: 9f21b0331ff5844dc9c923ae7667ec0b, type: 3}

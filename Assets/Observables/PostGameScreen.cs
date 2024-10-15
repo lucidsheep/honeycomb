@@ -350,7 +350,7 @@ public class PostGameScreen : KQObserver
 
 	void SetupReplay()
     {
-		replayClip = clipper.GetClip(0);
+		replayClip = VideoClipper.GetClip(0);
 		replayImage.texture = replayClip.texture;
 		replayImage.material.mainTexture = replayClip.texture;
 		

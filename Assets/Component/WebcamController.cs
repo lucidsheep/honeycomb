@@ -149,7 +149,7 @@ public class WebcamController : MonoBehaviour
     void OnGameComplete(int _, string __)
     {
         if(useClipper)
-            DOTween.Sequence().AppendInterval(1f).AppendCallback(() => clipper.SaveClip(0));
+            DOTween.Sequence().AppendInterval(1f).AppendCallback(() => VideoClipper.SaveClip(0));
     }
     public Texture GetWebcamTexture => (forcedTexture != null ? forcedTexture : webcam);
     // Update is called once per frame

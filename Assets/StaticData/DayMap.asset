@@ -19,6 +19,7 @@ MonoBehaviour:
   snail_track_width: 900
   beta_of: 0
   snail_Y: 11
+  queen_lives: 3
   thumbnail: {fileID: 21300000, guid: 78ed92528e1ed4a9e96d1008ca83abad, type: 3}
   features:
   - type: 0

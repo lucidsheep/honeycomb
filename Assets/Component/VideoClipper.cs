@@ -50,6 +50,17 @@ public class VideoClipper : MonoBehaviour
 		{
 			startIndex = curIndex;
 		}
+		public string GetProgress()
+		{
+			return (texArray.Length - Mathf.Abs(startIndex - curIndex)) + "/" + texArray.Length;
+		}
+
+		public void AdvanceFrames(int numFrames)
+		{
+			curIndex += numFrames;
+			while(curIndex >= texArray.Length)
+				curIndex -= texArray.Length;
+		}
 		public Clip(int clipLength, int width, int height, GraphicsFormat format)
 		{
 			texArray = new RenderTexture[clipLength];
@@ -140,9 +151,12 @@ public class VideoClipper : MonoBehaviour
 			curClip.AdvancePlayback();
 		}
 	}
+	public static int SaveClip(int priorityIndex = -1)
+	{
+		return instance._SaveClip(priorityIndex);
+	}
 
-
-	public void SaveClip(int priorityIndex = -1)
+	int _SaveClip(int priorityIndex = -1)
     {
 		curClip.FinalizeClip();
 		if(priorityIndex > -1)
@@ -151,16 +165,37 @@ public class VideoClipper : MonoBehaviour
 			clips[curClipIndex] = clips[priorityIndex];
 			clips[priorityIndex] = curClip;
 			curClip = clips[curClipIndex];
+			//CopyClip(clips[priorityIndex], curClip);
+			return priorityIndex;
         } else
         {
+			var retClip = curClipIndex;
 			curClipIndex = curClipIndex + 1 >= clips.Count ? numPriorityClips : curClipIndex + 1;
 			curClip = clips[curClipIndex];
+			CopyClip(clips[retClip], curClip);
+			Debug.Log("new clip is " + curClipIndex + ", saved clip " + retClip);
+			return retClip;
         }
     }
 
-	public List<Clip> GetAllClips() { return clips; }
-	public Clip GetClip(int index) { return clips[index]; }
+	public static List<Clip> GetAllClips() { return instance.clips; }
+	public static Clip GetClip(int index) { return instance.clips[index]; }
 
+	void CopyClip(Clip fromClip, Clip toClip)
+	{
+		for(int frame = 0; frame < numClipFrames; frame++)
+		{
+			fromClip.FinalizeClip();
+			toClip.FinalizeClip();
+			do
+			{
+				toClip.texture = fromClip.texture;
+				toClip.AdvancePlayback();
+			} while(fromClip.AdvancePlayback());
+			fromClip.FinalizeClip();
+			toClip.FinalizeClip();
+		}
+	}
     private void OnDestroy()
     {
 		foreach (var clip in clips)

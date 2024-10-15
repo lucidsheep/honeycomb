@@ -62,7 +62,7 @@ public class PlayerModel : IComparable
                     case StatValueType.Gates: return "Gate Control";
                     case StatValueType.LongestLife: return "Longest Life";
                     case StatValueType.ObjGuards: return "Obj. Guard" + (plural ? "s" : "");
-                    case StatValueType.Pinces: return "Pince" + (plural ? "s" : "");
+                    case StatValueType.Pinces: return "Pincer" + (plural ? "s" : "");
                     case StatValueType.QueenKills: return "";
                     case StatValueType.SnailKills: return "Snail Kill" + (plural ? "s" : "");
                     case StatValueType.UpTime: return "Mil. Uptime";

@@ -114,6 +114,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6830957936205249719, guid: 8dab7fd2afcdf4805806bf157b7f2695, type: 3}
+      propertyPath: position
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6830957936205249721, guid: 8dab7fd2afcdf4805806bf157b7f2695, type: 3}
       propertyPath: m_Name
       value: WC24NormalPlayerBlue (3)
@@ -288,6 +292,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6830957936205249719, guid: 8dab7fd2afcdf4805806bf157b7f2695, type: 3}
+      propertyPath: position
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6830957936205249721, guid: 8dab7fd2afcdf4805806bf157b7f2695, type: 3}
       propertyPath: m_Name
       value: WC24NormalPlayerBlue
@@ -361,6 +369,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6830957936205249719, guid: 8dab7fd2afcdf4805806bf157b7f2695, type: 3}
+      propertyPath: position
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6830957936205249721, guid: 8dab7fd2afcdf4805806bf157b7f2695, type: 3}
       propertyPath: m_Name
       value: WC24NormalPlayerBlue (2)
@@ -433,6 +445,10 @@ PrefabInstance:
     - target: {fileID: 6830957936205249718, guid: 8dab7fd2afcdf4805806bf157b7f2695, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830957936205249719, guid: 8dab7fd2afcdf4805806bf157b7f2695, type: 3}
+      propertyPath: position
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6830957936205249721, guid: 8dab7fd2afcdf4805806bf157b7f2695, type: 3}
       propertyPath: m_Name
