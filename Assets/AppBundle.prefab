@@ -3977,6 +3977,8 @@ MonoBehaviour:
     fontName: league
   - font: {fileID: 11400000, guid: dd8db0df657294c06af24bc420cb0dc6, type: 2}
     fontName: chalk
+  - font: {fileID: 11400000, guid: 93b93a84c5a624eab91f968b6a550054, type: 2}
+    fontName: wc24
 --- !u!114 &3953148250283245154
 MonoBehaviour:
   m_ObjectHideFlags: 0
