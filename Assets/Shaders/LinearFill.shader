@@ -8,6 +8,8 @@ Shader "Sprites/LinearFill"
 		_GradientTex ("Gradient", 2D) = "white" {}
 		_Fill("Fill", Float) = 0
 		_Color ("Tint", Color) = (1,1,1,1)
+		_Slanted("Slanted", Float) = 0
+		[MaterialToggle] _Inverted("Inverted", Float) = 0
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
 	}
 
@@ -69,16 +71,13 @@ Shader "Sprites/LinearFill"
 			sampler2D _AlphaTex;
 			sampler2D _GradientTex;
 			float _Fill;
+			float _Inverted;
+			float _Slanted;
 			float _AlphaSplitEnabled;
 
 			fixed4 SampleSpriteTexture (float2 uv)
 			{
 				fixed4 color = tex2D (_MainTex, uv);
-
-//				if(color.a < 0.4) {
-//					color.rgb = 0.0;
-//					color.a = 0.0;
-//				}
 
 				return color;
 			}
@@ -86,8 +85,13 @@ Shader "Sprites/LinearFill"
 			float SampleAlphaTexture(float2 uv)
 			{
 				fixed4 color = tex2D (_GradientTex, uv);
-				if(uv.x > _Fill) return 0.0;
+				if(_Inverted > 0)
+				{
+					if(uv.x < (1 - _Fill - (uv.y * _Slanted))) return 0.0;
+					return 1.0;
+				}
 
+				if(uv.x - (uv.y * _Slanted)> _Fill) return 0.0;
 				return 1.0;
 			}
 			fixed4 frag(v2f IN) : SV_Target
@@ -96,10 +100,10 @@ Shader "Sprites/LinearFill"
 				float g = SampleAlphaTexture(IN.texcoord);
 				fixed4 r = IN.color;
 				fixed4 f;
-				f.a = g;
-				f.r = r.r * f.a;
-				f.g = r.g * f.a;
-				f.b = r.b * f.a;
+				f.a = c.a * g;
+				f.r = c.r * r.r * c.a * f.a;
+				f.g = c.g * r.g * c.a * f.a;
+				f.b = c.b * r.b * c.a * f.a;
 				return f;
 			}
 		ENDCG

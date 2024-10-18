@@ -12,6 +12,8 @@ public class MapData : ScriptableObject
 	public int beta_of;
 	public int snail_Y;
 	public int queen_lives;
+
+	public int berries_to_win = 12;
 	public Sprite thumbnail;
 	public MapFeature[] features;
 

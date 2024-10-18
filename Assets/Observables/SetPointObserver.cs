@@ -5,7 +5,10 @@ using DG.Tweening;
 public class SetPointObserver : KQObserver
 {
 	public SetPoint spTemplate;
+    public bool zigZagPattern = false;
 
+    public Vector2 startPos;
+    public float increment;
 	SetPoint[] points;
     int wins = 0;
 
@@ -139,16 +142,23 @@ public class SetPointObserver : KQObserver
 
     void UpdatePositions()
     {
-        bool doZigZag = points.Length > 2;
+        bool doZigZag = points.Length > 2 && zigZagPattern;
         for(int i = 0; i < points.Length; i++)
         {
             var sp = points[i];
             if (!doZigZag)
             {
                 sp.transform.localPosition = new Vector3(
-                    ((8.4f + (i * 5.0f)) * (targetID == 0 ? -1f : 1f)), // + (targetID == 0 ? ViewModel.leftHexPadding.property : ViewModel.rightHexPadding.property),
-                    - 4.0f,
+                    ((startPos.x + (targetID == 1 ? .02f : 0f) + (i * increment)) * (targetID == 0 ? 1f : -1f)), // + (targetID == 0 ? ViewModel.leftHexPadding.property : ViewModel.rightHexPadding.property),
+                    startPos.y,
                     0f);
+                if(targetID == 1)
+                {
+                    var ev = sp.transform.localScale;
+                    ev.x *= -1f;
+                    sp.transform.localScale = new Vector3(-.88f, .88f, .88f);
+                }
+                
             } else
             {
                 Vector3 pos = new Vector3();

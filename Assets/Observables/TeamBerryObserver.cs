@@ -1,14 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using TMPro;
 
-public class BerryObserver : KQObserver
+public class TeamBerryObserver : KQObserver
 {
-	public SpriteRenderer berryIcon;
 	public TextMeshPro berryLabel;
-	public Color berryWarningColor = Color.red;
 
-	public string extraText = "";
 
 	bool dirty = false;
 	int berryCount = 0;
@@ -25,10 +22,7 @@ public class BerryObserver : KQObserver
 	{
 		if(dirty)
         {
-			berryLabel.text = berryCount.ToString() + extraText;
-			berryLabel.color = berryCount < 10 && GameModel.instance.gameIsRunning.property ? berryWarningColor : Color.white;
-			if(berryIcon != null)
-				berryIcon.color = berryLabel.color;
+			berryLabel.text = berryCount.ToString() + "/" + MapDB.currentMap.property.berries_to_win;
 			dirty = false;
 		}
 	}
@@ -36,7 +30,7 @@ public class BerryObserver : KQObserver
     public void OnChange(int before, int after)
     {
 		dirty = true;
-		berryCount = after;
+		berryCount = GameModel.instance.teams[targetID].GetBerryScore();
 	}
 }
 

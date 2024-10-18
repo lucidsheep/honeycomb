@@ -56,6 +56,7 @@ public class MainBarStyle
     public float cameraX;
     public float cameraY;
     public float cameraScale;
+    public float customCameraWidth;
     public bool hideCameraIcons;
 }
 

@@ -64,7 +64,7 @@ public class MainBarObserver : KQObserver
 		goldCam.transform.localPosition = new Vector3(camX, camY, -3.3f);
 		blueCam.transform.localScale = goldCam.transform.localScale = Vector3.one * camScale;
 		transform.localScale = Vector3.one * scale;
-
+		inputArea = scoreBar.GetComponentInChildren<MainBarInputArea>();
 		//gameObject.SetActive(ViewModel.currentTheme.layout != ThemeData.LayoutStyle.Game_Only);
 		//-3.94
     }
