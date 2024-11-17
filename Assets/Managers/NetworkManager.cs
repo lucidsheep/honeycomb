@@ -432,6 +432,7 @@ public class NetworkManager : MonoBehaviour
                             //store next set data and start countdown for showing match preview
                             GameModel.newSetTeamData = matchData;
                             GameModel.newSetTimeout = 3f;
+                            Debug.Log("new set queued");
                             if (matchData.current_match.is_warmup)
                                 GameModel.instance.isWarmup.property = true;
                         }
@@ -533,6 +534,11 @@ public class NetworkManager : MonoBehaviour
                 gd.playerType = jsonData.values[2];
                 gd.playerID = int.Parse(jsonData.values[3]);
                 gd.targetType = jsonData.values[2];
+                gd.teamID = gd.playerID % 2 == 0 ? 0 : 1;
+                break;
+            case GameEventType.GATE_USE_CANCEL:
+                gd.coordinates = new Vector2Int(int.Parse(jsonData.values[0]), int.Parse(jsonData.values[1]));
+                gd.playerID = int.Parse(jsonData.values[3]);
                 gd.teamID = gd.playerID % 2 == 0 ? 0 : 1;
                 break;
             case GameEventType.PLAYER_KILL:

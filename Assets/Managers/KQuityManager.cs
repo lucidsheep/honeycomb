@@ -144,7 +144,7 @@ public class KQuityManager : MonoBehaviour
     private void OnConnected(bool connected)
     {
         isConnected = connected;
-        Debug.Log("kquity " + (connected ? "" : "dis") + "connected");
+        //Debug.Log("kquity " + (connected ? "" : "dis") + "connected");
         gameInProgress.property = false;
     }
 

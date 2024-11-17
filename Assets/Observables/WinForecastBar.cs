@@ -19,7 +19,7 @@ public class WinForecastBar : KQObserver
 
     float rawPct = .5f;
 	bool iv = false;
-	bool isActive = false;
+	bool isActive = true;
 	bool startAnim = false;
 	int forceLit = 2;
 	bool forceLitBright = false;
@@ -74,8 +74,8 @@ public class WinForecastBar : KQObserver
 	{
 		if (dirty)
 		{
-            var newY = -range + (range * 2f * rawPct);
-            centerPoint.transform.localPosition = new Vector3(0f, newY, 0f);
+            var newX = -range + (range * 2f * rawPct);
+            centerPoint.transform.localPosition = new Vector3(-newX, 0.02f, 0f);
 			dirty = false;
         }
 	}

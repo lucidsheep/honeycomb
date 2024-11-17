@@ -131,6 +131,7 @@ public class GameModel : MonoBehaviour
 
     void NewSetAfterDelay()
     {
+        Debug.Log("new set after delay");
         ResetSet();
         newSetTimeout = -1f;
         if (newSetTeamData != null)
@@ -332,7 +333,6 @@ public class GameModel : MonoBehaviour
                 teams[1 - data.teamID].players[data.targetID].ResetLife();
                 break;
             case GameEventType.GATE_USE_START:
-                Debug.Log("Gate use start");
                 break;
             case GameEventType.GATE_USE_END:
                 if (data.targetType == EventTargetType.GATE_SWORD)

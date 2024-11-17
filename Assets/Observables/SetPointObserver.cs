@@ -156,7 +156,7 @@ public class SetPointObserver : KQObserver
                 {
                     var ev = sp.transform.localScale;
                     ev.x *= -1f;
-                    sp.transform.localScale = new Vector3(-.88f, .88f, .88f);
+                    sp.transform.localScale = new Vector3(-88f, .88f, .88f);
                 }
                 
             } else

@@ -173,7 +173,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 19.85
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2040,7 +2040,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 22.25
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3780,6 +3780,7 @@ MonoBehaviour:
       cameraX: 0
       cameraY: 0
       cameraScale: 0
+      customCameraWidth: 0
       hideCameraIcons: 0
     boxScoreStyle:
       name: 
@@ -3979,6 +3980,8 @@ MonoBehaviour:
     fontName: chalk
   - font: {fileID: 11400000, guid: 93b93a84c5a624eab91f968b6a550054, type: 2}
     fontName: wc24
+  - font: {fileID: 11400000, guid: 61780be2bf9fa4601a6179efdf7130c7, type: 2}
+    fontName: wcDetail
 --- !u!114 &3953148250283245154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6356,7 +6359,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 18.6
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7546,7 +7549,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 22.65
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9705,7 +9708,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 22.7
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

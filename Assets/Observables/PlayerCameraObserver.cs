@@ -457,14 +457,14 @@ public class PlayerCameraObserver : KQObserver
         var wcHeight = aspectRatio == AspectRatio.Ultrawide ? 1.35f : 1.85f;
         var wcWidth = (width / height) * wcHeight;
 
-        if(ViewModel.currentTheme.barStyle.customCameraWidth > 0f)
+        if(ViewModel.currentTheme.barStyle.customCameraWidth > 0f && webcamName != "commentaryCamera")
             wcWidth = ViewModel.currentTheme.barStyle.customCameraWidth;
         GetComponent<Canvas>().GetComponent<RectTransform>().sizeDelta = new Vector2(wcWidth, wcHeight);
 
         var frameHeight = aspectRatio == AspectRatio.Ultrawide ? 1.52f : 2.08f;
         var frameWidth = (width / height) * frameHeight;
         frame.size = new Vector2(frameWidth, frameHeight + (aspectRatio == AspectRatio.Ultrawide ? .08f : 0f));
-
+        //Debug.Log("frame size " + webcamName + ":" + wcWidth + "|" + wcHeight);
 
 
         camerasUpdatedEvent.Invoke();

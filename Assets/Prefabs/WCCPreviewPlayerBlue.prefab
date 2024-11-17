@@ -289,7 +289,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3503669942494949224, guid: 1e6c543b7bd504685985029ad0be5230, type: 2}
+  - {fileID: -5958603734704604498, guid: 468f8f6d37ee34a0c8cefa70fefa4ac1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -333,8 +333,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: PDX
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1e6c543b7bd504685985029ad0be5230, type: 2}
-  m_sharedMaterial: {fileID: 3503669942494949224, guid: 1e6c543b7bd504685985029ad0be5230, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 468f8f6d37ee34a0c8cefa70fefa4ac1, type: 2}
+  m_sharedMaterial: {fileID: -5958603734704604498, guid: 468f8f6d37ee34a0c8cefa70fefa4ac1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -700,23 +700,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7565575028312815604, guid: dbaee86297d1447bc91a97018003a02e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.14
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 7565575028312815604, guid: dbaee86297d1447bc91a97018003a02e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.14
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 7565575028312815604, guid: dbaee86297d1447bc91a97018003a02e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.14
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 7565575028312815604, guid: dbaee86297d1447bc91a97018003a02e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.12
+      value: 1.11
       objectReference: {fileID: 0}
     - target: {fileID: 7565575028312815604, guid: dbaee86297d1447bc91a97018003a02e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.005
       objectReference: {fileID: 0}
     - target: {fileID: 7565575028312815604, guid: dbaee86297d1447bc91a97018003a02e, type: 3}
       propertyPath: m_LocalPosition.z

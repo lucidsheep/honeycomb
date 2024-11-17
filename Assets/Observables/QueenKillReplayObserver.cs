@@ -7,6 +7,7 @@ using DG.Tweening;
 public class QueenKillReplayObserver : KQObserver
 {
     public RawImage replayImage;
+    public SpriteRenderer bg;
 
     RenderTexture replayRender;
     VideoClipper.Clip clip;
@@ -41,9 +42,10 @@ public class QueenKillReplayObserver : KQObserver
             state = State.Playing;
             clip.AdvancePlayback();
             replayImage.texture = replayRender;
-            var xCenter = Mathf.Min(.85f, Math.Max(.15f, ((float)data.coordinates.x / 1920f) - .15f));
-            var yCenter = Mathf.Min(.85f, Mathf.Max(.15f, ((float)data.coordinates.y / 1080f) - .15f));
+            var xCenter = Mathf.Min(.7f, Math.Max(0f, ((float)data.coordinates.x / 1920f) - .15f));
+            var yCenter = Mathf.Min(.7f, Mathf.Max(0f, ((float)data.coordinates.y / 1080f) - .15f));
             replayImage.uvRect = new Rect(xCenter, yCenter, .3f, .3f);
+            bg.transform.DOScaleX(8.54f, .2f).SetEase(Ease.OutQuad);
             replayImage.DOColor(Color.white, .5f);
         }
     }
@@ -73,6 +75,7 @@ public class QueenKillReplayObserver : KQObserver
         Debug.Log("finish replay");
         state = State.Finishing;
         replayImage.DOColor(new Color(1f,1f,1f,0f), .5f).SetDelay(1f).OnComplete(() => state = State.Ready);
+        bg.transform.DOScaleX(0f, .4f).SetDelay(1f).SetEase(Ease.InQuad);
 		//replayImage.color = new Color(1f, 1f, 1f, 0f);
 		//replayImage.gameObject.SetActive(false);
 	}

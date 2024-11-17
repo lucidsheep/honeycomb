@@ -29,7 +29,9 @@ public class PostgamePlayerLine : MonoBehaviour
 			profile.SetPicture(SpriteDB.GetIcon(player.teamID, player.positionID), 0, .25f);
 
 		}
-
+		//hack
+		if(ViewModel.currentTheme.name == "wc24")
+			profile.mask.GetComponent<SpriteRenderer>().enabled = false;
 		if (bg != null)
 			SetColorPreserveAlpha(bg, ViewModel.currentTheme.GetTeamTheme(player.teamID).pColor);
 		//if(profileBG != null)

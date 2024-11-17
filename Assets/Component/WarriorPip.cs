@@ -12,6 +12,7 @@ public class WarriorPip : MonoBehaviour
         set { _progress = value; SetFill(value);}
     }
 
+    bool completed = false;
     void SetFill(float pct)
     {
 		fill.material.SetFloat("_Fill", pct);
@@ -25,14 +26,25 @@ public class WarriorPip : MonoBehaviour
         _progress = 0.01f;
         if(fillAnim != null && !fillAnim.IsComplete())
             fillAnim.Complete();
-        fillAnim = DOTween.To(() => progress, x => progress = x, 1f, 2f).SetEase(Ease.Linear).OnComplete(() => DoFinishAnim());
+        fillAnim = DOTween.To(() => progress, x => progress = x, 1f, 2.25f).SetEase(Ease.Linear);
     }
 
+    public void CompleteFill()
+    {
+        if(completed) return;
+        
+        if(fillAnim != null && !fillAnim.IsComplete())
+            fillAnim.Complete();
+        progress = 1.0f;
+        completed = true;
+        DoFinishAnim();
+    }
     public void RemoveFill()
     {
         if(fillAnim != null && !fillAnim.IsComplete())
             fillAnim.Complete();
-        progress = 0;
+        progress = 0f;
+        completed = false;
         DoFinishAnim();
     }
 

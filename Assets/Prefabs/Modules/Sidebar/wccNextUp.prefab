@@ -139,6 +139,6 @@ MonoBehaviour:
   bgCustomPivot: {x: 0.5, y: 0.5}
   listTemplate: {fileID: 3880031137678142362, guid: 60aa180580f734531b8b93b5b146e740, type: 3}
   numQueueEntries: 3
-  listStartPosition: {x: 0.25, y: 1.19, z: 0}
+  listStartPosition: {x: 0.25, y: 1.31, z: 0}
   listIncrement: -0.4
   teamNames: []
