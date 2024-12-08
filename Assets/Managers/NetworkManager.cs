@@ -59,7 +59,7 @@ public class NetworkManager : MonoBehaviour
     public UnityEvent<int, int, int> onTournamentTeamWinLossData = new UnityEvent<int, int, int>();
     public UnityEvent<int> onGameID = new UnityEvent<int>();
     public UnityEvent<TeamGameStats> onTeamGameData = new UnityEvent<TeamGameStats>();
-    public UnityEvent<HMTournamentQueueData> onTournamentQueueData = new UnityEvent<HMTournamentQueueData>();
+    public UnityEvent<HMCabinetQueue> onTournamentQueueData = new UnityEvent<HMCabinetQueue>();
     public UnityEvent<int, string> onTournamentTeamName = new UnityEvent<int, string>();
 
     public Queue<string> LogQueue;
@@ -326,9 +326,12 @@ public class NetworkManager : MonoBehaviour
         switch(jsonStepOne.type)
         {
             case "queue":
+                GetCabinetQueue();
+                /*
                 var queueData = JsonUtility.FromJson<HMTournamentQueue>(json);
                 if(queueData.data.cabinet == cabinetID)
                     onTournamentQueueData.Invoke(queueData.data);
+                    */
                 break;
             default: break;
         }
@@ -814,7 +817,7 @@ public class NetworkManager : MonoBehaviour
                     GameModel.instance.isWarmup.property = result.results[0].is_warmup;
                     GameModel.inTournamentMode = true;
                     instance.setCompleteFlag = false;
-                    GetTournamentQueue(GameModel.currentTournamentID);
+                    GetCabinetQueue();
                 } else
                 {
                     Debug.Log("no tournament games found");
@@ -824,6 +827,25 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
+    public static void GetCabinetQueue()
+    {
+        instance.StartCoroutine(_GetCabinetQueue());
+    }
+
+    static IEnumerator _GetCabinetQueue()
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get("https://kqhivemind.com/api/game/cabinet/" + instance.cabinetID +"/queued-matches/"))
+        {
+            yield return webRequest.SendWebRequest();
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                var result = JsonUtility.FromJson<HMCabinetQueue>(webRequest.downloadHandler.text);
+
+                Debug.Log("got tournament queue with " + result.matches.Length + " matches");
+                instance.onTournamentQueueData.Invoke(result);
+            }
+        }
+    }
     public static void GetTournamentQueue(int tournamentID)
     {
         instance.StartCoroutine(_GetTournamentQueue(tournamentID));
@@ -842,7 +864,7 @@ public class NetworkManager : MonoBehaviour
                     {
                         if (queue.cabinet != instance.cabinetID) continue;
 
-                        instance.onTournamentQueueData.Invoke(queue);
+                        //instance.onTournamentQueueData.Invoke(queue);
                         Debug.Log("found active tournament queue");
                         break;
                     }

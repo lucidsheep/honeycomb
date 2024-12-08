@@ -29,7 +29,7 @@ public class TournamentQueueObserver : KQObserver
         }
     }
 
-    public void OnQueueData(HMTournamentQueueData data)
+    public void OnQueueData(HMCabinetQueue data)
     {
         foreach(var n in teamNames)
         {
@@ -38,7 +38,7 @@ public class TournamentQueueObserver : KQObserver
         }
 
         int curEntry = 0;
-        foreach(var entry in data.match_list)
+        foreach(var entry in data.matches)
         {
             teamNames[curEntry * 2].teamID = entry.blue_team;
             teamNames[curEntry * 2 + 1].teamID = entry.gold_team;

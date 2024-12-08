@@ -26,7 +26,7 @@ public class WarriorPip : MonoBehaviour
         _progress = 0.01f;
         if(fillAnim != null && !fillAnim.IsComplete())
             fillAnim.Complete();
-        fillAnim = DOTween.To(() => progress, x => progress = x, 1f, 2.25f).SetEase(Ease.Linear);
+        fillAnim = DOTween.To(() => progress, x => progress = x, 1f, 2.5f).SetEase(Ease.Linear);
     }
 
     public void CompleteFill()

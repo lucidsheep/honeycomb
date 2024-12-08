@@ -442,6 +442,21 @@ public class HMTournamentQueueData
     public HMTournamentMatch[] match_list;
 }
 
+[System.Serializable]
+
+public class HMCabinetQueue
+{
+    public int cabinet_id;
+    public HMCabinetQueueMatch[] matches;
+}
+
+[System.Serializable]
+public class HMCabinetQueueMatch
+{
+    public int id, blue_team, gold_team, blue_score, gold_score, round_num;
+    public string round_name;
+    public bool is_warmup;
+}
 //{ "id":171,"name":"Let's Talk Comp","linked_team_ids":["172021224"],"tournament":28}
 
 [System.Serializable]

@@ -4,6 +4,7 @@ using System;
 public class QueenHealthBarObserver : KQObserver
 {
     public SpriteRenderer fill;
+    public bool isTrail = false;
 
     float _progress = 1f;
     float progress {
@@ -54,8 +55,13 @@ public class QueenHealthBarObserver : KQObserver
         if(currentHP < 0) currentHP = 0;
         float newPct = (float)currentHP / (float)maxHP;
         if(fillAnim != null && !fillAnim.IsComplete())
-            fillAnim.Complete();
-        fillAnim = DOTween.To(() => progress, x => progress = x, newPct, (decreasing ? .5f : 1.5f)).SetEase((decreasing ? Ease.OutQuad : Ease.Linear));
+        {
+            if(isTrail)
+                fillAnim.Kill();
+            else
+                fillAnim.Complete();
+        }
+        fillAnim = DOTween.To(() => progress, x => progress = x, newPct, (decreasing ? (isTrail ? 1.5f : .05f) : 1.5f)).SetEase((decreasing ? Ease.OutQuad : Ease.Linear)).SetDelay(isTrail ? .75f : 0f);
     }
 
 }

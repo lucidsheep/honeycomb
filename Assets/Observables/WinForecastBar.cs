@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using TMPro;
 using DG.Tweening;
+using System;
 
 public class WinForecastBar : KQObserver
 {
@@ -11,6 +12,8 @@ public class WinForecastBar : KQObserver
 	public SpriteRenderer centerPoint;
 
     public float range;
+	public bool showSnail = true;
+	public SpriteRenderer snailSprite;
 
     int curWinner = -1;
 	bool dirty = true;
@@ -23,6 +26,12 @@ public class WinForecastBar : KQObserver
 	bool startAnim = false;
 	int forceLit = 2;
 	bool forceLitBright = false;
+
+	bool dirtySnail = false;
+	bool snailFacingRight = true;
+	float snailPos = 0f;
+
+	Tweener winPctAnim;
 
 	void OnWinPercentage(float blueWinPct, GameEventData eventData)
     {
@@ -40,9 +49,23 @@ public class WinForecastBar : KQObserver
 		//KQuityManager.gameInProgress.onChange.AddListener(OnGameStart);
 		GameModel.onGameEvent.AddListener(OnGameEvent);
 		GameModel.onGameStart.AddListener(OnGameStart);
+		SnailModel.onSnailMoveEstimate.AddListener(OnSnailUpdate);
 
+		if(!showSnail && snailSprite != null)
+			snailSprite.enabled = false;
 		dirty = true;
 	}
+
+    private void OnSnailUpdate(float pos)
+    {
+		var blueWinning = SnailModel.bluePercentage > SnailModel.goldPercentage;
+		var pct = blueWinning ? SnailModel.bluePercentage : SnailModel.goldPercentage;
+		var dist = range * pct *.01f;
+		var prevPos = snailPos;
+        snailPos = dist * (blueWinning ? -1f : 1f);
+		snailFacingRight = prevPos == snailPos ? snailFacingRight : prevPos < snailPos;
+		dirtySnail = true;
+    }
 
     protected override void OnThemeChange()
     {
@@ -63,6 +86,8 @@ public class WinForecastBar : KQObserver
 			prevPct = pct = .5f;
 			curWinner = -1;
         }
+		snailPos = 0f;
+		dirtySnail = true;
     }
 
 	void OnGameEvent(string type, GameEventData data)
@@ -75,9 +100,19 @@ public class WinForecastBar : KQObserver
 		if (dirty)
 		{
             var newX = -range + (range * 2f * rawPct);
-            centerPoint.transform.localPosition = new Vector3(-newX, 0.02f, 0f);
+			var distance = Mathf.Abs(centerPoint.transform.localPosition.x - -newX);
+			if(winPctAnim != null && !winPctAnim.IsComplete())
+				winPctAnim.Kill();
+			winPctAnim = centerPoint.transform.DOLocalMoveX(-newX, distance * (.5f / 2.7f)).SetEase(Ease.OutBack);
 			dirty = false;
         }
+
+		if(dirtySnail) //:O
+		{
+			snailSprite.transform.localPosition = new Vector3(snailPos, .02f, 0f);
+			snailSprite.transform.localScale = new Vector3(.75f * (snailFacingRight ? 1f : -1f), 1f, 1f);
+			dirtySnail = false; 
+		}
 	}
 }
 
