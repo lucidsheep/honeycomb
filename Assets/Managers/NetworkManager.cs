@@ -46,9 +46,9 @@ public class NetworkManager : MonoBehaviour
     public int tournamentID = -1; //todo - don't hardcode this
 
     bool useSecureSockets = true;
-    bool setCompleteFlag = true;
 
     public static int currentGameID = 0;
+    public static int currentTournamentGameID = 0;
     public static bool localMode = false;
 
     public GameEvent gameEventDispatcher = new GameEvent();
@@ -376,7 +376,6 @@ public class NetworkManager : MonoBehaviour
                         currentGameID = int.Parse(gameStartData.game_id);
                         onGameID.Invoke(currentGameID);
                     }
-                    setCompleteFlag = false;
                     break;
                 case "match":
                     var matchData = JsonUtility.FromJson<HMMatchState>(json);
@@ -385,7 +384,7 @@ public class NetworkManager : MonoBehaviour
                         Debug.Log("null game found");
                         GameModel.newSetTimeout = 25f;
                         GameModel.newSetTeamData = null;
-                        setCompleteFlag = true;
+                        currentTournamentGameID = 0;
                     }
                     else
                     {
@@ -413,7 +412,8 @@ public class NetworkManager : MonoBehaviour
                         {
                             StartCoroutine(GetTeamIDs());
                         }
-                        if (!setCompleteFlag)
+                        bool isNewSet = currentTournamentGameID != matchData.current_match.id;
+                        if (!isNewSet)
                         {
                             //match data during a set means an adjustment, so fix immediately
                             GameModel.instance.setPoints.property = matchData.current_match.rounds_per_match != 0 ? matchData.current_match.rounds_per_match : matchData.current_match.wins_per_match;
@@ -430,7 +430,7 @@ public class NetworkManager : MonoBehaviour
                                 GameModel.newSetTeamData = matchData;
                             }
                         }
-                        else
+                        else if(!GameModel.instance.gameIsRunning)
                         {
                             //store next set data and start countdown for showing match preview
                             GameModel.newSetTeamData = matchData;
@@ -816,7 +816,7 @@ public class NetworkManager : MonoBehaviour
                     GetBracketData(result.results[0].bracket, result.results[0].blue_score, result.results[0].gold_score);
                     GameModel.instance.isWarmup.property = result.results[0].is_warmup;
                     GameModel.inTournamentMode = true;
-                    instance.setCompleteFlag = false;
+                    currentTournamentGameID = result.results[0].id;
                     GetCabinetQueue();
                 } else
                 {
