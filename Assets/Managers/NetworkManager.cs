@@ -394,16 +394,17 @@ public class NetworkManager : MonoBehaviour
                         {
                             int blueTeamID = fakeTeamID;
                             fakeTeamID++;
+                            //Debug.Log("whiteboard data: \n" + json);
                             foreach(var playerData in matchData.current_match.blue_players)
                             {
-                                playerData.team = fakeTeamID;
+                                playerData.team = blueTeamID;
                                 ProcessTournamentPlayer(playerData);
                             }
                             int goldTeamID = fakeTeamID;
                             fakeTeamID++;
                             foreach(var playerData in matchData.current_match.gold_players)
                             {
-                                playerData.team = fakeTeamID;
+                                playerData.team = goldTeamID;
                                 ProcessTournamentPlayer(playerData);
                             }
                             onTournamentTeamIDs.Invoke(blueTeamID, goldTeamID);
@@ -413,6 +414,8 @@ public class NetworkManager : MonoBehaviour
                             StartCoroutine(GetTeamIDs());
                         }
                         bool isNewSet = currentTournamentGameID != matchData.current_match.id;
+                        Debug.Log("curmatch " + currentTournamentGameID + ", newmatch " + matchData.current_match.id);
+                        currentTournamentGameID = matchData.current_match.id;
                         if (!isNewSet)
                         {
                             //match data during a set means an adjustment, so fix immediately
