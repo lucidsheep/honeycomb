@@ -193,6 +193,7 @@ public class WebcamController : MonoBehaviour
     public void ChangeCamera(string newDeviceName)
     {
         webcam.Stop();
+        /* suspicion this is causing a memory leak on 4K cards
         if (PlayerCameraObserver.useCameraDefaults)
         {
             webcam.requestedFPS = 0;
@@ -203,9 +204,10 @@ public class WebcamController : MonoBehaviour
         }
         webcam.requestedHeight = 1920;
         webcam.requestedWidth = 1080;
-
+        */
         webcam.deviceName = newDeviceName;
         Debug.Log("webcam is " + webcam.deviceName);
+        Debug.Log("webcam res " + webcam.width + "x" + webcam.height);
         webcam.Play();
     }
 }

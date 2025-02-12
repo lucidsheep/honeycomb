@@ -274,6 +274,7 @@ public class SetupScreen : MonoBehaviour
 
 		GoogleSheetsDB.instance.ImportData(sceneID.text);
 
+		//todo - change these to ultrawide settings
 		if (lowResCamera.isOn)
 		{
 			PlayerCameraObserver.cameraHeight = 1080;

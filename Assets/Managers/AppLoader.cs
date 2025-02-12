@@ -28,13 +28,14 @@ public class AppLoader : MonoBehaviour
     bool jsonLoaded = false;
 
     static string slash;
+    static string platform;
 
     // Start is called before the first frame update
     void Awake()
     {
         Application.targetFrameRate = 60;
 
-        string platform = GetPlatform();
+        platform = GetPlatform();
         slash = platform == "windows" ? "\\" : "/"; // <3 Windows
         var baseURL = "https://kq.style/honeycomb/";
         Debug.Log("version " + APP_VERSION);
@@ -82,28 +83,31 @@ public class AppLoader : MonoBehaviour
         }
 
         //command line args
-        var args = Environment.GetCommandLineArgs();
-        if (args.Length > 0)
+        if(platform == "windows")
         {
-            Debug.Log("command line args: " + args.Length);
-            for (int i = 0; i < args.Length; i++)
+            var args = Environment.GetCommandLineArgs();
+            if (args.Length > 0)
             {
-                bool nextArg = i + 1 < args.Length;
-                var arg = args[i];
-                Debug.Log(arg);
-                switch(arg)
+                Debug.Log("command line args: " + args.Length);
+                for (int i = 0; i < args.Length; i++)
                 {
-                    case "setTheme":
-                        if (!nextArg) break;
-                        var next = args[i + 1];
-                        ViewModel.defaultTheme = next;
-                        PlayerPrefs.SetString("theme", next);
-                        break;
-                    case "skipSetup":
-                        SKIP_SETUP = true;
-                        break;
-                }
+                    bool nextArg = i + 1 < args.Length;
+                    var arg = args[i];
+                    Debug.Log(arg);
+                    switch(arg)
+                    {
+                        case "setTheme":
+                            if (!nextArg) break;
+                            var next = args[i + 1];
+                            ViewModel.defaultTheme = next;
+                            PlayerPrefs.SetString("theme", next);
+                            break;
+                        case "skipSetup":
+                            SKIP_SETUP = true;
+                            break;
+                    }
 
+                }
             }
         }
         if (useLocalBundle)
@@ -113,22 +117,35 @@ public class AppLoader : MonoBehaviour
             FinishLoad();
         } else
         {
-            StartCoroutine(LoadRemoteBundles(baseURL, platform));
+            StartCoroutine(LoadRemoteBundles(baseURL));
         }
     }
 
     void CreateUpdateScript()
     {
-        StreamWriter updateScript = new StreamWriter(Application.dataPath + slash + ".." + slash + "update.bat", false);
-        updateScript.Write("timeout /t 5\nif exist update.zip tar -xf update.zip\nif exist update.zip del update.zip\nstart Honeycomb.exe");
-        updateScript.Close();
+        if(platform == "windows")
+        {
+            StreamWriter updateScript = new StreamWriter(Application.dataPath + slash + ".." + slash + "update.bat", false);
+            updateScript.Write("timeout /t 5\nif exist update.zip tar -xf update.zip\nif exist update.zip del update.zip\nstart Honeycomb.exe");
+            updateScript.Close();
+        } else
+        {
+            //this doesn't set permissions, so just ship the update script with initial download
+            //StreamWriter updateScript = new StreamWriter(Application.dataPath + slash + ".." + slash + "update.sh", false);
+            //updateScript.Write("#/bin/bash\n\nsleep 5\nif [ -e update.zip ]\nthen\ntar -xf update.zip\nrm update.zip\nfi\n./Contents/Honeycomb &\ndisown");
+            //updateScript.Close();
+        }
     }
 
     void CreateKQuityScript()
     {
-        StreamWriter updateScript = new StreamWriter(Application.dataPath + slash + ".." + slash + "kquity.bat", false);
-        updateScript.Write("cd \"" + Application.dataPath + "\\..\"\nif exist kquity.zip tar -xf kquity.zip\nif exist kquity.zip del kquity.zip\ncd kquity\nstart /min kquity.exe");
-        updateScript.Close();
+        if(platform == "windows")
+        {
+            StreamWriter updateScript = new StreamWriter(Application.dataPath + slash + ".." + slash + "kquity.bat", false);
+            updateScript.Write("cd \"" + Application.dataPath + "\\..\"\nif exist kquity.zip tar -xf kquity.zip\nif exist kquity.zip del kquity.zip\ncd kquity\nstart /min kquity.exe");
+            updateScript.Close();
+        }
+        //macos has script built in
     }
 
     [System.Serializable]
@@ -156,7 +173,7 @@ public class AppLoader : MonoBehaviour
         public int version;
     }
 
-    IEnumerator LoadRemoteBundles(string baseURL, string platform)
+    IEnumerator LoadRemoteBundles(string baseURL)
     {
         string jsonURL = baseURL + platform + "/version.json";
         string assetURL = baseURL + platform + "/";
@@ -170,7 +187,7 @@ public class AppLoader : MonoBehaviour
                 if (APP_VERSION < result.version)
                 {
                     Debug.Log("verion update required! starting download");
-                    StartCoroutine(UpdateApp(baseURL, platform));
+                    StartCoroutine(UpdateApp(baseURL));
                     jsonLoaded = true;
                 }
                 else
@@ -186,14 +203,15 @@ public class AppLoader : MonoBehaviour
         
     }
 
-    IEnumerator UpdateApp(string baseURL, string platform)
+    IEnumerator UpdateApp(string baseURL)
     {
         bundleProgress = new List<(float, bool)>();
         bundleProgress.Add((0f, false));
         Debug.Log("starting update...");
         using (var zipReq = UnityWebRequest.Get(baseURL + platform + "/update.zip"))
         {
-            zipReq.downloadHandler = new DownloadHandlerFile(Application.dataPath + slash + ".." + slash + "update.zip");
+            var path = platform == "macOS" ? Application.dataPath + "/update.zip" : Application.dataPath + slash + ".." + slash + "update.zip";
+            zipReq.downloadHandler = new DownloadHandlerFile(path);
             var request = zipReq.SendWebRequest();
             while (!request.isDone)
             {
@@ -203,7 +221,11 @@ public class AppLoader : MonoBehaviour
             if (zipReq.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("finished downloading zip, starting update script...");
-                System.Diagnostics.Process.Start(Application.dataPath + slash + ".." + slash + "update.bat");
+                if(platform == "windows")
+                    System.Diagnostics.Process.Start(Application.dataPath + slash + ".." + slash + "update.bat");
+                else
+                    System.Diagnostics.Process.Start("/System/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal", Application.dataPath + "/update.sh");
+
                 Application.Quit();
             } else
             {
@@ -259,7 +281,7 @@ public class AppLoader : MonoBehaviour
             bundleProgress[bundleIndex] = (1f, true);
         } else
         {
-            var handler = new DownloadHandlerFile(Application.dataPath + slash + ".." + slash + "kquity.zip");
+            var handler = new DownloadHandlerFile(Application.dataPath + (platform == "windows" ? slash + ".." + slash : "/") + "kquity.zip");
             using (var webRequest = UnityWebRequest.Get(finalURL))
             {
                 Debug.Log("started download of kquity");

@@ -55,6 +55,9 @@ public class KQuityManager : MonoBehaviour
 #if !UNITY_EDITOR && UNITY_STANDALONE_WIN
         System.Diagnostics.Process.Start(Application.dataPath + "\\..\\" + "kquity.bat");
 #endif
+#if !UNITY_EDITOR && UNITY_STANDALONE_OSX
+        System.Diagnostics.Process.Start("/System/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal", Application.dataPath + "/kquity.sh");
+#endif
         Connect();
 	}
 
