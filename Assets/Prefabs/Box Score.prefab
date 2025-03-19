@@ -2061,6 +2061,8 @@ MonoBehaviour:
   blueHighlight: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   goldHighlight: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
   highlightStart: {x: 1.4, y: 0.19}
+  blueScoreColor: {r: 0, g: 0, b: 0, a: 1}
+  goldScoreColor: {r: 0, g: 0, b: 0, a: 1}
   highlightBerry: 0.5
   highlightSnail: 0.57
   highlightGold: -0.19

@@ -414,6 +414,8 @@ MonoBehaviour:
   namePlate: {fileID: 0}
   themeBG: {fileID: 5458108682728387336}
   defaultCrown: {fileID: 21300000, guid: 34a6f5b07505948e4aa494c13b0797d3, type: 3}
+  blueFontColor: {r: 1, g: 1, b: 1, a: 1}
+  goldFontColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1949158740875124358
 GameObject:
   m_ObjectHideFlags: 0

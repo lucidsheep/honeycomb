@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "app.rive.rive-unity": {
+      "version": "https://github.com/rive-app/rive-unity.git?path=package#v0.3.3",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "4e8dca6983f4b2f4e50b146df855f86503b122dd"
+    },
     "com.kyub.emojisearch": {
       "version": "https://gitlab.com/KyubInteractive/emojisearchapi.git#com.kyub.emojisearch-1.1.5",
       "depth": 0,

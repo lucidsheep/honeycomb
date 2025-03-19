@@ -109,6 +109,9 @@ public class PostGameScreen : KQObserver
 			pos.x = ViewModel.currentTheme.customCanvasX;
 			pos.y = ViewModel.currentTheme.customCanvasY - ViewModel.bottomBarPadding.property - .12f;
 			scale = .9f; //todo - this is hardcoded
+			bg.transform.localScale = ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.TwoCol ?
+				new Vector3(1.44f, 1f, .8f) :
+				new Vector3(1.54f, 1.07f, .85f);
 		}
 		else
 		{
@@ -134,6 +137,7 @@ public class PostGameScreen : KQObserver
 		pos.y += ViewModel.bottomBarPadding.property;
 		transform.localPosition = pos;
 		transform.localScale = Vector3.one * scale;
+		replayBG.sprite = AppLoader.GetStreamingSprite("postgameBG");
 		SetupSecondaryScreen();
 		SetupBoxScore();
 		SetupPlayerCards();
@@ -151,6 +155,12 @@ public class PostGameScreen : KQObserver
         {
 			subText.transform.localScale = Vector3.one * t.scale;
 			subText.transform.localPosition = new Vector3(t.x, t.y, 0f);
+        }
+		t = ViewModel.currentTheme.GetTweak("postgameSeriesText");
+		if(t != null)
+        {
+			seriesText.transform.localScale = Vector3.one * t.scale;
+			seriesText.transform.localPosition = new Vector3(t.x, t.y, 0f);
         }
 		SetVisible(false, true);
 	}
@@ -320,6 +330,7 @@ public class PostGameScreen : KQObserver
 		var video = winType == "military" ? videos.replayClip_military : winType == "economic" ? videos.replayClip_economic : videos.replayClip_snail;
 		bg.clip = video != null ? video : videos.replayClip;
 		bg.time = 0f;
+		bg.gameObject.SetActive(true);
 		bg.Play();
 		bool doFade = video != null;
 		if(doFade)
@@ -384,6 +395,7 @@ public class PostGameScreen : KQObserver
 		{
 			bg.source = VideoSource.VideoClip;
 			bg.clip = blueWins ? VideoDB.blueVideos.postgame : VideoDB.goldVideos.postgame;
+			bg.gameObject.SetActive(bg.clip != null);
 		} else
         {
 			bg.source = VideoSource.Url;

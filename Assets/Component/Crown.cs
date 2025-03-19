@@ -23,7 +23,7 @@ public class Crown : MonoBehaviour
 				main.sprite = filled ? full_blue : empty_blue;
             } else
             {
-				main.sprite = filled ? full_blue : empty_blue;
+				main.sprite = filled ? full_gold : empty_gold;
 			}
 			main.color = !useColor ? Color.white : color;
         }

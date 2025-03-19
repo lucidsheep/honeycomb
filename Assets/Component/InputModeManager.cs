@@ -7,7 +7,7 @@ public class InputModeManager : MonoBehaviour
 {
     public float heightPercent = .125f;
     public static bool inputModeEnabled = false;
-    MainBarInputArea masterObject { get { return ViewModel.instance.mainBar.inputArea; } }
+    MainBarInputArea masterObject { get { return Object.FindObjectOfType<MainBarInputArea>(true); } }
     //public Button
 
     private void Update()

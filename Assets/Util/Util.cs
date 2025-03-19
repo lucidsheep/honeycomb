@@ -76,5 +76,10 @@ public class Util
         return output;
     }
 
+    public static bool NullOrEmpty(string input)
+    {
+        return input == null || input == "";
+    }
+
 }
 

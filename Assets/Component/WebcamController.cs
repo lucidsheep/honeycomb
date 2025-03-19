@@ -71,7 +71,7 @@ public class WebcamController : MonoBehaviour
 
     public static (Vector3, float) GetPositionAndScale(bool minimized)
     {
-        Vector3 position = new Vector3(-1.65f, .95f, 90f);
+        Vector3 position = new Vector3(-1.95f, .95f, 90f);
         float scale = 0.007499999f;
 
         //hack for extra space with camp frame. need to include parameter to let theme to adjust this
@@ -85,6 +85,8 @@ public class WebcamController : MonoBehaviour
             {
                 position = new Vector3(4.19f, 2f + ViewModel.currentTheme.customCanvasY, 0f);
                 scale = 0.0022f;
+                if(ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.OneCol_Right)
+                    position.x -= 2f;
             }
             else if (ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.OneCol_Left)
                 position.x += 1f;
@@ -193,7 +195,7 @@ public class WebcamController : MonoBehaviour
     public void ChangeCamera(string newDeviceName)
     {
         webcam.Stop();
-        /* suspicion this is causing a memory leak on 4K cards
+        //suspicion this is causing a memory leak on 4K cards
         if (PlayerCameraObserver.useCameraDefaults)
         {
             webcam.requestedFPS = 0;
@@ -204,7 +206,6 @@ public class WebcamController : MonoBehaviour
         }
         webcam.requestedHeight = 1920;
         webcam.requestedWidth = 1080;
-        */
         webcam.deviceName = newDeviceName;
         Debug.Log("webcam is " + webcam.deviceName);
         Debug.Log("webcam res " + webcam.width + "x" + webcam.height);

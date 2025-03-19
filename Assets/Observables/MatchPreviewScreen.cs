@@ -122,7 +122,7 @@ public class MatchPreviewScreen : KQObserver
 
     override protected void OnThemeChange()
 	{
-		var pos = new Vector3(-1.64f, .96f, 0f);
+		var pos = new Vector3(-1.88f, .96f, 0f);
 		float scale = 1f;
 		switch (ViewModel.currentTheme.GetLayout())
 		{

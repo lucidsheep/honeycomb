@@ -58,6 +58,7 @@ MonoBehaviour:
   bg: {fileID: 0}
   profileBG: {fileID: 1543744518752495416}
   profile: {fileID: 6508469672875222772}
+  isQueen: 0
 --- !u!1 &271216278800380996
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,6 +541,7 @@ MonoBehaviour:
   bg: {fileID: 0}
   profileBG: {fileID: 3819364841874065869}
   profile: {fileID: 8809003267231483905}
+  isQueen: 0
 --- !u!1 &1119468364160652975
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,6 +948,7 @@ MonoBehaviour:
   bg: {fileID: 0}
   profileBG: {fileID: 7812297644564809087}
   profile: {fileID: 2545688870133662899}
+  isQueen: 0
 --- !u!1 &1295399767203596514
 GameObject:
   m_ObjectHideFlags: 0
@@ -1260,6 +1263,7 @@ MonoBehaviour:
   bg: {fileID: 0}
   profileBG: {fileID: 1428967956164229411}
   profile: {fileID: 6695294715996551407}
+  isQueen: 0
 --- !u!1 &1855465760806157967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1490,6 +1494,7 @@ MonoBehaviour:
   bg: {fileID: 0}
   profileBG: {fileID: 2634361569111675975}
   profile: {fileID: 7760230168685450635}
+  isQueen: 0
 --- !u!1 &2030508397602456428
 GameObject:
   m_ObjectHideFlags: 0
@@ -1659,7 +1664,7 @@ MonoBehaviour:
   - {fileID: 1428931972773942995}
   - {fileID: 2761041924277896311}
   miniTable: 1
-  themeBG: {fileID: 0}
+  themeBG: {fileID: 7289164476280171186}
 --- !u!1 &2317717963753973513
 GameObject:
   m_ObjectHideFlags: 0
@@ -1970,6 +1975,7 @@ MonoBehaviour:
   bg: {fileID: 0}
   profileBG: {fileID: 4309618441197323955}
   profile: {fileID: 8426260162621835135}
+  isQueen: 0
 --- !u!1 &3142712952758950857
 GameObject:
   m_ObjectHideFlags: 0
@@ -2112,6 +2118,7 @@ MonoBehaviour:
   bg: {fileID: 0}
   profileBG: {fileID: 2150452203281604381}
   profile: {fileID: 5974360499152608977}
+  isQueen: 0
 --- !u!1 &3230354135516552450
 GameObject:
   m_ObjectHideFlags: 0
@@ -3650,6 +3657,7 @@ MonoBehaviour:
   bg: {fileID: 0}
   profileBG: {fileID: 5257141252295744540}
   profile: {fileID: 561788625909472720}
+  isQueen: 0
 --- !u!1 &4077725515754804409
 GameObject:
   m_ObjectHideFlags: 0
@@ -6677,6 +6685,7 @@ MonoBehaviour:
   bg: {fileID: 0}
   profileBG: {fileID: 5934191033908937001}
   profile: {fileID: 2118022883251896549}
+  isQueen: 0
 --- !u!1 &8326505050845896757
 GameObject:
   m_ObjectHideFlags: 0
@@ -7347,6 +7356,7 @@ MonoBehaviour:
   bg: {fileID: 0}
   profileBG: {fileID: 2649030368527666562}
   profile: {fileID: 7781655896450649166}
+  isQueen: 0
 --- !u!1001 &264628023417618909
 PrefabInstance:
   m_ObjectHideFlags: 0

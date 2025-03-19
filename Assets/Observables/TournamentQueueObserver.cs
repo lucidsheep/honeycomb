@@ -4,7 +4,7 @@ using TMPro;
 
 public class TournamentQueueObserver : KQObserver
 {
-    public TournamentQueueTeamName listTemplate;
+    public TournamentQueueTeamName listTemplate, listBlueTemplate, listGoldTemplate;
 	public int numQueueEntries = 3;
     public Vector3 listStartPosition;
     public float listIncrement;
@@ -16,14 +16,28 @@ public class TournamentQueueObserver : KQObserver
         NetworkManager.instance.onTournamentQueueData.AddListener(OnQueueData);
         NetworkManager.instance.onTournamentTeamName.AddListener(OnTournamentTeamName);
 
+        SetTeamList();
+    }
+
+    void SetTeamList()
+    {
+        while(teamNames.Count > 0)
+        {
+            var tn = teamNames[0];
+            Destroy(tn.gameObject);
+            teamNames.RemoveAt(0);
+        }
+
         var numTeams = numQueueEntries * 2;
+        var listY = listStartPosition.y;
         while(numTeams > 0)
         {
-            var thisName = Instantiate(listTemplate, this.transform);
-            thisName.transform.localPosition = listStartPosition;
+            var isBlue = numTeams % 2 == 0;
+            var thisName = Instantiate((listBlueTemplate != null ? (isBlue ? listBlueTemplate : listGoldTemplate) :  listTemplate), this.transform);
+            thisName.transform.localPosition = new Vector3(listStartPosition.x, listY, listStartPosition.z);
             thisName.text.text = "";
-            thisName.isBlue = numTeams % 2 == 1;
-            listStartPosition.y += listIncrement;
+            thisName.isBlue = isBlue;
+            listY += listIncrement;
             teamNames.Add(thisName);
             numTeams--;
         }
@@ -83,6 +97,12 @@ public class TournamentQueueObserver : KQObserver
 		{
             listIncrement = float.Parse(moduleParameters["listIncrement"]);
 		}
+
+        if(moduleParameters.ContainsKey("length"))
+        {
+            numQueueEntries = int.Parse(moduleParameters["length"]);
+        }
+        SetTeamList();
     }
 }
 

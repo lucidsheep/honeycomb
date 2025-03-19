@@ -9,6 +9,8 @@ public class BoxScoreBase : MonoBehaviour
 	public SpriteRenderer highlightBox;
 	public Sprite blueHighlight, goldHighlight;
 	public Vector2 highlightStart = new Vector2(1.4f, .19f);
+	public Color blueScoreColor = Color.white;
+	public Color goldScoreColor = Color.white;
 	public float highlightBerry = .5f, highlightSnail = .57f, highlightGold = -.19f;
 
 	public bool usePercent = true;
@@ -44,20 +46,31 @@ public class BoxScoreBase : MonoBehaviour
 				highlightLoc % 2 == 1 ? highlightStart.y : highlightGold,
 				1f);
 		}
-		queenCol.text = blueQueens + "\n" + goldQueens;
-		berryCol.text = blueBerries + "\n" + goldBerries;
+		queenCol.text = AddColor(blueQueens, blueScoreColor) + "\n" + AddColor(goldQueens, goldScoreColor);
+		berryCol.text = AddColor(blueBerries, blueScoreColor) + "\n" + AddColor(goldBerries, goldScoreColor);
 
 		//snails are complicated
 		
-		string snailTxt = "";
-		if(blueSnail >= 100) snailTxt += "<size=66%>" + blueSnail.ToString() + "</size>\n";
-		else if(blueSnail <= 0) snailTxt += "--\n";
-		else snailTxt += blueSnail.ToString() + (usePercent ? "%" : "") + "\n";
+		string blueSnailTxt = "", goldSnailText = "";
+		if(blueSnail >= 100) blueSnailTxt += "<size=66%>" + blueSnail.ToString() + "</size>\n";
+		else if(blueSnail <= 0) blueSnailTxt += "--";
+		else blueSnailTxt += blueSnail.ToString() + (usePercent ? "%" : "");
 
-		if(goldSnail >= 100) snailTxt += "<size=66%>" + goldSnail.ToString() + "</size>";
-		else if(goldSnail <= 0) snailTxt += "--";
-		else snailTxt += goldSnail.ToString() + (usePercent ? "%" : "");
-		snailCol.text = snailTxt;
+		if(goldSnail >= 100) goldSnailText += "<size=66%>" + goldSnail.ToString() + "</size>";
+		else if(goldSnail <= 0) goldSnailText += "--";
+		else goldSnailText += goldSnail.ToString() + (usePercent ? "%" : "");
+
+		snailCol.text = AddColor(blueSnailTxt, blueScoreColor) + "\n" + AddColor(goldSnailText, goldScoreColor);
+	}
+
+	string AddColor(string input, Color color)
+	{
+		return "<color=#" + ColorUtility.ToHtmlStringRGB(color) + ">" + input + "</color>";
+	}
+
+	string AddColor(int input, Color color)
+	{
+		return AddColor(input.ToString(), color);
 	}
 }
 

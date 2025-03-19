@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using DG.Tweening;
+using Unity.Barracuda;
 
 public class QueenKillReplayObserver : KQObserver
 {
@@ -27,6 +28,7 @@ public class QueenKillReplayObserver : KQObserver
         if (type == GameEventType.PLAYER_KILL && data.targetType == "Queen")
         {
             if(state != State.Ready) return;
+            if(PlayerPrefs.GetInt("instantReplay") == 0) return;
 
             //calculate if the game is over, don't show replay if it is
             var blueQueens = GameModel.instance.teams[1].players[2].curGameStats.deaths.property;

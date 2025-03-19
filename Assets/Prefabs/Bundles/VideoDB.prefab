@@ -110,3 +110,16 @@ MonoBehaviour:
       replayClip_snail: {fileID: 32900000, guid: 047b4507e6bd14f8eab99038102a6563, type: 3}
       postgame: {fileID: 32900000, guid: 0bc67d857d1bf467481cefc88536f2c9, type: 3}
     name: wcc
+  - blueVideos:
+      replayClip: {fileID: 32900000, guid: 6f75f482edf6448a7aac071e96ec6dc1, type: 3}
+      replayClip_military: {fileID: 32900000, guid: 10d3ebe2c1f494efaaa41a30fa0e894f, type: 3}
+      replayClip_economic: {fileID: 32900000, guid: a52493f0903b64929b0541ca5e076797, type: 3}
+      replayClip_snail: {fileID: 32900000, guid: c83169176f68446a59efa3ee56fa4468, type: 3}
+      postgame: {fileID: 0}
+    goldVideos:
+      replayClip: {fileID: 32900000, guid: 6f75f482edf6448a7aac071e96ec6dc1, type: 3}
+      replayClip_military: {fileID: 32900000, guid: c706e94ab93b8483fb05e953b873a368, type: 3}
+      replayClip_economic: {fileID: 32900000, guid: dfaf3691afd4f4c908dfd19f962dc6cb, type: 3}
+      replayClip_snail: {fileID: 32900000, guid: 047b4507e6bd14f8eab99038102a6563, type: 3}
+      postgame: {fileID: 0}
+    name: jojo

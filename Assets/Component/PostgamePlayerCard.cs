@@ -14,10 +14,17 @@ public class PostgamePlayerCard : MonoBehaviour
 	public GameObject namePlate;
 	public SpriteRenderer themeBG;
 	public Sprite defaultCrown;
+	public Color blueFontColor = Color.white;
+	public Color goldFontColor = Color.white;
 
 	Color fadedWhite = new Color(1f, 1f, 1f, 0f);
 
 	void SetColorPreserveAlpha(SpriteRenderer target, Color color)
+	{
+		target.color = new Color(color.r, color.g, color.b, target.color.a);
+	}
+
+	void SetColorPreserveAlpha(TextMeshPro target, Color color)
 	{
 		target.color = new Color(color.r, color.g, color.b, target.color.a);
 	}
@@ -84,16 +91,23 @@ public class PostgamePlayerCard : MonoBehaviour
 			crowns[2].sprite = nQueenKills > 2 ? customCrownFull : customCrownEmpty;
 		}
 
-		if(ViewModel.currentTheme.postgameCardFont != "")
+		if(!Util.NullOrEmpty(ViewModel.currentTheme.postgameCardFont))
         {
 			leftCol.font = rightCol.font = FontDB.GetFont(ViewModel.currentTheme.postgameCardFont);
         }
 
+		SetColorPreserveAlpha(leftCol, teamID == 0 ? blueFontColor : goldFontColor);
+		SetColorPreserveAlpha(rightCol, teamID == 0 ? blueFontColor : goldFontColor);
+		SetColorPreserveAlpha(playerName, teamID == 0 ? blueFontColor : goldFontColor);
+
 		if(ViewModel.currentTheme.playerCardStyle != null && ViewModel.currentTheme.playerCardStyle.scale > 0f)
         {
-			leftCol.font = FontDB.GetFont(ViewModel.currentTheme.playerCardStyle.numberFont);
-			rightCol.font = FontDB.GetFont(ViewModel.currentTheme.playerCardStyle.statFont);
-			playerName.font = FontDB.GetFont(ViewModel.currentTheme.playerCardStyle.nameFont);
+			if(!Util.NullOrEmpty(ViewModel.currentTheme.playerCardStyle.numberFont))
+			{
+				leftCol.font = FontDB.GetFont(ViewModel.currentTheme.playerCardStyle.numberFont);
+				rightCol.font = FontDB.GetFont(ViewModel.currentTheme.playerCardStyle.statFont);
+				playerName.font = FontDB.GetFont(ViewModel.currentTheme.playerCardStyle.nameFont);
+			}
 		}
 	}
 }

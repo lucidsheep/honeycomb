@@ -173,7 +173,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 19.85
+  m_fontSize: 36
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2040,7 +2040,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.25
+  m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3781,7 +3781,9 @@ MonoBehaviour:
       cameraY: 0
       cameraScale: 0
       customCameraWidth: 0
+      customCameraHeight: 0
       hideCameraIcons: 0
+      flipPlayerCameras: 0
     boxScoreStyle:
       name: 
       useCustomPosition: 0
@@ -3910,6 +3912,10 @@ MonoBehaviour:
   - {fileID: 3022604383968729705, guid: d5aa0da262f0e4c59b8e66d3869c6b7d, type: 3}
   - {fileID: 1621947411791464451, guid: ed43228fa1b6e44ab87d592dff432ac5, type: 3}
   - {fileID: 1621947411791464451, guid: 495eaaefbe7a54e28a672f4bdb88509e, type: 3}
+  - {fileID: 7326644024046561879, guid: 61095af5dad6446ef83bf08484d4ec9f, type: 3}
+  - {fileID: 7326644024046561879, guid: c83d047068bcc4abaaac5aa96c0206f7, type: 3}
+  - {fileID: 8124462963830366932, guid: 87b83284a7a0740dca150ef55e801575, type: 3}
+  - {fileID: 3022604383968729705, guid: 8dc23ce52eefd4da589fd346a78b5dae, type: 3}
   curModules: []
   leftSidebar: {fileID: 7971284978406135557}
   rightSidebar: {fileID: 4681536881800815490}
@@ -3982,6 +3988,8 @@ MonoBehaviour:
     fontName: wc24
   - font: {fileID: 11400000, guid: 61780be2bf9fa4601a6179efdf7130c7, type: 2}
     fontName: wcDetail
+  - font: {fileID: 11400000, guid: 34e32b6e031d14d3ab71c718be31f162, type: 2}
+    fontName: jojo
 --- !u!114 &3953148250283245154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3999,22 +4007,27 @@ MonoBehaviour:
   - {fileID: 5265151286151429123, guid: 2ceeb44c3fb844020897b949446cdfd4, type: 3}
   - {fileID: 5265151286151429123, guid: c330d782837e04c71bfe4be1f12431bf, type: 3}
   - {fileID: 5265151286151429123, guid: 7db57a939d75740549c52d93820ab14d, type: 3}
+  - {fileID: 5265151286151429123, guid: ea8e38702dba745368ea94dfcf9ef841, type: 3}
   postgameScreens:
   - {fileID: 6037398074245946859, guid: 69af786a65b474a6fbbef21241acc7e5, type: 3}
   - {fileID: -1697214059453694578, guid: 9f21b0331ff5844dc9c923ae7667ec0b, type: 3}
   - {fileID: 3146608573864202273, guid: d6db21a91cf55491b83e974fdda849ec, type: 3}
   - {fileID: 3146608573864202273, guid: c9683c446071144d68a9794f561b3f25, type: 3}
+  - {fileID: 3146608573864202273, guid: 546bfc34446d14f1cb282b300070b4c3, type: 3}
   boxScores:
   - {fileID: 4577985997614243457, guid: 74bd0d852fe6449a480b09c4c94b7e36, type: 3}
   - {fileID: 8030671955221456812, guid: 572a3937b43e54886835d1e83593f103, type: 3}
   - {fileID: 7240986922557060792, guid: f270fdc8596934c9499abf724d99c3d4, type: 3}
+  - {fileID: 8030671955221456812, guid: 8c6176c1db1b64b25833199a6d3c5585, type: 3}
   playerCards:
   - {fileID: 1949158740447203311, guid: 3eb77c6b61d5742b9b575af13f5867a4, type: 3}
   - {fileID: 1949158740447203311, guid: 4cbe978972ec3421ab2829ed83a8d565, type: 3}
+  - {fileID: 1949158740447203311, guid: 65f2db393e10b4ef8ad3ec562ac66e2c, type: 3}
   previewScreens:
   - {fileID: 300211002665921891, guid: 7a9a3f930bbbd4727b4c569d51784145, type: 3}
   - {fileID: 300211002665921891, guid: 8dae89de2cd2348c7b7b14abab872038, type: 3}
   - {fileID: 300211002665921891, guid: 2134f820464184ba998625f36e075914, type: 3}
+  - {fileID: 300211002665921891, guid: efe9574cf02474e3eae58ffa9d60f26d, type: 3}
 --- !u!114 &9215371543772327094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6359,7 +6372,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.6
+  m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7549,7 +7562,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.65
+  m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9708,7 +9721,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.7
+  m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

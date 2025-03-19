@@ -457,10 +457,15 @@ public class PlayerCameraObserver : KQObserver
         var wcHeight = aspectRatio == AspectRatio.Ultrawide ? 1.35f : 1.85f;
         var wcWidth = (width / height) * wcHeight;
 
-        if(ViewModel.currentTheme.barStyle.customCameraWidth > 0f && webcamName != "commentaryCamera")
-            wcWidth = ViewModel.currentTheme.barStyle.customCameraWidth;
-        GetComponent<Canvas>().GetComponent<RectTransform>().sizeDelta = new Vector2(wcWidth, wcHeight);
-
+        if(webcamName != "commentaryCamera")
+        {
+            if(ViewModel.currentTheme.barStyle.customCameraWidth > 0f && webcamName != "commentaryCamera")
+                wcWidth = ViewModel.currentTheme.barStyle.customCameraWidth;
+            if(ViewModel.currentTheme.barStyle.customCameraHeight > 0f && webcamName != "commentaryCamera")
+                wcHeight = ViewModel.currentTheme.barStyle.customCameraHeight;
+            GetComponent<Canvas>().GetComponent<RectTransform>().sizeDelta = new Vector2(wcWidth, wcHeight);
+            GetComponentInChildren<RawImage>().GetComponent<RectTransform>().rotation = Quaternion.Euler(0f, 0f, ViewModel.currentTheme.barStyle.flipPlayerCameras ? 180f : 0f);
+        }
         var frameHeight = aspectRatio == AspectRatio.Ultrawide ? 1.52f : 2.08f;
         var frameWidth = (width / height) * frameHeight;
         frame.size = new Vector2(frameWidth, frameHeight + (aspectRatio == AspectRatio.Ultrawide ? .08f : 0f));
@@ -558,6 +563,17 @@ public class PlayerCameraObserver : KQObserver
         if (moduleParameters.ContainsKey("hideBackground"))
         {
             frame.gameObject.SetActive(false);
+        }
+        if(moduleParameters.ContainsKey("cameraWidth") || moduleParameters.ContainsKey("cameraHeight"))
+        {
+            
+            var w = 2f; var h = 1.85f;
+            if(moduleParameters.ContainsKey("cameraWidth"))
+                w = float.Parse(moduleParameters["cameraWidth"]);
+            if(moduleParameters.ContainsKey("cameraHeight"))
+                h = float.Parse(moduleParameters["cameraHeight"]);
+                Debug.Log("camera width key found, set to " + w + "," + h);
+            GetComponent<RectTransform>().sizeDelta = new Vector2(w,h);
         }
     }
     private void OnDestroy()

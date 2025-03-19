@@ -319,6 +319,7 @@ public class ViewModel : MonoBehaviour
 			Destroy(instance.matchPreview.gameObject);
 
 		instance.matchPreview = Instantiate(MainLayoutModuleManager.GetMatchPreview(styleName), instance.transform.parent);
+		
     }
 
 	void StartSubView(SubView view)

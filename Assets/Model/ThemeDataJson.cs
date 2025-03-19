@@ -57,7 +57,9 @@ public class MainBarStyle
     public float cameraY;
     public float cameraScale;
     public float customCameraWidth;
+    public float customCameraHeight;
     public bool hideCameraIcons;
+    public bool flipPlayerCameras;
 }
 
 [System.Serializable]

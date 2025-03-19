@@ -49,7 +49,7 @@ public class TeamNameObserver : KQObserver
     protected override void OnThemeChange()
     {
         base.OnThemeChange();
-		if(ViewModel.currentTheme.headerFont != "")
+		if(ViewModel.currentTheme.headerFont != null && ViewModel.currentTheme.headerFont != "")
         {
 			txt.font = FontDB.GetFont(ViewModel.currentTheme.headerFont);
 			if (ViewModel.currentTheme.headerFont != "defaultHeader")
