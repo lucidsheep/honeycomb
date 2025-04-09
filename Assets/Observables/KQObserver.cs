@@ -11,6 +11,7 @@ public class KQObserver : MonoBehaviour
 	public SpriteRenderer normalBG;
 	public Vector2 offset;
 	public bool absolutePos = false;
+	public bool allCaps = false;
 	public Vector2 bgCustomPivot = new Vector2(.5f, .5f);
 	public Dictionary<string,string> moduleParameters = new Dictionary<string, string>();
 	public int team { get { return targetID == 0 ? UIState.blue : UIState.gold; } }
@@ -88,6 +89,15 @@ public class KQObserver : MonoBehaviour
 					t.font = font;
 			}
         }
+		if(moduleParameters.ContainsKey("fontColor"))
+        {
+			var color = Util.HexToColor(moduleParameters["fontColor"]);
+			if (color != null)
+			{
+				foreach (var t in GetComponentsInChildren<TextMeshPro>())
+					t.color = color;
+			}
+        }
 		if(moduleParameters.ContainsKey("offsetX"))
         {
 			offset.x = float.Parse(moduleParameters["offsetX"]);
@@ -96,6 +106,8 @@ public class KQObserver : MonoBehaviour
 		{
 			offset.y = float.Parse(moduleParameters["offsetY"]);
 		}
+		if(moduleParameters.ContainsKey("allCaps"))
+			allCaps = true;
 		if(bgContainer != null)
 		{
 			if (moduleParameters.ContainsKey("hideBackground"))
@@ -111,6 +123,12 @@ public class KQObserver : MonoBehaviour
 				bgPos.y = float.Parse(moduleParameters["backgroundY"]);
 			bgContainer.transform.localPosition = bgPos;
 		}
+	}
+
+	protected string pString(string input)
+	{
+		var ret = input.Replace("\uFE0F", "");
+		return allCaps ? ret.ToUpper() : ret;
 	}
 
 }

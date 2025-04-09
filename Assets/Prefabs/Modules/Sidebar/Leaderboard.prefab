@@ -1050,7 +1050,7 @@ MonoBehaviour:
   leaderboardPlayersTxt: {fileID: 7689134745082986029}
   leaderboardValuesTxt: {fileID: 981197731042705011}
   leaderboardTitleTxt: {fileID: 991716672557867374}
-  frame: {fileID: 4414293496555962361}
+  frame: {fileID: 7075671063894106786}
   fontContainer: {fileID: 7791548144167267635}
   maxNameLength: 13
 --- !u!1 &8419926693951323631

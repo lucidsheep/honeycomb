@@ -973,7 +973,12 @@ MonoBehaviour:
   absolutePos: 0
   bgCustomPivot: {x: 0.5, y: 0.5}
   text: {fileID: 7689134745082986029}
+  pronounText: {fileID: 0}
+  sceneText: {fileID: 0}
   textContainer: {fileID: 7791548144167267635}
+  bgFrame:
+  - {fileID: 3741475299701425215}
+  - {fileID: 3520936493464377912}
   mainBG: {fileID: 8419926693951323631}
   icons:
   - {fileID: 7869374800635082309}
@@ -982,6 +987,8 @@ MonoBehaviour:
   - {fileID: 8325023707511720475}
   - {fileID: 353565773375083152}
   pronounSize: 2
+  maxNameLength: 99
+  boldQueen: 1
 --- !u!114 &6393767741003113469
 MonoBehaviour:
   m_ObjectHideFlags: 0

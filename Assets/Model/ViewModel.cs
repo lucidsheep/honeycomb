@@ -309,6 +309,11 @@ public class ViewModel : MonoBehaviour
 			instance.topLevelGraphicContainer.sprite = AppLoader.GetStreamingSprite("mainFrame");
 			instance.backgroundGraphicContainers[0].sprite = AppLoader.GetStreamingSprite("background");
 			SetMatchPreviewScreen(newTheme.matchPreview == null ? "" : newTheme.matchPreview.name);
+			if(newTheme.backgroundColor != null && newTheme.backgroundColor != "")
+			{
+				instance.bgFilter = Util.HexToColor(newTheme.backgroundColor);
+				instance.backgroundGraphicContainers[0].color = instance.bgFilter;
+			}
 			onThemeChange.Invoke();
 		}
     }

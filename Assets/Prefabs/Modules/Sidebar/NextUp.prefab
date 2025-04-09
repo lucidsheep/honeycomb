@@ -310,7 +310,10 @@ MonoBehaviour:
   offset: {x: 0, y: 0}
   absolutePos: 0
   bgCustomPivot: {x: 0.5, y: 0.5}
+  titleText: {fileID: 3928180984266717775}
   listTemplate: {fileID: 3880031137678142362, guid: f5337f284495c4f828dd1ea1195a72da, type: 3}
+  listBlueTemplate: {fileID: 0}
+  listGoldTemplate: {fileID: 0}
   numQueueEntries: 3
   listStartPosition: {x: 0.25, y: 1.19, z: 0}
   listIncrement: -0.4

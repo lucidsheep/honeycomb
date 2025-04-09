@@ -93,6 +93,8 @@ public class ThemeDataJson
     public string name;
     public string layout;
     public string headerFont, postgameHeaderFont, postgameCardFont, postgameDetailFont;
+
+    public string backgroundColor;
     public string postgameScreen;
     public string mainBarStyle;
     public string matchPreviewStyle;

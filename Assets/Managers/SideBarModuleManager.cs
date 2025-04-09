@@ -29,7 +29,7 @@ public class SideBarModuleManager : MonoBehaviour
 	void OnThemeChange()
     {
 		SetModules();
-		bool showInfo = !ViewModel.currentTheme.showTicker && ViewModel.currentTheme.GetLayout() != ThemeDataJson.LayoutStyle.Game_Only;
+		bool showInfo = !(ViewModel.currentTheme.showTicker == false || ViewModel.currentTheme.GetLayout() == ThemeDataJson.LayoutStyle.Game_Only);
 		gameIDText.color = timeText.color = (showInfo ? gameInfoColor : new Color(1f, 1f, 1f, 0f));
     }
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using HidSharp.Reports.Units;
 
 public class SetPointObserver : KQObserver
 {
@@ -9,14 +10,18 @@ public class SetPointObserver : KQObserver
 
     public Vector2 startPos;
     public float increment;
-	SetPoint[] points;
+	public SetPoint[] points;
     int wins = 0;
+    int maxPoints = 0;
+    //if set , allocate setPoints in SP array
+    public int presetMax = 0;
 
     Coroutine delayCoroutine;
 
     private void Start()
     {
-        points = new SetPoint[0];
+        if(presetMax <= 0)
+            points = new SetPoint[0];
         GameModel.instance.setPoints.onChange.AddListener(OnMaxPointSet);
         GameModel.onGamePointForcedUpdate.AddListener(OnForcedUpdate);
         NetworkManager.instance.gameEventDispatcher.AddListener(OnGameEvent);
@@ -91,7 +96,7 @@ public class SetPointObserver : KQObserver
         Debug.Log("team " + team + " victory, stored wins " + wins);
         Debug.Log("win type is " + winType);
         Debug.Log("map name is " + MapDB.currentMap.property.name);
-        if (wins - 1 >= points.Length) return;
+        if (wins - 1 >= points.Length || wins - 1 >= maxPoints) return;
         SetPoint.DayType day;
         switch(MapDB.currentMap.property.name)
         {
@@ -115,29 +120,41 @@ public class SetPointObserver : KQObserver
     void OnMaxPointSet(int before, int after)
     {
         Debug.Log("maxpointset " + after);
-        var storedSetPoints = points;
-        points = new SetPoint[after];
-        for(int j = 0; j < after; j++)
+        maxPoints = after;
+        if(presetMax > 0)
         {
-            if (j < storedSetPoints.Length)
+            for(int i = 0; i < points.Length; i++)
             {
-                points[j] = storedSetPoints[j];
-                storedSetPoints[j] = null;
+                points[i].gameObject.SetActive(i < after);
+                //if(i < after)
+                //    points[i].SetEmpty(team);
             }
-            else
-            {
-                var sp = Instantiate(spTemplate, ViewModel.stage);
-                sp.transform.localPosition = new Vector3((targetID == 0 ? 1f : -1f), 0f, 0f);
-                points[j] = sp;
-                sp.SetEmpty(team);
-            }
-        }
-        for(int k = 0; k < storedSetPoints.Length; k++)
+        } else
         {
-            if (storedSetPoints[k] != null)
-                Destroy(storedSetPoints[k].gameObject);
+            var storedSetPoints = points;
+            points = new SetPoint[after];
+            for(int j = 0; j < after; j++)
+            {
+                if (j < storedSetPoints.Length)
+                {
+                    points[j] = storedSetPoints[j];
+                    storedSetPoints[j] = null;
+                }
+                else
+                {
+                    var sp = Instantiate(spTemplate, ViewModel.stage);
+                    sp.transform.localPosition = new Vector3((targetID == 0 ? 1f : -1f), 0f, 0f);
+                    points[j] = sp;
+                    sp.SetEmpty(team);
+                }
+            }
+            for(int k = 0; k < storedSetPoints.Length; k++)
+            {
+                if (storedSetPoints[k] != null)
+                    Destroy(storedSetPoints[k].gameObject);
+            }
+            UpdatePositions();
         }
-        UpdatePositions();
     }
 
     void UpdatePositions()

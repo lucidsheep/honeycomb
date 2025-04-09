@@ -80,12 +80,12 @@ public class TournamentLeaderboardObserver : KQObserver
 				lbName = ViewModel.currentTheme.leaderboardTargetName + " Points™";
 			else if (leaderboardList.ContainsKey(leaderboard.leaderboardName))
 				lbName = leaderboardList[leaderboard.leaderboardName];
-			leaderboardNameTxt.text = "<b>" + lbName + "</b>";
+			leaderboardNameTxt.text = "<b>" + pString(lbName) + "</b>";
 			int limit = Mathf.Min(numRows, leaderboard.players.Length);
 			for(int i = 0; i < limit; i++)
 			{
 				var player = leaderboard.players[i];
-				lbPlayers += Util.SmartTruncate(player.name.Replace("\uFE0F", ""), maxNameLength) + "\n";
+				lbPlayers += Util.SmartTruncate(pString(player.name), maxNameLength) + "\n";
 				lbValues += GetLBValue(leaderboard.leaderboardName, player) + "\n";
 			}
 			leaderboardPlayersTxt.text = lbPlayers;
@@ -115,6 +115,23 @@ public class TournamentLeaderboardObserver : KQObserver
 		{
 			leaderboardPlayersTxt.fontSize = leaderboardValuesTxt.fontSize = float.Parse(moduleParameters["fontSize"]);
 		}
+		if(moduleParameters.ContainsKey("fontSpacing"))
+		{
+			leaderboardPlayersTxt.lineSpacing = float.Parse(moduleParameters["fontSpacing"]);
+		}
+		if(moduleParameters.ContainsKey("detailFont"))
+        {
+			var font = FontDB.GetFont(moduleParameters["detailFont"]);
+			if (font != null)
+			{
+				leaderboardValuesTxt.font = font;
+			}
+        }
+		if(moduleParameters.ContainsKey("detailFontSpacing"))
+		{
+			leaderboardValuesTxt.lineSpacing = float.Parse(moduleParameters["detailFontSpacing"]);
+		}
+
 		if(moduleParameters.ContainsKey("nameLength"))
 		{
 			maxNameLength = int.Parse(moduleParameters["nameLength"]);

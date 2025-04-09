@@ -10,6 +10,7 @@ public class SetPoint : MonoBehaviour
     public Sprite[] spriteOptionsBlue;
     public Sprite[] spriteOptionsGold;
     public GameObject shadow;
+    public GameObject filledShadow;
     public Color emptyBlue = new Color(0x00, 0x5D, 0x87);
     public Color emptyGold = new Color(0x8C, 0x65, 0x00);
     public Color outlineBlue;
@@ -34,6 +35,11 @@ public class SetPoint : MonoBehaviour
         incrementalDay = incrementalDay == 3 ? 0 : incrementalDay + 1;
         sr.sprite = teamID == 0 ? spriteOptionsBlue[index] : spriteOptionsGold[index];
         sr.color = Color.white;
+        if(filledShadow != null)
+        {
+            filledShadow.SetActive(true);
+            shadow.SetActive(false);
+        }
     }
     public void SetSprite(int teamID, DayType day, VictoryType victory)
     {
@@ -41,13 +47,21 @@ public class SetPoint : MonoBehaviour
         int index = ((int)day * 3) + (int)victory;
         sr.sprite = teamID == 0 ? spriteOptionsBlue[index] : spriteOptionsGold[index];
         sr.color = Color.white;
+        if(filledShadow != null)
+        {
+            filledShadow.SetActive(true);
+            shadow.SetActive(false);
+        }
     }
 
     public void SetEmpty(int teamID)
     {
         tid = teamID;
         sr.sprite = emptySprite;
+        shadow.SetActive(true);
         shadow.GetComponent<SpriteRenderer>().color = teamID == 0 ? outlineBlue : outlineGold;
+        if(filledShadow != null)
+            filledShadow.SetActive(false);
         sr.color = teamID == 0 ? emptyBlue : emptyGold;
     }
 

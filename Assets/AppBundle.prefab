@@ -3740,6 +3740,7 @@ MonoBehaviour:
     postgameHeaderFont: 
     postgameCardFont: 
     postgameDetailFont: 
+    backgroundColor: 
     postgameScreen: 
     mainBarStyle: 
     matchPreviewStyle: 
@@ -3916,6 +3917,8 @@ MonoBehaviour:
   - {fileID: 7326644024046561879, guid: c83d047068bcc4abaaac5aa96c0206f7, type: 3}
   - {fileID: 8124462963830366932, guid: 87b83284a7a0740dca150ef55e801575, type: 3}
   - {fileID: 3022604383968729705, guid: 8dc23ce52eefd4da589fd346a78b5dae, type: 3}
+  - {fileID: 7326644024046561879, guid: 5c7e67ac83db145309c59ea797c4ce4d, type: 3}
+  - {fileID: 7326644024046561879, guid: ae88440912a294d0f8772b2a1c7daca9, type: 3}
   curModules: []
   leftSidebar: {fileID: 7971284978406135557}
   rightSidebar: {fileID: 4681536881800815490}
@@ -3990,6 +3993,10 @@ MonoBehaviour:
     fontName: wcDetail
   - font: {fileID: 11400000, guid: 34e32b6e031d14d3ab71c718be31f162, type: 2}
     fontName: jojo
+  - font: {fileID: 11400000, guid: 48a05332179994ba68816d3f0630815f, type: 2}
+    fontName: sqprimary
+  - font: {fileID: 11400000, guid: 288d3534b345e4b7180160e5297e0bbf, type: 2}
+    fontName: sqsecondary
 --- !u!114 &3953148250283245154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4008,21 +4015,25 @@ MonoBehaviour:
   - {fileID: 5265151286151429123, guid: c330d782837e04c71bfe4be1f12431bf, type: 3}
   - {fileID: 5265151286151429123, guid: 7db57a939d75740549c52d93820ab14d, type: 3}
   - {fileID: 5265151286151429123, guid: ea8e38702dba745368ea94dfcf9ef841, type: 3}
+  - {fileID: 5265151286151429123, guid: 3726edc8998a745779d88d7a2025d01c, type: 3}
   postgameScreens:
   - {fileID: 6037398074245946859, guid: 69af786a65b474a6fbbef21241acc7e5, type: 3}
   - {fileID: -1697214059453694578, guid: 9f21b0331ff5844dc9c923ae7667ec0b, type: 3}
   - {fileID: 3146608573864202273, guid: d6db21a91cf55491b83e974fdda849ec, type: 3}
   - {fileID: 3146608573864202273, guid: c9683c446071144d68a9794f561b3f25, type: 3}
   - {fileID: 3146608573864202273, guid: 546bfc34446d14f1cb282b300070b4c3, type: 3}
+  - {fileID: 3146608573864202273, guid: 9518466f5fd2f419195ea097c45d5ce5, type: 3}
   boxScores:
   - {fileID: 4577985997614243457, guid: 74bd0d852fe6449a480b09c4c94b7e36, type: 3}
   - {fileID: 8030671955221456812, guid: 572a3937b43e54886835d1e83593f103, type: 3}
   - {fileID: 7240986922557060792, guid: f270fdc8596934c9499abf724d99c3d4, type: 3}
   - {fileID: 8030671955221456812, guid: 8c6176c1db1b64b25833199a6d3c5585, type: 3}
+  - {fileID: 8030671955221456812, guid: 1aaa6d439517a4a7697effcc7ecd2a74, type: 3}
   playerCards:
   - {fileID: 1949158740447203311, guid: 3eb77c6b61d5742b9b575af13f5867a4, type: 3}
   - {fileID: 1949158740447203311, guid: 4cbe978972ec3421ab2829ed83a8d565, type: 3}
   - {fileID: 1949158740447203311, guid: 65f2db393e10b4ef8ad3ec562ac66e2c, type: 3}
+  - {fileID: 1949158740447203311, guid: 8ca067b3bf7b6444e835b27548ccd0be, type: 3}
   previewScreens:
   - {fileID: 300211002665921891, guid: 7a9a3f930bbbd4727b4c569d51784145, type: 3}
   - {fileID: 300211002665921891, guid: 8dae89de2cd2348c7b7b14abab872038, type: 3}
@@ -4139,6 +4150,7 @@ MonoBehaviour:
   normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  allCaps: 0
   bgCustomPivot: {x: 0, y: 0}
   cameraImage: {fileID: 1363950708158818434}
   webcamName: blueCamera
@@ -4780,7 +4792,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -100
   m_Sprite: {fileID: 0}
-  m_Color: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5910,6 +5922,7 @@ MonoBehaviour:
   normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  allCaps: 0
   bgCustomPivot: {x: 0.5, y: 0.5}
   sprite: {fileID: 8085324227033304910}
 --- !u!1 &3901695975573122895
@@ -6561,6 +6574,7 @@ MonoBehaviour:
   normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  allCaps: 0
   bgCustomPivot: {x: 0.5, y: 0.5}
   bgMesh: {fileID: 7819336863422915151}
   player: {fileID: 7745342322160758427}
@@ -7152,6 +7166,7 @@ MonoBehaviour:
   normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  allCaps: 0
   bgCustomPivot: {x: 0, y: 0}
   cameraImage: {fileID: 3214492608885765394}
   webcamName: blueCamera
@@ -7970,6 +7985,7 @@ MonoBehaviour:
   normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  allCaps: 0
   bgCustomPivot: {x: 0, y: 0}
   cameraImage: {fileID: 8513868327213783106}
   webcamName: gameplayCamera
@@ -8981,6 +8997,7 @@ MonoBehaviour:
   normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  allCaps: 0
   bgCustomPivot: {x: 0, y: 0}
   cameraImage: {fileID: 6149501208399137510}
   webcamName: blueCamera
@@ -10468,7 +10485,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -100
   m_Sprite: {fileID: 0}
-  m_Color: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

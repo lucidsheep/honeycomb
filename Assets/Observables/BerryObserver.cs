@@ -8,6 +8,8 @@ public class BerryObserver : KQObserver
 	public TextMeshPro berryLabel;
 	public Color berryWarningColor = Color.red;
 
+	Color normalColor = Color.white;
+
 	public string extraText = "";
 
 	bool dirty = false;
@@ -18,6 +20,7 @@ public class BerryObserver : KQObserver
 	{
 		base.Start();
 		GameModel.instance.berriesLeft.onChange.AddListener(OnChange);
+		normalColor = berryLabel.color;
 	}
 
 	// Update is called once per frame
@@ -26,7 +29,7 @@ public class BerryObserver : KQObserver
 		if(dirty)
         {
 			berryLabel.text = berryCount.ToString() + extraText;
-			berryLabel.color = berryCount < 10 && GameModel.instance.gameIsRunning.property ? berryWarningColor : Color.white;
+			berryLabel.color = berryCount < 10 && GameModel.instance.gameIsRunning.property ? berryWarningColor : normalColor;
 			if(berryIcon != null)
 				berryIcon.color = berryLabel.color;
 			dirty = false;

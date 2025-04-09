@@ -4,11 +4,15 @@ using TMPro;
 
 public class TournamentQueueObserver : KQObserver
 {
+    public TextMeshPro titleText;
     public TournamentQueueTeamName listTemplate, listBlueTemplate, listGoldTemplate;
 	public int numQueueEntries = 3;
     public Vector3 listStartPosition;
-    public float listIncrement;
+    public float listIncrement, listSetIncrement;
     public List<TournamentQueueTeamName> teamNames = new List<TournamentQueueTeamName>();
+
+    string customFontName = "";
+    Color fontColor = Color.white;
 
     public override void Start()
     {
@@ -30,14 +34,20 @@ public class TournamentQueueObserver : KQObserver
 
         var numTeams = numQueueEntries * 2;
         var listY = listStartPosition.y;
+        var font = customFontName == "" ? null : FontDB.GetFont(customFontName);
+
         while(numTeams > 0)
         {
             var isBlue = numTeams % 2 == 0;
             var thisName = Instantiate((listBlueTemplate != null ? (isBlue ? listBlueTemplate : listGoldTemplate) :  listTemplate), this.transform);
             thisName.transform.localPosition = new Vector3(listStartPosition.x, listY, listStartPosition.z);
             thisName.text.text = "";
+            if(font != null) thisName.text.font = font;
+            thisName.text.color = fontColor;
             thisName.isBlue = isBlue;
             listY += listIncrement;
+            if(!isBlue)
+                listY += listSetIncrement;
             teamNames.Add(thisName);
             numTeams--;
         }
@@ -74,7 +84,7 @@ public class TournamentQueueObserver : KQObserver
         {
             if(tName.teamID == teamID)
             {
-                tName.text.text = teamName;
+                tName.text.text = pString(teamName);
             }
         }
     }
@@ -98,10 +108,27 @@ public class TournamentQueueObserver : KQObserver
             listIncrement = float.Parse(moduleParameters["listIncrement"]);
 		}
 
+        if(moduleParameters.ContainsKey("listSetIncrement"))
+		{
+            listSetIncrement = float.Parse(moduleParameters["listSetIncrement"]);
+		}
+
         if(moduleParameters.ContainsKey("length"))
         {
             numQueueEntries = int.Parse(moduleParameters["length"]);
         }
+
+        if(moduleParameters.ContainsKey("font"))
+        {
+			customFontName = moduleParameters["font"];
+        }
+		if(moduleParameters.ContainsKey("fontColor"))
+        {
+			fontColor = Util.HexToColor(moduleParameters["fontColor"]);
+        }
+        if(moduleParameters.ContainsKey("hideTitle"))
+            titleText.text = "";
+        
         SetTeamList();
     }
 }
