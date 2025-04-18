@@ -1137,13 +1137,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7839c89bbe0949c1b852e84b787e07c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetID: 0
+  targetID: 1
   moduleName: goldRosterSQ
   size: 1.875
   bgContainer: {fileID: 520437825753932765}
   normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  allCaps: 0
   bgCustomPivot: {x: 0.5, y: 0.5}
   text: {fileID: 7689134745082986029}
   pronounText: {fileID: 0}

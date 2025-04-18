@@ -14,6 +14,8 @@ public class TournamentQueueObserver : KQObserver
     string customFontName = "";
     Color fontColor = Color.white;
 
+    bool centerAlign = false;
+
     public override void Start()
     {
         base.Start();
@@ -45,6 +47,8 @@ public class TournamentQueueObserver : KQObserver
             if(font != null) thisName.text.font = font;
             thisName.text.color = fontColor;
             thisName.isBlue = isBlue;
+            if(centerAlign)
+                thisName.text.alignment = TextAlignmentOptions.Center;
             listY += listIncrement;
             if(!isBlue)
                 listY += listSetIncrement;
@@ -128,6 +132,9 @@ public class TournamentQueueObserver : KQObserver
         }
         if(moduleParameters.ContainsKey("hideTitle"))
             titleText.text = "";
+
+        if(moduleParameters.ContainsKey("textAlign") && moduleParameters["textAlign"] == "center")
+            centerAlign = true;
         
         SetTeamList();
     }

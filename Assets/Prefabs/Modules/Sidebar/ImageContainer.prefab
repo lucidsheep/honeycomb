@@ -53,6 +53,7 @@ MonoBehaviour:
   normalBG: {fileID: 0}
   offset: {x: 0, y: 0}
   absolutePos: 0
+  allCaps: 0
   bgCustomPivot: {x: 0.5, y: 0.5}
   sprite: {fileID: -4156337770303443728}
 --- !u!212 &-4156337770303443728
@@ -95,7 +96,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1552878567
   m_SortingLayer: 12
-  m_SortingOrder: 101
+  m_SortingOrder: 103
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
