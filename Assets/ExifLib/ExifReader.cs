@@ -233,13 +233,14 @@ namespace ExifLib
                     }
                 }
             }
-
+            /*
             if (info.ThumbnailData == null && info.ThumbnailOffset > 0 && info.ThumbnailSize > 0)
             {
                 // store it.
                 info.ThumbnailData = new byte[info.ThumbnailSize];
                 Array.Copy(section, offsetBase + info.ThumbnailOffset, info.ThumbnailData, 0, info.ThumbnailSize);
             }
+            */
         }
 
         private void ProcessSOF(byte[] section, int marker)
