@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Events;
 using Unity.Jobs;
+using Rive;
+using Microsoft.Unity.VisualStudio.Editor;
 
 public class NetworkManager : MonoBehaviour
 {
@@ -61,6 +63,8 @@ public class NetworkManager : MonoBehaviour
     public UnityEvent<TeamGameStats> onTeamGameData = new UnityEvent<TeamGameStats>();
     public UnityEvent<HMCabinetQueue> onTournamentQueueData = new UnityEvent<HMCabinetQueue>();
     public UnityEvent<int, string> onTournamentTeamName = new UnityEvent<int, string>();
+
+    public UnityEvent<string> onRiveImageLoaded = new UnityEvent<string>();
 
     public Queue<string> LogQueue;
 
@@ -785,8 +789,39 @@ public class NetworkManager : MonoBehaviour
                     var exifData = ExifLib.ExifReader.ReadJpeg(webRequest.downloadHandler.data, "avatar");
                     rotation = (int)exifData.Orientation;
                 }
+                //webRequest.downloadHandler.data byte array
+                ImageOutOfBandAsset imageOOB = OutOfBandAsset.Create<ImageOutOfBandAsset>(webRequest.downloadHandler.data);
+
+
                 var result = DownloadHandlerTexture.GetContent(webRequest);
                 PlayerStaticData.OnPlayerProfilePic(userID, result, rotation);
+            } else
+            {
+                Debug.Log("Error retrieving profile pic: http error " + webRequest.responseCode + ":" + webRequest.result + ", " + webRequest.error);
+                Debug.Log(webRequest.downloadHandler.text);
+            }
+        }
+    }
+
+    public static Dictionary<string, ImageOutOfBandAsset> RiveImageCache = new Dictionary<string, ImageOutOfBandAsset>();
+
+    public static void GetDynamicRiveImage(string url)
+    {
+        if(RiveImageCache.ContainsKey("url")) return;
+
+        instance.StartCoroutine(_GetDynamicRiveImage(url));
+    }
+
+    static IEnumerator _GetDynamicRiveImage(string url)
+    {
+        using (var webRequest = UnityWebRequest.Get(url))
+        {
+            yield return webRequest.SendWebRequest();
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                ImageOutOfBandAsset imageOOB = OutOfBandAsset.Create<ImageOutOfBandAsset>(webRequest.downloadHandler.data);
+                RiveImageCache.Add(url, imageOOB);
+                instance.onRiveImageLoaded.Invoke(url);
             } else
             {
                 Debug.Log("Error retrieving profile pic: http error " + webRequest.responseCode + ":" + webRequest.result + ", " + webRequest.error);
